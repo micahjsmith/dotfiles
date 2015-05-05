@@ -1,79 +1,96 @@
 # .bashrc
 
 # Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
 
-# Add to path.
-export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/sw/bin
+#Add to path. Trim duplicate paths.
+PATH=$PATH:$HOME/local/bin
+PATH=$PATH:$HOME/anaconda/bin
+TMP=$(echo $PATH | sed s_:_\\n_g | awk '!x[$0]++' | tr "\n" ":")
+export PATH=${TMP%?}
 
 # Random settings
-export TERM=xterm-color
-export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-bind "set bell-style none"
+export TERM='screen-256color'             # Preferred color terminal
+export EDITOR=vim                         # Default editor
+mesg n                                    # Disallow others to write
+stty -ixon                                # Disable <C-s> that hangs terminal.
+bind '"\e[A": history-search-backward'    # Arrows search from current cmd
+bind '"\e[B": history-search-forward'     # Arrows search from current cmd
+set bell-style none                       # Try to avoid bells
 
-# Default editor
-export EDITOR='vim'
+# Colorize PS1
+export PS1="\[$(tput bold)\]\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
 
 # System-specific proxies
 source ~/.proxies
 
-# User specific aliases and functions
-alias ..='cd ..'
-alias .l='cd .. && ls'
-alias ...='cd ../..'
-alias e='evince '
-alias latest='\ls -t | head -n 1'
+# Aliases that are paths to certain directories.
+source ~/.aliases
 
-# Note- -G enables color on OS X, whereas --color can be used on Linux.
-alias l='\ls -aF -G'
-alias ls='\ls -G'
-alias l1='\ls -aF1 -G'
-alias ll='\ls -ahlF -G'
-alias lsd='\ls -d1 -G */'
-alias lld='\ls -dl -G */'
+# User specific aliases
+alias ..='\cd ..'
+alias ...='cd ../..'
+alias e='evince'
+alias latest='\ls -t | head -n 1'
 alias mm='$(history -p !!).m'
 alias tmuxa='tmux attach -t'
 alias tmuxd='tmux detach'
 alias v='vim'
+alias xopen='xdg-open'
 
-# Aliases that are paths to certain directories
-source ~/.aliases
+#Change what ls displays
+alias ls='\ls --color'
+alias l='\ls -AF --color'
+alias l1='\ls -AF1 --color'
+alias ll='\ls -AhlF --color'
+alias lsd='\ls -d1 --color */'
+alias lld='\ls -dhl --color */'
 
-# The name of the nth most recently modified file
-latestn(){
-    \ls -t | head -n $1 | tail -n 1
-}
+#Better log viewing in Git, from Henry
+alias githist='git log --graph --all --full-history --color --format=oneline --branches --abbrev-commit'
 
-# Most frequently used commands, from CLF
-freqcmds(){
-    history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
-}
+#So the display doesn't come up for git
+unset SSH_ASKPASS
 
-# Quick calculator function, from CLF (user fizz)
-?(){
-    echo "$*" | bc 0l
-}
-
-# Facilitate a simple copy from tmux
+#Facilitate copying from tmux
 tcopy(){
-    echo "$1" > /tmp/tcopytmp.txt
-    gvim /tmp/tcopytmp.txt
-    rm /tmp/tcopytmp.txt
+  echo "$1" > ~/workspace/tcopytmp.txt
+  gedit ~/workspace/tcopytmp.txt
+  rm ~/workspace/tcopytmp.txt
 }
 
 # Imitate zsh-like cd
 c(){
-    if [ $# -eq 1 ]; then
-        cd $1
-    elif [ $# -eq 2 ]; then
-        cd ${PWD/$1/$2}
-    else
-        echo "[c] USAGE: c dir"
-        echo "[c] USAGE: c old new"
-        return 1
-    fi
+  if [ "$#" = "1" ]; then
+    cd "$1"
+  elif [ "$#" = "2" ]; then
+    cd "${PWD/$1/$2}"
+  else
+    echo "[c] USAGE: c dirname"
+    echo "[c] USAGE: c old new"
+    return 1
+  fi
 }
 
 # Zsh-like cd + list the files in the directory
 cl(){
-    c $* && ls
+  c "$*" && ls
+}
+
+# Access nth most recent modified file.
+latestn(){
+  \ls -t | head -n $1 | tail -n 1  
+}
+
+# The names of the n most recently modified files in this directory and all
+# subdirectories. See http://stackoverflow.com/a/4561987/2514228
+latestr(){
+  find . -type f -printf '%T@ %p\n' | sort -n | tail -n $1 | cut -f2 -d" "
+}
+
+# Quick calculator function, from user fizz on CLF
+?(){
+  echo "$*" | bc -l
 }
