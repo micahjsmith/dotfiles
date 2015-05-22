@@ -1,15 +1,11 @@
 # .bashrc
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
-
-#Add to path. Trim duplicate paths.
+#Add to path.
 PATH=$PATH:$HOME/local/bin
-PATH=$PATH:$HOME/anaconda/bin
-TMP=$(echo $PATH | sed s_:_\\n_g | awk '!x[$0]++' | tr "\n" ":")
-export PATH=${TMP%?}
+
+# Add coreutils to path with normal names.
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+MANATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Random settings
 export TERM='screen-256color'             # Preferred color terminal
@@ -50,6 +46,7 @@ alias lld='\ls -dhl --color */'
 
 #Better log viewing in Git, from Henry
 alias githist='git log --graph --all --full-history --color --format=oneline --branches --abbrev-commit'
+alias gitlogp='git log --graph --full-history --all --pretty=format:"%h%x09%d%x20%s"'
 
 #So the display doesn't come up for git
 unset SSH_ASKPASS
