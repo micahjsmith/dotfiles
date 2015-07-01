@@ -8,7 +8,7 @@ PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 MANATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Random settings
-export TERM='screen-256color'             # Preferred color terminal
+export TERM='xterm-256color'              # Preferred color terminal
 export EDITOR=vim                         # Default editor
 mesg n                                    # Disallow others to write
 stty -ixon                                # Disable <C-s> that hangs terminal.

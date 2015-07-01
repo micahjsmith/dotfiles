@@ -54,7 +54,7 @@ function! ToggleMatch()
     let g:setMatchOn=1
   endif
 endfunction
-nnore <silent> <C-m> :call ToggleMatch()<CR>
+nnore <silent> <leader><m> :call ToggleMatch()<CR>
     
 "Move cursor on display physically, prefering the behavior of ^ over 0
 nnoremap j gj
@@ -78,8 +78,8 @@ map gd :bd<CR>
 inoremap <C-g> <Esc><C-g>i
 
 "Insert lines above and below without entering insert mode
-nmap <C-k> O<Esc>j
-nmap <C-j> o<Esc>k
+nnoremap <C-k> O<Esc>j
+nnoremap <C-j> o<Esc>k
 
 "vim-airline configuration
 set laststatus=2
@@ -92,3 +92,8 @@ let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
 
 "Mapping in visual block mode for Increment.vim
 vnoremap <C-a> :Inc<CR>
+
+"Configuration for working with julia
+"<C-o> conflicts with tmux prefix.
+inoremap <C-x><C-x> <C-x><C-o>
+au BufRead,BufNewFile *.jl setlocal textwidth=120
