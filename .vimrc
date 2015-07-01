@@ -96,4 +96,7 @@ vnoremap <C-a> :Inc<CR>
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
 inoremap <C-x><C-x> <C-x><C-o>
-au BufRead,BufNewFile *.jl setlocal textwidth=120
+au BufRead,BufNewFile *.jl setlocal textwidth=922
+
+"Best practice for git commits, from thoughtbot.
+autocmd Filetype gitcommit setlocal spell textwidth=72
