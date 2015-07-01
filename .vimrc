@@ -39,8 +39,8 @@ autocmd FileType make set tabstop=8|set shiftwidth=8|set noexpandtab
 
 "Save pinky finger from harm.
 noremap ; :
-noremap , ;
 imap jj <Esc>
+let mapleader = ","
 
 "Highlight characters 81+ on each line. Toggle with C-m
 let g:setMatchOn=1
@@ -54,7 +54,7 @@ function! ToggleMatch()
     let g:setMatchOn=1
   endif
 endfunction
-nnore <silent> <leader><m> :call ToggleMatch()<CR>
+nnore <silent> <leader>m :call ToggleMatch()<CR>
     
 "Move cursor on display physically, prefering the behavior of ^ over 0
 nnoremap j gj
