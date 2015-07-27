@@ -1,0 +1,26 @@
+#!/bin/bash
+# Just need to run once on a new system.
+
+# User
+git config --global user.name "Micah Smith"
+git config --global user.email "micahjsmith@gmail.com"
+
+# Git diff using vim
+git config --global diff.tool vimdiff
+git config --global difftool.prompt false
+git config --global alias.d difftool
+
+# Git merge using vim
+git config --global merge.tool vimdiff
+git config --global mergetool.prompt false
+git config --global merge.conflictstyle diff3
+
+# Use https always
+git config --global url."https://".insteadof git://
+
+# Rebase if possible rather than having a lot of merge commits
+git config --global branch.autosetuprebase always
+git config --global branch.autosetupmerge always
+
+# Only push the current branch with `git push`.
+git config --global push.default tracking
