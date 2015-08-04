@@ -15,7 +15,7 @@ stty -ixon                                # Disable <C-s> that hangs terminal
 bind '"\e[A": history-search-backward'    # Arrows search from current cmd
 bind '"\e[B": history-search-forward'     # Arrows search from current cmd
 umask 0002                                # Default file creation mode
-#set bell-style none                       # Try to avoid bells
+set bell-style none                       # Try to avoid bells
 
 # Colorize PS1
 export PS1="\[$(tput bold)\]\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
@@ -47,17 +47,10 @@ alias lld='\ls -dhl --color */'
 
 #Better log viewing in Git, from Henry
 alias githist='git log --graph --all --full-history --color --format=oneline --branches --abbrev-commit'
-alias gitlogp='git log --graph --full-history --all --pretty=format:"%h%x09%d%x20%s"'
+alias gitlogp='git log --graph --all --full-history --color --pretty=format:"%h%x09%d%x20%s"'
 
 #So the display doesn't come up for git
 unset SSH_ASKPASS
-
-#Facilitate copying from tmux
-tcopy(){
-  echo "$1" > ~/workspace/tcopytmp.txt
-  gedit ~/workspace/tcopytmp.txt
-  rm ~/workspace/tcopytmp.txt
-}
 
 # Imitate zsh-like cd
 c(){
@@ -95,7 +88,9 @@ latestr(){
 
 # Compile single table and view as pdf
 pdftable(){
-  pdflatex "\\documentclass{article}\\begin{document}\\input{$1}\\end{document}" && evince article.pdf && rm -i 'article.*'
+  pdflatex \
+    "\\documentclass{article}\\begin{document}\\input{$1}\\end{document}" \
+    && evince article.pdf && rm -i 'article.*'
 } 
 
 # Don't display executables as bold.
