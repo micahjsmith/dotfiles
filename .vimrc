@@ -2,7 +2,7 @@
 execute pathogen#infect()
 
 "Basic settings
-syntax on
+syntax enable
 filetype plugin indent on
 set ruler
 set more
@@ -33,28 +33,11 @@ set nobackup
 set nowb
 set noswapfile
 
-"Custom tab settings
-autocmd FileType python set tabstop=4|set shiftwidth=4
-autocmd FileType make set tabstop=8|set shiftwidth=8|set noexpandtab
-
 "Save pinky finger from harm.
 noremap ; :
 imap jj <Esc>
 let mapleader = ","
 
-"Highlight characters 81+ on each line. Toggle with C-m
-let g:setMatchOn=1
-function! ToggleMatch()
-  if g:setMatchOn
-    highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-    match OverLength /\%81v.\+/
-    let g:setMatchOn=0
-  else
-    match none
-    let g:setMatchOn=1
-  endif
-endfunction
-nnore <silent> <leader>m :call ToggleMatch()<CR>
     
 "Move cursor on display physically, prefering the behavior of ^ over 0
 nnoremap j gj
@@ -93,10 +76,66 @@ let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
 "Mapping in visual block mode for Increment.vim
 vnoremap <C-a> :Inc<CR>
 
+"Custom tab settings
+autocmd FileType python set tabstop=4|set shiftwidth=4
+autocmd FileType make set tabstop=8|set shiftwidth=8|set noexpandtab
+
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
 inoremap <C-x><C-x> <C-x><C-o>
-au BufRead,BufNewFile *.jl setlocal textwidth=922
+autocmd BufRead,BufNewFile *.jl setlocal textwidth=92
+autocmd Filetype julia setlocal textwidth=92
 
 "Best practice for git commits, from thoughtbot.
 autocmd Filetype gitcommit setlocal spell textwidth=72
+
+"Colorz
+"set background=dark
+"colorscheme solarized
+
+"Highlight characters (textwidth+1)+ on each line. Toggle with <leader>m.
+"Default to 80
+let g:setMatchOn=1
+function! ToggleMatch()
+  if &textwidth==0
+    set textwidth=80
+  endif
+  if g:setMatchOn
+    highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+    let g:matchOverLength=matchadd('OverLength', '\%>'.&l:textwidth.'v.\+', -1)
+    let g:setMatchOn=0
+  else
+    call matchdelete(g:matchOverLength)
+    let g:setMatchOn=1
+  endif
+endfunction
+nnore <silent> <leader>m :call ToggleMatch()<CR>
+
+" Keep screen view in same spot when switching between buffers. See
+" vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
+" Save current view settings on a per-window, per-buffer basis.
+function! AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+" Restore current view settings.
+function! AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
+" When switching buffers, preserve window view.
+if v:version >= 700
+    autocmd BufLeave * call AutoSaveWinView()
+    autocmd BufEnter * call AutoRestoreWinView()
+endif
