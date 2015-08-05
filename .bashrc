@@ -44,6 +44,7 @@ alias l1='\ls -AF1 --color'
 alias ll='\ls -AhlF --color'
 alias lsd='\ls -d1 --color */'
 alias lld='\ls -dhl --color */'
+alias llth='\ls -AhltF --color | head'
 
 #Better log viewing in Git, from Henry
 alias githist='git log --graph --all --full-history --color --format=oneline --branches --abbrev-commit'

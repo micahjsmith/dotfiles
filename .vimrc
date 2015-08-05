@@ -49,8 +49,10 @@ nnoremap 0 g^
 "Redraw the screen and remove any search highlighting
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
-"Reformat block of text, at expense of rarely-used Ex mode
+"Format blocks of text
 nnoremap Q gq$
+set formatoptions+=j         " Remove comment char on line join
+set breakindent
 
 "Manage buffer switching
 map gn :bn<CR>
@@ -139,3 +141,9 @@ if v:version >= 700
     autocmd BufLeave * call AutoSaveWinView()
     autocmd BufEnter * call AutoRestoreWinView()
 endif
+
+" Different colorscheme with vimdiff
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
