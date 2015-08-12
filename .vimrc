@@ -35,9 +35,13 @@ set noswapfile
 
 "Save pinky finger from harm.
 noremap ; :
-imap jj <Esc>
+inoremap jk <Esc>
+inoremap kj <Esc>
+inoremap jj <nop>
+inoremap JK <nop>
+inoremap JJ <nop>
+inoremap KJ <nop>
 let mapleader = ","
-
     
 "Move cursor on display physically, prefering the behavior of ^ over 0
 nnoremap j gj
@@ -75,7 +79,7 @@ let g:airline_theme = 'wombat'
 "pydiction configuration
 let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
 
-"Mapping in visual block mode for Increment.vim
+"Mapping in visual block mode for Increment.vim. See Script #156.
 vnoremap <C-a> :Inc<CR>
 
 "Custom tab settings
