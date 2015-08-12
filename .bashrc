@@ -5,7 +5,7 @@ PATH=$PATH:$HOME/local/bin
 
 # Add coreutils to path with normal names.
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-MANATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Random settings
 export TERM='xterm-256color'              # Preferred color terminal
@@ -16,6 +16,7 @@ bind '"\e[A": history-search-backward'    # Arrows search from current cmd
 bind '"\e[B": history-search-forward'     # Arrows search from current cmd
 umask 0002                                # Default file creation mode
 set bell-style none                       # Try to avoid bells
+unset SSH_ASKPASS                         # So the display doesn't come up for git
 
 # Colorize PS1
 export PS1="\[$(tput bold)\]\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
@@ -45,13 +46,6 @@ alias ll='\ls -AhlF --color'
 alias lsd='\ls -d1 --color */'
 alias lld='\ls -dhl --color */'
 alias llth='\ls -AhltF --color | head'
-
-#Better log viewing in Git, from Henry
-alias githist='git log --graph --all --full-history --color --format=oneline --branches --abbrev-commit'
-alias gitlogp='git log --graph --all --full-history --color --pretty=format:"%h%x09%d%x20%s"'
-
-#So the display doesn't come up for git
-unset SSH_ASKPASS
 
 # Imitate zsh-like cd
 c(){
