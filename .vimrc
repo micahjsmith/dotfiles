@@ -42,6 +42,7 @@ inoremap JK <nop>
 inoremap JJ <nop>
 inoremap KJ <nop>
 let mapleader = ","
+map q: :q
     
 "Move cursor on display physically, prefering the behavior of ^ over 0
 nnoremap j gj
@@ -89,8 +90,8 @@ autocmd FileType make set tabstop=8|set shiftwidth=8|set noexpandtab
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
 inoremap <C-x><C-x> <C-x><C-o>
-autocmd BufRead,BufNewFile *.jl setlocal textwidth=92
 autocmd Filetype julia setlocal textwidth=92
+autocmd FileType julia setlocal shiftwidth=4 tabstop=4
 
 "Best practice for git commits, from thoughtbot.
 autocmd Filetype gitcommit setlocal spell textwidth=72
