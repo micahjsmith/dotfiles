@@ -12,14 +12,16 @@ export TERM='xterm-256color'              # Preferred color terminal
 export EDITOR=vim                         # Default editor
 mesg n                                    # Disallow others to write
 stty -ixon                                # Disable <C-s> that hangs terminal
-bind '"\e[A": history-search-backward'    # Arrows search from current cmd
-bind '"\e[B": history-search-forward'     # Arrows search from current cmd
+bind '"\e[A": history-search-backward' 2>/dev/null    # Arrows search from current cmd
+bind '"\e[B": history-search-forward'  2>/dev/null   # Arrows search from current cmd
 umask 0002                                # Default file creation mode
 set bell-style none                       # Try to avoid bells
 unset SSH_ASKPASS                         # So the display doesn't come up for git
 
-# Colorize PS1
-export PS1="\[$(tput bold)\]\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
+# Colorize PS1, and add git branch. See https://github.com/jimeh/git-aware-prompt
+export GITAWAREPROMPT=~/.bash/git-aware-prompt
+source "${GITAWAREPROMPT}/main.sh"
+export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
 
 # System-specific proxies
 source ~/.proxies
