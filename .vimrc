@@ -56,8 +56,10 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 "Format blocks of text
 nnoremap Q gq$
-set formatoptions+=j         " Remove comment char on line join
-set breakindent
+if version >= 704
+  set formatoptions+=j         " Remove comment char on line join
+  set breakindent
+endif
 
 "Manage buffer switching
 map gn :bn<CR>
