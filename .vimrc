@@ -103,6 +103,9 @@ autocmd FileType julia setlocal shiftwidth=4 tabstop=4
 inoremap <C-x><C-x> <C-x><C-o>
 autocmd Filetype julia setlocal textwidth=92
 
+"Configuration for working with md
+autocmd Filetype markdown setlocal textwidth=92
+
 "Best practice for git commits, from thoughtbot.
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
