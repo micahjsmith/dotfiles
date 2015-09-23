@@ -3,30 +3,37 @@ execute pathogen#infect()
 
 "Basic settings
 syntax enable
-filetype plugin indent on
 set ruler
 set more
 set autoread
 set hidden
 set number
 set noautowrite
-set autoindent 
-set smartindent
-set expandtab
-set smarttab
-set tabstop=2
-set shiftwidth=2
 set scrolloff=2
 set sidescrolloff=5
 set history=200
 set cmdheight=2
-set ignorecase
-set smartcase
-set incsearch
 set noerrorbells
 set visualbell
 set nowrap
 set backspace=indent,eol,start
+
+"Indenting
+filetype plugin indent on
+set autoindent 
+set smartindent
+
+"Tabs
+set expandtab
+set smarttab
+set tabstop=4
+set shiftwidth=4
+
+"Searching
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
 
 "Prefer to avoid swap files/backups.
 set nobackup
@@ -86,14 +93,15 @@ let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
 vnoremap <C-a> :Inc<CR>
 
 "Custom tab settings
-autocmd FileType python set tabstop=4|set shiftwidth=4
-autocmd FileType make set tabstop=8|set shiftwidth=8|set noexpandtab
+autocmd FileType python setlocal tabstop=4 shiftwidth=4
+autocmd FileType make setlocal tabstop=8 shiftwidth=8 noexpandtab
+autocmd FileType matlab setlocal tabstop=2 shiftwidth=2
+autocmd FileType julia setlocal shiftwidth=4 tabstop=4
 
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
 inoremap <C-x><C-x> <C-x><C-o>
 autocmd Filetype julia setlocal textwidth=92
-autocmd FileType julia setlocal shiftwidth=4 tabstop=4
 
 "Best practice for git commits, from thoughtbot.
 autocmd Filetype gitcommit setlocal spell textwidth=72
