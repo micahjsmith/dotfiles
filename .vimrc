@@ -11,12 +11,13 @@ set number
 set noautowrite
 set scrolloff=2
 set sidescrolloff=5
-set history=200
+set history=1000
 set cmdheight=2
 set noerrorbells
 set visualbell
 set nowrap
 set backspace=indent,eol,start
+set wildmenu
 
 "Indenting
 filetype plugin indent on
@@ -63,8 +64,10 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 "Format blocks of text
 nnoremap Q gq$
-if version >= 704
+if version > 703 || version == 703 && has("patch541")
   set formatoptions+=j         " Remove comment char on line join
+endif
+if version > 704 || version == 704 && has("patch338")
   set breakindent
 endif
 
