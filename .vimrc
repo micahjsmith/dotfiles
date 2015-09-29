@@ -18,6 +18,7 @@ set visualbell
 set nowrap
 set backspace=indent,eol,start
 set wildmenu
+set textwidth=80
 
 "Indenting
 filetype plugin indent on
@@ -95,22 +96,17 @@ let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
 "Mapping in visual block mode for Increment.vim. See Script #156.
 vnoremap <C-a> :Inc<CR>
 
-"Custom tab settings
-autocmd FileType python setlocal tabstop=4 shiftwidth=4
-autocmd FileType make setlocal tabstop=8 shiftwidth=8 noexpandtab
-autocmd FileType matlab setlocal tabstop=2 shiftwidth=2
-autocmd FileType julia setlocal shiftwidth=4 tabstop=4
+"Custom language settings - tabs and textwidth
+autocmd FileType python    setlocal tabstop=4 shiftwidth=4
+autocmd FileType make      setlocal tabstop=8 shiftwidth=8 noexpandtab
+autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2
+autocmd FileType julia     setlocal tabstop=4 shiftwidth=4 textwidth=92
+autocmd FileType markdown  setlocal tabstop=2 shiftwidth=2 textwidth=92
+autocmd Filetype gitcommit setlocal                        textwidth=72 spell
 
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
 inoremap <C-x><C-x> <C-x><C-o>
-autocmd Filetype julia setlocal textwidth=92
-
-"Configuration for working with md
-autocmd Filetype markdown setlocal textwidth=92
-
-"Best practice for git commits, from thoughtbot.
-autocmd Filetype gitcommit setlocal spell textwidth=72
 
 "Colorz
 "set background=dark
@@ -120,9 +116,6 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 "Default to 80
 let g:setMatchOn=1
 function! ToggleMatch()
-  if &textwidth==0
-    set textwidth=80
-  endif
   if g:setMatchOn
     highlight OverLength ctermbg=red ctermfg=white guibg=#592929
     let g:matchOverLength=matchadd('OverLength', '\%>'.&l:textwidth.'v.\+', -1)
