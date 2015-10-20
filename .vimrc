@@ -81,8 +81,8 @@ map gd :bd<CR>
 inoremap <C-g> <Esc><C-g>i
 
 "Insert lines above and below without entering insert mode
-nnoremap <C-k> O<Esc>j
-nnoremap <C-j> o<Esc>k
+nnoremap <C-k> :call append(line('.')-1, '')<CR>
+nnoremap <C-j> :call append(line('.'), '')<CR>
 
 "vim-airline configuration
 set laststatus=2
