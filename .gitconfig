@@ -1,0 +1,23 @@
+[user]
+	name = Micah Smith
+	email = micahjsmith@gmail.com
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[branch]
+	autosetuprebase = always
+[url "https://"]
+	insteadof = git://
+[alias]
+	d = difftool
+	lgp = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %s <%an>'
+	lg = log --graph --all --full-history --color --abbrev-commit --decorate
+	m = mergetool
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[push]
+	default = tracking
