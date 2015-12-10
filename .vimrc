@@ -3,30 +3,39 @@ execute pathogen#infect()
 
 "Basic settings
 syntax enable
-filetype plugin indent on
 set ruler
 set more
 set autoread
 set hidden
 set number
 set noautowrite
-set autoindent 
-set smartindent
-set expandtab
-set smarttab
-set tabstop=4
-set shiftwidth=4
 set scrolloff=2
 set sidescrolloff=5
-set history=200
+set history=1000
 set cmdheight=2
-set ignorecase
-set smartcase
-set incsearch
 set noerrorbells
 set visualbell
 set nowrap
 set backspace=indent,eol,start
+set wildmenu
+set textwidth=80
+
+"Indenting
+filetype plugin indent on
+set autoindent 
+set smartindent
+
+"Tabs
+set expandtab
+set smarttab
+set tabstop=4
+set shiftwidth=4
+
+"Searching
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
 
 "Prefer to avoid swap files/backups.
 set nobackup
@@ -40,7 +49,6 @@ noremap ; :
 inoremap jk <Esc>
 inoremap kj <Esc>
 inoremap JK <nop>
-inoremap JJ <nop>
 inoremap KJ <nop>
     
 "Move cursor on display physically, prefering the behavior of ^ over 0
@@ -55,8 +63,12 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 "Format blocks of text
 nnoremap Q gq$
-set formatoptions+=j         " Remove comment char on line join
-set breakindent
+if version > 703 || version == 703 && has("patch541")
+  set formatoptions+=j         " Remove comment char on line join
+endif
+if version > 704 || version == 704 && has("patch338")
+  set breakindent
+endif
 
 "Manage buffer switching
 map gn :bn<CR>
@@ -67,8 +79,8 @@ map gd :bd<CR>
 inoremap <C-g> <Esc><C-g>i
 
 "Insert lines above and below without entering insert mode
-nnoremap <C-k> O<Esc>j
-nnoremap <C-j> o<Esc>k
+nnoremap <C-k> :call append(line('.')-1, '')<CR>
+nnoremap <C-j> :call append(line('.'), '')<CR>
 
 "vim-airline configuration
 set laststatus=2
@@ -82,19 +94,17 @@ let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
 "Mapping in visual block mode for Increment.vim. See Script #156.
 vnoremap <C-a> :Inc<CR>
 
-"Custom tab settings
-autocmd FileType python set tabstop=4|set shiftwidth=4
-autocmd FileType make set tabstop=8|set shiftwidth=8|set noexpandtab
-autocmd FileType matlab set tabstop=2|set shiftwidth=2
-autocmd FileType julia setlocal shiftwidth=4 tabstop=4
+"Custom language settings - tabs and textwidth
+autocmd FileType python    setlocal tabstop=4 shiftwidth=4
+autocmd FileType make      setlocal tabstop=8 shiftwidth=8 noexpandtab
+autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2
+autocmd FileType julia     setlocal tabstop=4 shiftwidth=4 textwidth=92
+autocmd FileType markdown  setlocal tabstop=2 shiftwidth=2 textwidth=92
+autocmd Filetype gitcommit setlocal                        textwidth=72 spell
 
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
 inoremap <C-x><C-x> <C-x><C-o>
-autocmd Filetype julia setlocal textwidth=92
-
-"Best practice for git commits, from thoughtbot.
-autocmd Filetype gitcommit setlocal spell textwidth=72
 
 "Colorz
 "set background=dark
@@ -104,9 +114,6 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 "Default to 80
 let g:setMatchOn=1
 function! ToggleMatch()
-  if &textwidth==0
-    set textwidth=80
-  endif
   if g:setMatchOn
     highlight OverLength ctermbg=red ctermfg=white guibg=#592929
     let g:matchOverLength=matchadd('OverLength', '\%>'.&l:textwidth.'v.\+', -1)
@@ -156,6 +163,11 @@ highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+" Ignore whitespace with vimdiff
+if &diff
+    set diffopt +=iwhite
+endif
 
 " Insert datestamp
 nnoremap <leader>d "=strftime("%Y-%m-%d")<CR>P

@@ -18,27 +18,38 @@ umask 0002                                # Default file creation mode
 set bell-style none                       # Try to avoid bells
 unset SSH_ASKPASS                         # So the display doesn't come up for git
 
+# Which which
+# `brew install gnu-which` on OSX
+if gwhich --version 2>/dev/null | grep -q GNU
+then
+    which ()
+    {
+        (alias; declare -f) | gwhich  --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+    }
+    export -f which
+fi
+
 # Colorize PS1, and add git branch. See https://github.com/jimeh/git-aware-prompt
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
-source "${GITAWAREPROMPT}/main.sh"
+source "${GITAWAREPROMPT}/main.sh" 2>/dev/null
 export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
-
-# System-specific proxies
-source ~/.proxies
-
-# Aliases that are paths to certain directories.
-source ~/.aliases
 
 # User specific aliases
 alias ..='\cd ..'
 alias ...='cd ../..'
 alias e='evince'
 alias latest='\ls -t | head -n 1'
+alias makel='make 2>&1 | less'
 alias mm='$(history -p !!).m'
 alias tmuxa='tmux attach -t'
 alias tmuxd='tmux detach'
-alias v='vim'
 alias xopen='xdg-open'
+
+# Invoking vim
+if which mvim 2>1 >/dev/null; then
+    alias vim='mvim -v'
+fi
+alias v='vim'
 
 #Change what ls displays
 alias ls='\ls --color'
@@ -48,6 +59,7 @@ alias ll='\ls -AhlF --color'
 alias lsd='\ls -d1 --color */'
 alias lld='\ls -dhl --color */'
 alias llth='\ls -AhltF --color | head'
+
 
 # Imitate zsh-like cd
 c(){
@@ -92,3 +104,9 @@ pdftable(){
 
 # Don't display executables as bold.
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}
+
+# System-specific proxies
+source ~/.proxies 2>/dev/null
+
+# Aliases that are paths to certain directories.
+source ~/.aliases 2>/dev/null
