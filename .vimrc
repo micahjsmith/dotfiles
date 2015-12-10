@@ -14,8 +14,8 @@ set autoindent
 set smartindent
 set expandtab
 set smarttab
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set scrolloff=2
 set sidescrolloff=5
 set history=200
@@ -34,15 +34,14 @@ set nowb
 set noswapfile
 
 "Save pinky finger from harm.
+let mapleader = ","
+map q: :q
 noremap ; :
 inoremap jk <Esc>
 inoremap kj <Esc>
-inoremap jj <nop>
 inoremap JK <nop>
 inoremap JJ <nop>
 inoremap KJ <nop>
-let mapleader = ","
-map q: :q
     
 "Move cursor on display physically, prefering the behavior of ^ over 0
 nnoremap j gj
@@ -86,12 +85,13 @@ vnoremap <C-a> :Inc<CR>
 "Custom tab settings
 autocmd FileType python set tabstop=4|set shiftwidth=4
 autocmd FileType make set tabstop=8|set shiftwidth=8|set noexpandtab
+autocmd FileType matlab set tabstop=2|set shiftwidth=2
+autocmd FileType julia setlocal shiftwidth=4 tabstop=4
 
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
 inoremap <C-x><C-x> <C-x><C-o>
 autocmd Filetype julia setlocal textwidth=92
-autocmd FileType julia setlocal shiftwidth=4 tabstop=4
 
 "Best practice for git commits, from thoughtbot.
 autocmd Filetype gitcommit setlocal spell textwidth=72
@@ -117,6 +117,10 @@ function! ToggleMatch()
   endif
 endfunction
 nnore <silent> <leader>m :call ToggleMatch()<CR>
+
+"Highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
+match ExtraWhitespace /\s\+\%#\@<!$/
 
 " Keep screen view in same spot when switching between buffers. See
 " vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers

@@ -1,7 +1,7 @@
 # .bashrc
 
 #Add to path.
-PATH=$PATH:$HOME/local/bin
+PATH=$HOME/local/bin:$PATH
 
 # Add coreutils to path with normal names.
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
