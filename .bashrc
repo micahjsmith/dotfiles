@@ -1,4 +1,4 @@
-# .bashrc
+# Micah Smith's .bashrc
 
 #Add to path.
 PATH=$HOME/local/bin:$PATH
@@ -15,14 +15,14 @@ stty -ixon                                # Disable <C-s> that hangs terminal
 bind '"\e[A": history-search-backward' 2>/dev/null    # Arrows search from current cmd
 bind '"\e[B": history-search-forward'  2>/dev/null   # Arrows search from current cmd
 umask 0002                                # Default file creation mode
-set bell-style none                       # Try to avoid bells
+set bell-style none                       # Try to avoid bells...
 unset SSH_ASKPASS                         # So the display doesn't come up for git
 
 # Which which
 # `brew install gnu-which` on OSX
-if gwhich --version 2>/dev/null | grep -q GNU
+if gwhich --version 2>/dev/null | grep -q GNU;
 then
-    which ()
+    function which ()
     {
         (alias; declare -f) | gwhich  --tty-only --read-alias --read-functions --show-tilde --show-dot $@
     }
@@ -38,7 +38,6 @@ export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tpu
 alias ..='\cd ..'
 alias ...='cd ../..'
 alias e='evince'
-alias latest='\ls -t | head -n 1'
 alias makel='make 2>&1 | less'
 alias mm='$(history -p !!).m'
 alias tmuxa='tmux attach -t'
@@ -46,10 +45,12 @@ alias tmuxd='tmux detach'
 alias xopen='xdg-open'
 
 # Invoking vim
-if which mvim 2>1 >/dev/null; then
+if which mvim >/dev/null 2>&1; then
     alias vim='mvim -v'
+    alias v='mvim -v'
+else
+    alias v='vim'
 fi
-alias v='vim'
 
 #Change what ls displays
 alias ls='\ls --color'
@@ -59,7 +60,6 @@ alias ll='\ls -AhlF --color'
 alias lsd='\ls -d1 --color */'
 alias lld='\ls -dhl --color */'
 alias llth='\ls -AhltF --color | head'
-
 
 # Imitate zsh-like cd
 c(){
@@ -74,25 +74,16 @@ c(){
   fi
 }
 
-# Zsh-like cd + list the files in the directory
-cl(){
-  c "$*" && ls
-}
-
-# Access nth most recent modified file.
+# Most recent modified file
+alias latest='\ls -t | head -n 1'
+# nth most recent modified file
 latestn(){
-  \ls -t | head -n $1 | tail -n 1  
+  \ls -t | head -n $1 | tail -n 1
 }
-
 # The names of the n most recently modified files in this directory and all
 # subdirectories. See http://stackoverflow.com/a/4561987/2514228
 latestr(){
   find . -type f -printf '%T@ %p\n' | sort -n | tail -n $1 | cut -f2 -d" "
-}
-
-# Quick calculator function, from user fizz on CLF
-?(){
-  echo "$*" | bc -l
 }
 
 # Compile single table and view as pdf
@@ -100,7 +91,7 @@ pdftable(){
   pdflatex \
     "\\documentclass{article}\\begin{document}\\input{$1}\\end{document}" \
     && evince article.pdf && rm -i 'article.*'
-} 
+}
 
 # Don't display executables as bold.
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}
@@ -108,5 +99,5 @@ LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}
 # System-specific proxies
 source ~/.proxies 2>/dev/null
 
-# Aliases that are paths to certain directories.
+# Paths to system-specific directories
 source ~/.aliases 2>/dev/null
