@@ -22,7 +22,7 @@ set textwidth=80
 
 "Indenting
 filetype plugin indent on
-set autoindent 
+set autoindent
 set smartindent
 
 "Tabs
@@ -50,8 +50,8 @@ inoremap jk <Esc>
 inoremap kj <Esc>
 inoremap JK <nop>
 inoremap KJ <nop>
-    
-"Move cursor on display physically, prefering the behavior of ^ over 0
+
+"Move cursor on display physically, preferring the behavior of ^ over 0
 nnoremap j gj
 nnoremap k gk
 nnoremap $ g$
@@ -101,6 +101,7 @@ autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2
 autocmd FileType julia     setlocal tabstop=4 shiftwidth=4 textwidth=92
 autocmd FileType markdown  setlocal tabstop=2 shiftwidth=2 textwidth=92
 autocmd Filetype gitcommit setlocal                        textwidth=72 spell
+autocmd FileType tex       setlocal                        textwidth=92 spell
 
 "Configuration for working with julia
 "<C-o> conflicts with tmux prefix.
