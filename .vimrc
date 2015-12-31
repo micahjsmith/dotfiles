@@ -76,7 +76,8 @@ map gp :bp<CR>
 map gd :bd<CR>
 
 "Enable C-g in insert mode - displays file name and other info
-inoremap <C-g> <Esc><C-g>i
+inoremap <C-g> <Esc>1<C-g>i
+nnoremap <C-g> 1<C-g>
 
 "Insert lines above and below without entering insert mode
 nnoremap <C-k> :call append(line('.')-1, '')<CR>
@@ -173,3 +174,12 @@ endif
 " Insert datestamp
 nnoremap <leader>d "=strftime("%Y-%m-%d")<CR>P
 iab <expr> dts strftime("%Y-%m-%d")
+
+" vim-expand-region mappings
+" See https://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/ sec. 3
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+" linediff.vim mappings
+vnoremap <leader>l :Linediff<Enter>
+nnoremap <leader>r :LinediffReset<Enter>

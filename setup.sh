@@ -67,6 +67,30 @@ else
     echo "$SCRIPTNAME: increment.vim already installed"
 fi
 
+# Setup vim-expand-region
+if [ ! -d ~/.vim/bundle/vim-expand-region ];
+then
+    git clone https://github.com/terryma/vim-expand-region.git ~/.vim/bundle/vim-expand-region
+else
+    echo "$SCRIPTNAME: vim-expand-region already installed"
+fi
+
+# Setup indentLine
+if [ ! -d ~/.vim/bundle/indentLine ];
+then
+    git clone https://github.com/Yggdroot/indentLine.git ~/.vim/bundle/indentLine
+else
+    echo "$SCRIPTNAME: indentLine already installed"
+fi
+
+# Setup linediff.vim
+if [ ! -d ~/.vim/bundle/linediff.vim ];
+then
+    git clone https://github.com/AndrewRadev/linediff.vim.git ~/.vim/bundle/linediff.vim
+else
+    echo "$SCRIPTNAME: linediff.vim lready installed"
+fi
+
 ### Bash setup
 
 # Setup git-aware-prompt
