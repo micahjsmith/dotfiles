@@ -185,6 +185,10 @@ highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Re
 " Section: Plugins
 " ----------------
 
+" tabular
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a= :Tabularize /=<CR>
+
 " vim-airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
