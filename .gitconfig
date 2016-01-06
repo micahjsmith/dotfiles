@@ -10,10 +10,13 @@
 [url "https://"]
 	insteadof = git://
 [alias]
-	d = difftool
+	d   = difftool
 	lgp = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %s <%an>'
-	lg = log --graph --all --full-history --color --abbrev-commit --decorate
-	m = mergetool
+	lg  = log --graph --all --full-history --color --abbrev-commit --decorate
+	m   = mergetool
+    st  = status
+    co  = checkout
+    br  = branch
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
@@ -21,3 +24,6 @@
 	prompt = false
 [push]
 	default = tracking
+[difftool "vimdiff"]
+    # This is because vim will otherwise fail on filenames starting with a '+'
+	cmd = "vimdiff -- $LOCAL $REMOTE"
