@@ -28,3 +28,5 @@
 	prompt = false
 [push]
 	default = tracking
+[include]
+    path = ~/.gitconfig.local
