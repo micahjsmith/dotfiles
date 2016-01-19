@@ -99,9 +99,7 @@ let mapleader = ","
 map q: :q
 noremap ; :
 inoremap jk <Esc>
-inoremap kj <Esc>
 inoremap JK <nop>
-inoremap KJ <nop>
 
 "Move cursor on display physically, preferring the behavior of ^ over 0
 nnoremap j gj
@@ -166,7 +164,7 @@ function! ToggleMatch()
     let g:setMatchOn=1
   endif
 endfunction
-nnore <silent> <leader>m :call ToggleMatch()<CR>
+nnoremap <silent> <leader>m :call ToggleMatch()<CR>
 
 "Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
@@ -198,8 +196,7 @@ let g:airline_theme = 'wombat'
 " pydiction
 let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
 
-" Increment.vim
-" See Script #156.
+" Increment.vim (Script #156)
 vnoremap <C-a> :Inc<CR>
 
 " vim-expand-region
@@ -207,6 +204,9 @@ vnoremap <C-a> :Inc<CR>
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-" linediff.vim mappings
-vnoremap <leader>l :Linediff<Enter>
-nnoremap <leader>r :LinediffReset<Enter>
+" linediff.vim
+vnoremap <leader>l :Linediff<CR>
+nnoremap <leader>r :LinediffReset<CR>
+
+" indentLine
+autocmd FilterWritePre * if &diff | exe "IndentLinesDisable" | endif
