@@ -15,7 +15,7 @@
 	prompt = false
 [difftool "vimdiff"]
     # vim will otherwise fail on filenames starting with a '+'
-	cmd = "vimdiff -- $LOCAL $REMOTE"
+	cmd = vimdiff -- $LOCAL $REMOTE
 [branch]
 	autosetuprebase = always
 [url "https://"]
