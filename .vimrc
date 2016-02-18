@@ -210,3 +210,8 @@ nnoremap <leader>r :LinediffReset<CR>
 
 " indentLine
 autocmd FilterWritePre * if &diff | exe "IndentLinesDisable" | endif
+
+" Section: Local
+" --------------
+
+source $HOME/.vimrc.local
