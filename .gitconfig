@@ -15,7 +15,7 @@
 	prompt = false
 [difftool "vimdiff"]
     # vim will otherwise fail on filenames starting with a '+'
-	cmd = "vimdiff -- $LOCAL $REMOTE"
+	cmd = vimdiff -- $LOCAL $REMOTE
 [branch]
 	autosetuprebase = always
 [url "https://"]
@@ -28,5 +28,11 @@
 	prompt = false
 [push]
 	default = tracking
+[core]
+    # warn on whitespace issues
+    whitespace = trailing-space,space-before-tab
+[apply]
+    # fix whitespace issues in patches
+    whitespace = fix
 [include]
     path = ~/.gitconfig.local
