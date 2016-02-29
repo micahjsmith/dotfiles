@@ -7,7 +7,7 @@
 	lg  = log --graph --all --full-history --color --abbrev-commit --decorate
 	m   = mergetool
     st  = status
-    co  = checkout
+    ch  = checkout
     br  = branch
 [diff]
 	tool = vimdiff
