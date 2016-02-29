@@ -24,6 +24,8 @@ set visualbell
 set nowrap
 set backspace=indent,eol,start
 set wildmenu
+"set wildmode=longest:full
+set wildmode=full
 set textwidth=80
 
 "Indenting
@@ -119,6 +121,9 @@ map gn :bn<CR>
 map gp :bp<CR>
 map gd :bd<CR>
 
+"Open files for editing that don't exist
+"map gf :e <cfile><CR>
+
 "Enable C-g in insert mode - displays file name and other info
 inoremap <C-g> <Esc>1<C-g>i
 nnoremap <C-g> 1<C-g>
@@ -126,9 +131,6 @@ nnoremap <C-g> 1<C-g>
 "Insert lines above and below without entering insert mode
 nnoremap <C-k> :call append(line('.')-1, '')<CR>
 nnoremap <C-j> :call append(line('.'), '')<CR>
-
-" Configuration for working with julia, as <C-o> conflicts with tmux prefix
-inoremap <C-x><C-x> <C-x><C-o>
 
 " Section: Autocommands
 " ---------------------
@@ -209,9 +211,9 @@ vnoremap <leader>l :Linediff<CR>
 nnoremap <leader>r :LinediffReset<CR>
 
 " indentLine
-autocmd FilterWritePre * if &diff | exe "IndentLinesDisable" | endif
+autocmd FilterWritePre * if &diff | exe "silent! IndentLinesDisable" | endif
 
 " Section: Local
 " --------------
 
-source $HOME/.vimrc.local
+silent! source $HOME/.vimrc.local

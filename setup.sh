@@ -21,7 +21,7 @@ fi
 if [ ! -d ~/.vim/bundle/vim-fugitive ];
 then
     git clone https://github.com/tpope/vim-fugitive.git ~/.vim/bundle/vim-fugitive
-    vim -u NONE -c "helptags vim-fugitive/doc" -c q
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-fugitive/doc" -c q
 else
     echo "$SCRIPTNAME: vim-fugitive already installed"
 fi
@@ -30,6 +30,7 @@ fi
 if [ ! -d ~/.vim/bundle/julia-vim ];
 then
     git clone https://github.com/JuliaLang/julia-vim.git ~/.vim/bundle/julia-vim
+    vim -u NONE -c "helptags ~/.vim/bundle/julia-vim/doc" -c q
 else
     echo "$SCRIPTNAME: julia-vim already installed"
 fi
@@ -38,6 +39,7 @@ fi
 if [ ! -d ~/.vim/bundle/tabular ];
 then
     git clone https://github.com/godlygeek/tabular.git ~/.vim/bundle/tabular
+    vim -u NONE -c "helptags ~/.vim/bundle/tabular/doc" -c q
 else
     echo "$SCRIPTNAME: tabular already installed"
 fi
@@ -46,6 +48,7 @@ fi
 if [ ! -d ~/.vim/bundle/vim-airline ];
 then
     git clone https://github.com/bling/vim-airline.git ~/.vim/bundle/vim-airline
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-airline/doc" -c q
 else
     echo "$SCRIPTNAME: vim-airline already installed"
 fi
@@ -54,6 +57,7 @@ fi
 if [ ! -d ~/.vim/bundle/vim-markdown ];
 then
     git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/bundle/vim-markdown
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-markdown/doc" -c q
 else
     echo "$SCRIPTNAME: vim-markdown already installed"
 fi
@@ -71,6 +75,7 @@ fi
 if [ ! -d ~/.vim/bundle/vim-expand-region ];
 then
     git clone https://github.com/terryma/vim-expand-region.git ~/.vim/bundle/vim-expand-region
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-expand-region/doc" -c q
 else
     echo "$SCRIPTNAME: vim-expand-region already installed"
 fi
@@ -79,6 +84,7 @@ fi
 if [ ! -d ~/.vim/bundle/indentLine ];
 then
     git clone https://github.com/Yggdroot/indentLine.git ~/.vim/bundle/indentLine
+    vim -u NONE -c "helptags ~/.vim/bundle/indentLine/doc" -c q
 else
     echo "$SCRIPTNAME: indentLine already installed"
 fi
@@ -87,8 +93,18 @@ fi
 if [ ! -d ~/.vim/bundle/linediff.vim ];
 then
     git clone https://github.com/AndrewRadev/linediff.vim.git ~/.vim/bundle/linediff.vim
+    vim -u NONE -c "helptags ~/.vim/bundle/linediff.vim/doc" -c q
 else
     echo "$SCRIPTNAME: linediff.vim lready installed"
+fi
+
+# Setup vim-unimpaired
+if [ ! -d ~/.vim/bundle/vim-unimpaired ];
+then
+    git clone https://github.com/tpope/vim-unimpaired.git ~/.vim/bundle/vim-unimpaired
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-unimpaired/doc" -c q
+else
+    echo "$SCRIPTNAME: vim-unimpaired lready installed"
 fi
 
 ### Bash setup
