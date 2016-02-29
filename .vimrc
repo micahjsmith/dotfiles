@@ -138,7 +138,7 @@ autocmd FileType python    setlocal tabstop=4 shiftwidth=4
 autocmd FileType make      setlocal tabstop=8 shiftwidth=8 noexpandtab
 autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2
 autocmd FileType julia     setlocal tabstop=4 shiftwidth=4 textwidth=92
-autocmd FileType markdown  setlocal tabstop=2 shiftwidth=2 textwidth=92
+autocmd FileType markdown  setlocal tabstop=4 shiftwidth=4 textwidth=92
 autocmd Filetype gitcommit setlocal                        textwidth=72 spell
 autocmd FileType tex       setlocal                        textwidth=92 spell
 
