@@ -216,4 +216,4 @@ autocmd FilterWritePre * if &diff | exe "silent! IndentLinesDisable" | endif
 " Section: Local
 " --------------
 
-source $HOME/.vimrc.local
+silent! source $HOME/.vimrc.local
