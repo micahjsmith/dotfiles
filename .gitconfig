@@ -1,35 +1,35 @@
 [user]
-	name = Micah Smith
-	email = micahjsmith@gmail.com
+    name = Micah Smith
+    email = micahjsmith@gmail.com
 [alias]
-	d   = difftool -g
+    d   = difftool -g
     dc  = difftool
-	lgp = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %s <%an>'
-	lg  = log --graph --all --full-history --color --abbrev-commit --decorate
-	m   = mergetool
+    lgp = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %s <%an>'
+    lg  = log --graph --all --full-history --color --abbrev-commit --decorate
+    m   = mergetool
     st  = status
     ch  = checkout
     br  = branch
 [diff]
-	tool = vimdiff
+    tool = vimdiff
     guitool = meld
 [difftool]
-	prompt = false
+    prompt = false
 [difftool "vimdiff"]
     # vim will otherwise fail on filenames starting with a '+'
-	cmd = vimdiff -- $LOCAL $REMOTE
+    cmd = vimdiff -- $LOCAL $REMOTE
 [branch]
-	autosetuprebase = always
+    autosetuprebase = always
 [url "https://"]
-	insteadof = git://
-	pushInsteadOf = git://
+    insteadof = git://
+    pushInsteadOf = git://
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+    tool = vimdiff
+    conflictstyle = diff3
 [mergetool]
-	prompt = false
+    prompt = false
 [push]
-	default = tracking
+    default = tracking
 [core]
     # warn on whitespace issues
     whitespace = trailing-space,space-before-tab
