@@ -2,7 +2,8 @@
 	name = Micah Smith
 	email = micahjsmith@gmail.com
 [alias]
-	d   = difftool
+	d   = difftool -g
+    dc  = difftool
 	lgp = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %s <%an>'
 	lg  = log --graph --all --full-history --color --abbrev-commit --decorate
 	m   = mergetool
@@ -11,6 +12,7 @@
     br  = branch
 [diff]
 	tool = vimdiff
+    guitool = meld
 [difftool]
 	prompt = false
 [difftool "vimdiff"]
