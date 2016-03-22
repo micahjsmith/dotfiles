@@ -8,15 +8,15 @@ PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Random settings
-export TERM='xterm-256color'              # Preferred color terminal
-export EDITOR=vim                         # Default editor
-mesg n                                    # Disallow others to write
-stty -ixon                                # Disable <C-s> that hangs terminal
-bind '"\e[A": history-search-backward' 2>/dev/null    # Arrows search from current cmd
-bind '"\e[B": history-search-forward'  2>/dev/null   # Arrows search from current cmd
-umask 0002                                # Default file creation mode
-set bell-style none                       # Try to avoid bells...
-unset SSH_ASKPASS                         # So the display doesn't come up for git
+export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
+export EDITOR=vim                                  # Default editor
+mesg n                                             # Disallow others to write
+stty -ixon                                         # Disable <C-s> that hangs terminal
+bind '"\e[A": history-search-backward' 2>/dev/null # Arrows search from current cmd
+bind '"\e[B": history-search-forward'  2>/dev/null # Arrows search from current cmd
+umask 0002                                         # Default file creation mode
+set bell-style none                                # Try to avoid bells...
+unset SSH_ASKPASS                                  # So the display doesn't come up for git
 
 # Which which
 # `brew install gnu-which` on OSX
@@ -29,9 +29,17 @@ then
     export -f which
 fi
 
-# Colorize PS1, and add git branch. See https://github.com/jimeh/git-aware-prompt
-export GITAWAREPROMPT=~/.bash/git-aware-prompt
-source "${GITAWAREPROMPT}/main.sh" 2>/dev/null
+# Colors
+LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
+
+# Set solarized palette on gnome-terminal
+if ps -p$PPID 2>/dev/null | grep -q gnome-terminal;
+then
+    ~/.bash/gnome-terminal-colors-solarized/set_dark.sh 2>&1 >/dev/null
+fi
+
+# Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
+source "~/.bash/git-aware-prompt/main.sh" 2>/dev/null
 export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
 
 # User specific aliases
@@ -92,9 +100,6 @@ pdftable(){
     "\\documentclass{article}\\begin{document}\\input{$1}\\end{document}" \
     && evince article.pdf && rm -i 'article.*'
 }
-
-# Don't display executables as bold.
-LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}
 
 # System-specific proxies
 source ~/.proxies 2>/dev/null

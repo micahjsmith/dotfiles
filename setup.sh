@@ -95,7 +95,7 @@ then
     git clone https://github.com/AndrewRadev/linediff.vim.git ~/.vim/bundle/linediff.vim
     vim -u NONE -c "helptags ~/.vim/bundle/linediff.vim/doc" -c q
 else
-    echo "$SCRIPTNAME: linediff.vim lready installed"
+    echo "$SCRIPTNAME: linediff.vim already installed"
 fi
 
 # Setup vim-unimpaired
@@ -104,7 +104,17 @@ then
     git clone https://github.com/tpope/vim-unimpaired.git ~/.vim/bundle/vim-unimpaired
     vim -u NONE -c "helptags ~/.vim/bundle/vim-unimpaired/doc" -c q
 else
-    echo "$SCRIPTNAME: vim-unimpaired lready installed"
+    echo "$SCRIPTNAME: vim-unimpaired already installed"
+fi
+
+# Setup vim-colors-solarized
+if [ ! -d ~/.vim/bundle/vim-colors-solarized ];
+then
+    git clone https://github.com/altercation/vim-colors-solarized.git \
+        ~/.vim/bundle/vim-colors-solarized
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-colors-solarized/doc" -c q
+else
+    echo "$SCRIPTNAME: vim-colors-solarized already installed"
 fi
 
 ### Bash setup
@@ -116,6 +126,16 @@ then
     git clone https://github.com/jimeh/git-aware-prompt.git ~/.bash/git-aware-prompt
 else
     echo "$SCRIPTNAME: git-aware-prompt already installed"
+fi
+
+# Setup solarized
+if [ ! -d ~/.bash/gnome-terminal-colors-solarized ];
+then
+    mkdir -p ~/.bash/gnome-terminal-colors-solarized
+    git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git \
+        ~/.bash/gnome-terminal-colors-solarized
+else
+    echo "$SCRIPTNAME: gnome-terminal-colors-solarized already installed"
 fi
 
 ### Dotfiles

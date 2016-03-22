@@ -132,6 +132,9 @@ nnoremap <C-g> 1<C-g>
 nnoremap <C-k> :call append(line('.')-1, '')<CR>
 nnoremap <C-j> :call append(line('.'), '')<CR>
 
+"Remove all trailing whitespace in file
+nnoremap <leader>w :%s/[ \t]\+$//g<CR>
+
 " Section: Autocommands
 " ---------------------
 
@@ -179,8 +182,8 @@ highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 "Colorz
-"set background=dark
-"colorscheme solarized
+set background=dark
+colorscheme solarized
 
 " Section: Plugins
 " ----------------
@@ -193,7 +196,7 @@ nmap <leader>a= :Tabularize /=<CR>
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme = 'wombat'
+" let g:airline_theme = 'wombat'
 
 " pydiction
 let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
