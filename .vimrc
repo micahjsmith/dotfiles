@@ -142,7 +142,7 @@ nnoremap <leader>w :%s/[ \t]\+$//g<CR>
 "Custom language settings - tabs and textwidth
 autocmd FileType python    setlocal tabstop=4 shiftwidth=4
 autocmd FileType make      setlocal tabstop=8 shiftwidth=8 noexpandtab
-autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2
+autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2 | syntax keyword matlabRepeat parfor
 autocmd FileType julia     setlocal tabstop=4 shiftwidth=4 textwidth=92
 autocmd FileType markdown  setlocal tabstop=4 shiftwidth=4 textwidth=92 spell
 autocmd Filetype gitcommit setlocal                        textwidth=72 spell
