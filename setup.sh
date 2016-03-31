@@ -129,13 +129,24 @@ else
 fi
 
 # Setup solarized
-if [ ! -d ~/.bash/gnome-terminal-colors-solarized ];
+if ps -p$PPID 2>/dev/null | grep -q gnome-terminal &&  \
+    [ ! -d ~/.bash/gnome-terminal-colors-solarized ];
 then
     mkdir -p ~/.bash/gnome-terminal-colors-solarized
     git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git \
         ~/.bash/gnome-terminal-colors-solarized
 else
     echo "$SCRIPTNAME: gnome-terminal-colors-solarized already installed"
+fi
+
+if echo $TERM_PROGRAM | grep -q Apple_Terminal && \
+    [ ! -d ~/.bash/osx-terminal.app-colors-solarized ];
+then
+    mkdir -p ~/.bash/osx-terminal.app-colors-solarized
+    git clone https://github.com/tomislav/osx-terminal.app-colors-solarized.git \
+        ~/.bash/osx-terminal.app-colors-solarized
+else
+    echo "$SCRIPTNAME: osx-terminal.app-colors-solarized already installed"
 fi
 
 ### Dotfiles
