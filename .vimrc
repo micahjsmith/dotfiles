@@ -182,8 +182,12 @@ highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 "Colorz
-set background=dark
 colorscheme solarized
+if has("gui_running")
+    set background=light
+else
+    set background=dark
+endif
 
 " Section: Plugins
 " ----------------
