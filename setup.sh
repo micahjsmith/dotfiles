@@ -149,6 +149,30 @@ else
     echo "$SCRIPTNAME: osx-terminal.app-colors-solarized already installed"
 fi
 
+if [ ! -d ~/.bash/dircolors-solarized ];
+then
+    mkdir -p ~/.bash/dircolors-solarized
+    git clone https://github.com/seebi/dircolors-solarized.git \
+        ~/.bash/dircolors-solarized
+    if [ -h "$HOME/.dir_colors" ];
+    then
+        ln -s ~/.bash/dircolors-solarized/dircolors.256dark ~/.dir_colors
+        eval `dircolors ~/.dir_colors`
+    fi
+else
+    echo "$SCRIPTNAME: dircolors-solarized already installed"
+fi
+
+# Download Monaco font
+if [ ! -f "$HOME/.fonts/Monaco.ttf" ];
+then
+    mkdir -p "$HOME/.fonts"
+    wget -O "$HOME/.fonts/Monaco.ttf" http://usystem.googlecode.com/files/MONACO.TTF
+    fc-cache -f -v
+else
+    echo "$SCRIPTNAME: Monaco font already downloaded"
+fi
+
 ### Dotfiles
 for FILE in .bashrc .vimrc .tmux.conf .gitconfig;
 do

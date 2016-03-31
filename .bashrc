@@ -30,7 +30,6 @@ then
 fi
 
 # Colors
-LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
 # Set solarized palette on gnome-terminal
 if ps -p$PPID 2>/dev/null | grep -q gnome-terminal;
@@ -38,8 +37,11 @@ then
     ~/.bash/gnome-terminal-colors-solarized/set_dark.sh 2>&1 >/dev/null
 fi
 
+eval `dircolors ~/.dir_colors`                     # Use solarized for `ls --color` output
+LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
+
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
-source "~/.bash/git-aware-prompt/main.sh" 2>/dev/null
+source "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
 export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
 
 # User specific aliases
