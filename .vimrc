@@ -18,7 +18,7 @@ set noautowrite
 set scrolloff=2
 set sidescrolloff=5
 set history=1000
-set cmdheight=2
+set cmdheight=1
 set noerrorbells
 set visualbell
 set nowrap
