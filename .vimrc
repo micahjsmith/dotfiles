@@ -118,9 +118,10 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 nnoremap Q gq$
 
 "Manage buffer switching
-map gn :bn<CR>
-map gp :bp<CR>
-map gd :bd<CR>
+nnoremap gn :bn<CR>
+nnoremap gp :bp<CR>
+nnoremap gd :bd<CR>
+"autocmd FileType netrw nnoremap <buffer> :bd<CR>
 
 "Open files for editing that don't exist
 "map gf :e <cfile><CR>
@@ -129,12 +130,17 @@ map gd :bd<CR>
 inoremap <C-g> <Esc>1<C-g>i
 nnoremap <C-g> 1<C-g>
 
-"Insert lines above and below without entering insert mode
+"Insert lines above and below without entering insert mode. Disable K which I
+"accidentally hit all the time.
 nnoremap <C-k> :call append(line('.')-1, '')<CR>
 nnoremap <C-j> :call append(line('.'), '')<CR>
+nnoremap K <nop>
 
 "Remove all trailing whitespace in file
 nnoremap <leader>w :%s/[ \t]\+$//g<CR>
+
+"Execute current selection in bash shell
+vnoremap <leader>b :w !bash<CR>
 
 " Section: Autocommands
 " ---------------------
@@ -216,6 +222,19 @@ nnoremap <leader>r :LinediffReset<CR>
 
 " indentLine
 autocmd FilterWritePre * if &diff | exe "silent! IndentLinesDisable" | endif
+let g:setTmuxCopyOn=1
+function! ToggleTmuxCopy()
+    if g:setTmuxCopyOn
+        silent! IndentLinesDisable
+        set nonumber
+        let g:setTmuxCopyOn=0
+    else
+        silent! IndentLinesEnable
+        set number
+        let g:setTmuxCopyOn=1
+    endif
+endfunction
+nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
 
 " Section: Local
 " --------------
