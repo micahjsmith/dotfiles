@@ -129,13 +129,26 @@ else
 fi
 
 # Setup solarized
-if [ ! -d ~/.bash/gnome-terminal-colors-solarized ];
+if ps -p$PPID 2>/dev/null | grep -q gnome-terminal &&  \
+    [ ! -d ~/.bash/gnome-terminal-colors-solarized ];
 then
     mkdir -p ~/.bash/gnome-terminal-colors-solarized
     git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git \
         ~/.bash/gnome-terminal-colors-solarized
 else
-    echo "$SCRIPTNAME: gnome-terminal-colors-solarized already installed"
+    echo "$SCRIPTNAME: gnome-terminal-colors-solarized not applicable or already installed"
+fi
+
+if echo $TERM_PROGRAM | grep -q Apple_Terminal && \
+    [ ! -d ~/.bash/osx-terminal.app-colors-solarized ];
+then
+    mkdir -p ~/.bash/osx-terminal.app-colors-solarized
+    git clone https://github.com/tomislav/osx-terminal.app-colors-solarized.git \
+        ~/.bash/osx-terminal.app-colors-solarized
+    open ~/.bash/osx-terminal.app-colors-solarized/Solarized\ Dark.terminal &
+    open ~/.bash/osx-terminal.app-colors-solarized/Solarized\ Light.terminal &
+else
+    echo "$SCRIPTNAME: osx-terminal.app-colors-solarized not applicable or already installed"
 fi
 
 if [ ! -d ~/.bash/dircolors-solarized ];
@@ -153,13 +166,20 @@ else
 fi
 
 # Download Monaco font
-if [ ! -f "$HOME/.fonts/Monaco.ttf" ];
+if ! fc-list 2>/dev/null | grep -i -q Monaco;
 then
-    mkdir -p "$HOME/.fonts"
-    wget -O "$HOME/.fonts/Monaco.ttf" http://usystem.googlecode.com/files/MONACO.TTF
+    MONACO_DST="$HOME/.fonts/Monaco.ttf"
+    MONACO_SRC="http://usystem.googlecode.com/files/MONACO.TTF"
+    mkdir -p "$(dirname $MONACO_DST)"
+    if which wget >/dev/null 2>&1;
+    then
+        wget -O $MONACO_DST $MONACO_SRC
+    else
+        curl $MONACO_SRC > $MONACO_DST
+    fi
     fc-cache -f -v
 else
-    echo "$SCRIPTNAME: Monaco font already downloaded"
+    echo "$SCRIPTNAME: Monaco font already installed"
 fi
 
 ### Dotfiles
