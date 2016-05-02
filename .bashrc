@@ -41,6 +41,7 @@ eval `dircolors ~/.dir_colors`                     # Use solarized for `ls --col
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
+export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
 export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
 
