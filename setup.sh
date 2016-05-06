@@ -183,7 +183,7 @@ else
 fi
 
 ### Dotfiles
-for FILE in .bashrc .vimrc .tmux.conf .gitconfig;
+for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc;
 do
     if [ ! -h "$HOME/$FILE" ];
     then

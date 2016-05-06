@@ -1,0 +1,38 @@
+" Micah Smith
+" .vrapperrc
+" This is a severely stripped down version of my normal vimrc as not all
+" features are available in vrapper
+
+" Section: Options
+" ----------------
+
+" Section: Commands
+" ----------------
+
+" Section: Mappings
+" -----------------
+
+"Save pinky finger from harm.
+let mapleader = ","
+map q: :q
+noremap ; :
+inoremap jk <Esc>
+inoremap JK <nop>
+
+"Move cursor on display physically, preferring the behavior of ^ over 0
+nnoremap L $
+nnoremap ^ 0
+nnoremap 0 ^
+nnoremap H ^
+
+"Format blocks of text
+nnoremap Q gq$
+
+" Section: Visual
+" ---------------
+
+" Section: Plugins
+" ----------------
+
+" Section: Local
+" --------------
