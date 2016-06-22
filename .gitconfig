@@ -1,6 +1,8 @@
 [user]
     name = Micah Smith
     email = micahjsmith@gmail.com
+[github]
+	user = micahjsmith
 [alias]
     br  = branch
     ch  = checkout
