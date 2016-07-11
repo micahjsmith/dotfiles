@@ -34,7 +34,11 @@ fi
 # Set solarized palette on gnome-terminal
 if ps -p$PPID 2>/dev/null | grep -q gnome-terminal;
 then
-    ~/.bash/gnome-terminal-colors-solarized/set_dark.sh 2>&1 >/dev/null
+    # ~/.bash/gnome-terminal-colors-solarized/set_dark.sh 2>&1 >/dev/null
+    # export GNOME_SOLARIZED_DARK=1
+
+    ~/.bash/gnome-terminal-colors-solarized/set_light.sh 2>&1 >/dev/null
+    export GNOME_SOLARIZED_LIGHT=1
 fi
 
 eval `dircolors ~/.dir_colors`                     # Use solarized for `ls --color` output
