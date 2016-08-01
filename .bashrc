@@ -108,8 +108,5 @@ pdftable(){
     && evince article.pdf && rm -i 'article.*'
 }
 
-# System-specific proxies
-source ~/.proxies 2>/dev/null
-
-# Paths to system-specific directories
-source ~/.aliases 2>/dev/null
+# System-specific proxies, directories, aliases, etc.
+source ~/.bashrc.local 2>/dev/null
