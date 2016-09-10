@@ -242,6 +242,9 @@ function! ToggleTmuxCopy()
 endfunction
 nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
 
+" vim-markdown
+let g:vim_markdown_folding_disabled = 1
+
 " Section: Local
 " --------------
 

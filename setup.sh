@@ -156,7 +156,7 @@ then
     mkdir -p ~/.bash/dircolors-solarized
     git clone https://github.com/seebi/dircolors-solarized.git \
         ~/.bash/dircolors-solarized
-    if [ -h "$HOME/.dir_colors" ];
+    if [ ! -h "$HOME/.dir_colors" ];
     then
         ln -s ~/.bash/dircolors-solarized/dircolors.256dark ~/.dir_colors
         eval `dircolors ~/.dir_colors`
