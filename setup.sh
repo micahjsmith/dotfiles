@@ -117,6 +117,15 @@ else
     echo "$SCRIPTNAME: vim-colors-solarized already installed"
 fi
 
+# Setup vim-surround
+if [ ! -d ~/.vim/bundle/vim-surround ];
+then
+    git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-surround/doc" -c q
+else
+    echo "$SCRIPTNAME: vim-surround already installed"
+fi
+
 ### Bash setup
 
 # Setup git-aware-prompt
@@ -165,22 +174,22 @@ else
     echo "$SCRIPTNAME: dircolors-solarized already installed"
 fi
 
-# Download Monaco font
-if ! fc-list 2>/dev/null | grep -i -q Monaco;
-then
-    MONACO_DST="$HOME/.fonts/Monaco.ttf"
-    MONACO_SRC="http://usystem.googlecode.com/files/MONACO.TTF"
-    mkdir -p "$(dirname $MONACO_DST)"
-    if which wget >/dev/null 2>&1;
-    then
-        wget -O $MONACO_DST $MONACO_SRC
-    else
-        curl $MONACO_SRC > $MONACO_DST
-    fi
-    fc-cache -f -v
-else
-    echo "$SCRIPTNAME: Monaco font already installed"
-fi
+# # Download Monaco font
+# if ! fc-list 2>/dev/null | grep -i -q Monaco;
+# then
+#     MONACO_DST="$HOME/.fonts/Monaco.ttf"
+#     MONACO_SRC="http://usystem.googlecode.com/files/MONACO.TTF"
+#     mkdir -p "$(dirname $MONACO_DST)"
+#     if which wget >/dev/null 2>&1;
+#     then
+#         wget -O $MONACO_DST $MONACO_SRC
+#     else
+#         curl $MONACO_SRC > $MONACO_DST
+#     fi
+#     fc-cache -f -v
+# else
+#     echo "$SCRIPTNAME: Monaco font already installed"
+# fi
 
 ### Dotfiles
 for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc;
