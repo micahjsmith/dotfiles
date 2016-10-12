@@ -117,6 +117,15 @@ else
     echo "$SCRIPTNAME: vim-colors-solarized already installed"
 fi
 
+# Setup vim-surround
+if [ ! -d ~/.vim/bundle/vim-surround ];
+then
+    git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
+    vim -u NONE -c "helptags ~/.vim/bundle/vim-surround/doc" -c q
+else
+    echo "$SCRIPTNAME: vim-surround already installed"
+fi
+
 ### Bash setup
 
 # Setup git-aware-prompt
