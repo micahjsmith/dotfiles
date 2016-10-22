@@ -94,6 +94,9 @@ function! AutoRestoreWinView()
     endif
 endfunction
 
+"Auto-change directory to working directory. See Vim Wikia Tip 64.
+autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+
 " Section: Mappings
 " -----------------
 
