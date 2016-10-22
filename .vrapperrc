@@ -6,6 +6,19 @@
 " Section: Options
 " ----------------
 
+"Basic settings
+set number
+set scrolloff=2
+set sidescrolloff=5
+set backspace=indent,eol,start
+set textwidth=80
+
+"Searching
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
 " Section: Commands
 " ----------------
 
@@ -27,6 +40,11 @@ nnoremap H ^
 
 "Format blocks of text
 nnoremap Q gq$
+
+"Manage buffer switching
+nnoremap gn :bn<CR>
+nnoremap gp :bp<CR>
+nnoremap gd :bd<CR>
 
 " Section: Visual
 " ---------------

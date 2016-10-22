@@ -126,7 +126,7 @@ nnoremap gd :bd<CR>
 "autocmd FileType netrw nnoremap <buffer> :bd<CR>
 
 "Open files for editing that don't exist
-"map gf :e <cfile><CR>
+map ge :e <cfile><CR>
 
 "Enable C-g in insert mode - displays file name and other info
 inoremap <C-g> <Esc>1<C-g>i
@@ -143,6 +143,9 @@ nnoremap <leader>w :%s/[ \t]\+$//g<CR>
 
 "Execute current selection in bash shell
 vnoremap <leader>b :w !bash<CR>
+
+"Toggle spelling
+nnoremap <leader>s :set invspell<CR>
 
 " Section: Autocommands
 " ---------------------
