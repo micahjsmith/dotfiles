@@ -51,7 +51,8 @@ export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tpu
 
 # User specific aliases
 alias ..='\cd ..'
-alias ...='cd ../..'
+alias ...='\cd ../..'
+alias ....='\cd ../../..'
 alias e='evince'
 alias makel='make 2>&1 | less'
 alias mm='$(history -p !!).m'

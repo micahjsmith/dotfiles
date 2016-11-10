@@ -155,6 +155,7 @@ nnoremap <leader>s :set invspell<CR>
 
 "Custom language settings - tabs and textwidth
 autocmd FileType python    setlocal tabstop=4 shiftwidth=4
+autocmd FileType python    inoremap # X<C-h>#
 autocmd FileType make      setlocal tabstop=8 shiftwidth=8 noexpandtab
 autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2 | syntax keyword matlabRepeat parfor
 autocmd FileType julia     setlocal tabstop=4 shiftwidth=4 textwidth=92
@@ -234,17 +235,9 @@ nnoremap <leader>r :LinediffReset<CR>
 
 " indentLine
 autocmd FilterWritePre * if &diff | exe "silent! IndentLinesDisable" | endif
-let g:setTmuxCopyOn=1
 function! ToggleTmuxCopy()
-    if g:setTmuxCopyOn
-        silent! IndentLinesDisable
-        set nonumber
-        let g:setTmuxCopyOn=0
-    else
-        silent! IndentLinesEnable
-        set number
-        let g:setTmuxCopyOn=1
-    endif
+    silent! IndentLinesToggle
+    set invnumber
 endfunction
 nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
 
