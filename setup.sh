@@ -3,127 +3,169 @@
 #   Setup all my config. Downloads vim plugins, bash git prompt, and creates
 #   symlinks of relevant dotfiles to home directory
 
+### Parse options
+
+print_usage_and_exit(){
+    #TODO
+    echo "usage: setup.sh [.]"
+};
+
+OPTS=`getopt -o hv:w --long help,vimdir:,windows -n 'parse-options' -- "$@"`
+
+if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
+
+eval set -- "$OPTS"
+
+# Defaults
+VIMDIR="$HOME/.vim"
+WINDOWS=false
+
+while true; do
+    case "$1" in
+        -h | --help )
+            print_usage_and_exit; break ;;
+        -v | --vimdir )
+            shift; VIMDIR="$1"; shift ;;
+        -w | --windows )
+            WINDOWS=true; shift ;;
+        -- )
+            shift; break ;;
+        * )
+            break ;;
+    esac
+done
+
 SCRIPTNAME=$(basename $0)
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if which wget >/dev/null 2>&1; then
+    download="wget -q -O"
+else
+    download="curl -LSso"
+fi
 
 ### Vim setup
 
 # Setup vim-pathogen
-if [ ! -f ~/.vim/autoload/pathogen.vim ];
+if [ ! -f $VIMDIR/autoload/pathogen.vim ];
 then
-    mkdir -p ~/.vim/autoload ~/.vim/bundle
-    curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+    mkdir -p $VIMDIR/autoload $VIMDIR/bundle
+    $download $VIMDIR/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 else
     echo "$SCRIPTNAME: pathogen.vim already installed"
 fi
 
 # Setup vim-fugitive
-if [ ! -d ~/.vim/bundle/vim-fugitive ];
+if [ ! -d $VIMDIR/bundle/vim-fugitive ];
 then
-    git clone https://github.com/tpope/vim-fugitive.git ~/.vim/bundle/vim-fugitive
-    vim -u NONE -c "helptags ~/.vim/bundle/vim-fugitive/doc" -c q
+    git clone https://github.com/tpope/vim-fugitive.git $VIMDIR/bundle/vim-fugitive
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-fugitive/doc" -c q
 else
     echo "$SCRIPTNAME: vim-fugitive already installed"
 fi
 
 # Setup julia-vim
-if [ ! -d ~/.vim/bundle/julia-vim ];
+if [ ! -d $VIMDIR/bundle/julia-vim ];
 then
-    git clone https://github.com/JuliaLang/julia-vim.git ~/.vim/bundle/julia-vim
-    vim -u NONE -c "helptags ~/.vim/bundle/julia-vim/doc" -c q
+    git clone https://github.com/JuliaLang/julia-vim.git $VIMDIR/bundle/julia-vim
+    vim -u NONE -c "helptags $VIMDIR/bundle/julia-vim/doc" -c q
 else
     echo "$SCRIPTNAME: julia-vim already installed"
 fi
 
 # Setup tabular
-if [ ! -d ~/.vim/bundle/tabular ];
+if [ ! -d $VIMDIR/bundle/tabular ];
 then
-    git clone https://github.com/godlygeek/tabular.git ~/.vim/bundle/tabular
-    vim -u NONE -c "helptags ~/.vim/bundle/tabular/doc" -c q
+    git clone https://github.com/godlygeek/tabular.git $VIMDIR/bundle/tabular
+    vim -u NONE -c "helptags $VIMDIR/bundle/tabular/doc" -c q
 else
     echo "$SCRIPTNAME: tabular already installed"
 fi
 
 # Setup vim-airline
-if [ ! -d ~/.vim/bundle/vim-airline ];
+if [ ! -d $VIMDIR/bundle/vim-airline ];
 then
-    git clone https://github.com/bling/vim-airline.git ~/.vim/bundle/vim-airline
-    vim -u NONE -c "helptags ~/.vim/bundle/vim-airline/doc" -c q
+    git clone https://github.com/bling/vim-airline.git $VIMDIR/bundle/vim-airline
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-airline/doc" -c q
 else
     echo "$SCRIPTNAME: vim-airline already installed"
 fi
 
 # Setup vim-markdown
-if [ ! -d ~/.vim/bundle/vim-markdown ];
+if [ ! -d $VIMDIR/bundle/vim-markdown ];
 then
-    git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/bundle/vim-markdown
-    vim -u NONE -c "helptags ~/.vim/bundle/vim-markdown/doc" -c q
+    git clone https://github.com/plasticboy/vim-markdown.git $VIMDIR/bundle/vim-markdown
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-markdown/doc" -c q
 else
     echo "$SCRIPTNAME: vim-markdown already installed"
 fi
 
 # Setup increment.vim
-if [ ! -f ~/.vim/plugins/increment.vim ];
+if [ ! -f $VIMDIR/plugins/increment.vim ];
 then
-    mkdir -p ~/.vim/plugins
-    curl -LSso ~/.vim/plugins/increment.vim http://www.vim.org/scripts/download_script.php?src_id=469
+    mkdir -p $VIMDIR/plugins
+    $download $VIMDIR/plugins/increment.vim http://www.vim.org/scripts/download_script.php?src_id=469
 else
     echo "$SCRIPTNAME: increment.vim already installed"
 fi
 
 # Setup vim-expand-region
-if [ ! -d ~/.vim/bundle/vim-expand-region ];
+if [ ! -d $VIMDIR/bundle/vim-expand-region ];
 then
-    git clone https://github.com/terryma/vim-expand-region.git ~/.vim/bundle/vim-expand-region
-    vim -u NONE -c "helptags ~/.vim/bundle/vim-expand-region/doc" -c q
+    git clone https://github.com/terryma/vim-expand-region.git $VIMDIR/bundle/vim-expand-region
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-expand-region/doc" -c q
 else
     echo "$SCRIPTNAME: vim-expand-region already installed"
 fi
 
 # Setup indentLine
-if [ ! -d ~/.vim/bundle/indentLine ];
+if [ ! -d $VIMDIR/bundle/indentLine ];
 then
-    git clone https://github.com/Yggdroot/indentLine.git ~/.vim/bundle/indentLine
-    vim -u NONE -c "helptags ~/.vim/bundle/indentLine/doc" -c q
+    git clone https://github.com/Yggdroot/indentLine.git $VIMDIR/bundle/indentLine
+    vim -u NONE -c "helptags $VIMDIR/bundle/indentLine/doc" -c q
 else
     echo "$SCRIPTNAME: indentLine already installed"
 fi
 
 # Setup linediff.vim
-if [ ! -d ~/.vim/bundle/linediff.vim ];
+if [ ! -d $VIMDIR/bundle/linediff.vim ];
 then
-    git clone https://github.com/AndrewRadev/linediff.vim.git ~/.vim/bundle/linediff.vim
-    vim -u NONE -c "helptags ~/.vim/bundle/linediff.vim/doc" -c q
+    git clone https://github.com/AndrewRadev/linediff.vim.git $VIMDIR/bundle/linediff.vim
+    vim -u NONE -c "helptags $VIMDIR/bundle/linediff.vim/doc" -c q
 else
     echo "$SCRIPTNAME: linediff.vim already installed"
 fi
 
 # Setup vim-unimpaired
-if [ ! -d ~/.vim/bundle/vim-unimpaired ];
+if [ ! -d $VIMDIR/bundle/vim-unimpaired ];
 then
-    git clone https://github.com/tpope/vim-unimpaired.git ~/.vim/bundle/vim-unimpaired
-    vim -u NONE -c "helptags ~/.vim/bundle/vim-unimpaired/doc" -c q
+    git clone https://github.com/tpope/vim-unimpaired.git $VIMDIR/bundle/vim-unimpaired
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-unimpaired/doc" -c q
 else
     echo "$SCRIPTNAME: vim-unimpaired already installed"
 fi
 
 # Setup vim-colors-solarized
-if [ ! -d ~/.vim/bundle/vim-colors-solarized ];
+if [ ! -d $VIMDIR/bundle/vim-colors-solarized ];
 then
     git clone https://github.com/altercation/vim-colors-solarized.git \
-        ~/.vim/bundle/vim-colors-solarized
-    vim -u NONE -c "helptags ~/.vim/bundle/vim-colors-solarized/doc" -c q
+        $VIMDIR/bundle/vim-colors-solarized
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-colors-solarized/doc" -c q
 else
     echo "$SCRIPTNAME: vim-colors-solarized already installed"
 fi
 
 # Setup vim-surround
-if [ ! -d ~/.vim/bundle/vim-surround ];
+if [ ! -d $VIMDIR/bundle/vim-surround ];
 then
-    git clone https://github.com/tpope/vim-surround.git ~/.vim/bundle/vim-surround
-    vim -u NONE -c "helptags ~/.vim/bundle/vim-surround/doc" -c q
+    git clone https://github.com/tpope/vim-surround.git $VIMDIR/bundle/vim-surround
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-surround/doc" -c q
 else
     echo "$SCRIPTNAME: vim-surround already installed"
+fi
+
+if $WINDOWS; then
+    exit 0
 fi
 
 ### Bash setup
