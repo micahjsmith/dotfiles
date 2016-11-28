@@ -1,0 +1,3 @@
+"Windows config
+set guioptions-=T
+set guifont=Consolas:h16

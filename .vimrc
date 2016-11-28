@@ -64,39 +64,6 @@ if &diff
     set diffopt +=iwhite
 endif
 
-" Section: Commands
-" ----------------
-
-" Insert datestamp
-nnoremap <leader>d "=strftime("%Y-%m-%d")<CR>P
-iab <expr> dts strftime("%Y-%m-%d")
-
-" Keep screen view in same spot when switching between buffers. See
-" vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
-" Save current view settings on a per-window, per-buffer basis.
-function! AutoSaveWinView()
-    if !exists("w:SavedBufView")
-        let w:SavedBufView = {}
-    endif
-    let w:SavedBufView[bufnr("%")] = winsaveview()
-endfunction
-
-" Restore current view settings.
-function! AutoRestoreWinView()
-    let buf = bufnr("%")
-    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
-        let v = winsaveview()
-        let atStartOfFile = v.lnum == 1 && v.col == 0
-        if atStartOfFile && !&diff
-            call winrestview(w:SavedBufView[buf])
-        endif
-        unlet w:SavedBufView[buf]
-    endif
-endfunction
-
-"Auto-change directory to working directory. See Vim Wikia Tip 64.
-autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
-
 " Section: Mappings
 " -----------------
 
@@ -149,6 +116,39 @@ vnoremap <leader>b :w !bash<CR>
 
 "Toggle spelling
 nnoremap <leader>s :set invspell<CR>
+
+" Section: Commands
+" ----------------
+
+" Insert datestamp
+nnoremap <leader>d "=strftime("%Y-%m-%d")<CR>P
+iab <expr> dts strftime("%Y-%m-%d")
+
+" Keep screen view in same spot when switching between buffers. See
+" vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
+" Save current view settings on a per-window, per-buffer basis.
+function! AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+" Restore current view settings.
+function! AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
+"Auto-change directory to working directory. See Vim Wikia Tip 64.
+autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
 
 " Section: Autocommands
 " ---------------------
@@ -216,7 +216,7 @@ nmap <leader>a= :Tabularize /=<CR>
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:airline_theme = 'wombat'
+let g:airline_theme = 'solarized'
 
 " pydiction
 let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
