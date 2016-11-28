@@ -2,6 +2,11 @@
 # setup.sh
 #   Setup all my config. Downloads vim plugins, bash git prompt, and creates
 #   symlinks of relevant dotfiles to home directory
+#
+# macOS or Linux usage:
+#   ./setup.sh
+# Windows usage (WSL):
+#   ./setup.sh --windows --vimdir /mnt/c/Users/micahsmith/vimfiles
 
 ### Parse options
 
@@ -89,6 +94,15 @@ then
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-airline/doc" -c q
 else
     echo "$SCRIPTNAME: vim-airline already installed"
+fi
+
+# Setup vim-airline-themes
+if [ ! -d $VIMDIR/bundle/vim-airline-themes ];
+then
+    git clone https://github.com/vim-airline/vim-airline-themes $VIMDIR/bundle/vim-airline-themes
+    vim -u NONE -c "helptags $VIMDIR/bundle/vim-airline-themes/doc" -c q
+else
+    echo "$SCRIPTNAME: vim-airline-themes already installed"
 fi
 
 # Setup vim-markdown
