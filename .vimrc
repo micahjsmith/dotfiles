@@ -117,6 +117,9 @@ vnoremap <leader>b :w !bash<CR>
 "Toggle spelling
 nnoremap <leader>s :set invspell<CR>
 
+"Replace misspelled word with first suggestion
+nnoremap <leader>z 1z=
+
 " Section: Commands
 " ----------------
 
