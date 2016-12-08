@@ -25,9 +25,6 @@
     cmd = vimdiff -- $LOCAL $REMOTE
 [branch]
     autosetuprebase = always
-[url "git://"]
-    insteadof = https://
-    pushInsteadOf = https://
 [merge]
     tool = vimdiff
     conflictstyle = diff3
