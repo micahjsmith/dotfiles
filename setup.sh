@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Micah Smith
 # setup.sh
 #   Setup all my config. Downloads vim plugins, bash git prompt, and creates
@@ -12,7 +14,7 @@
 
 print_usage_and_exit(){
     #TODO
-    echo "usage: setup.sh [.]"
+    echo "usage: ./setup.sh [.]"
 };
 
 OPTS=`getopt -o hv:w --long help,vimdir:,windows -n 'parse-options' -- "$@"`
