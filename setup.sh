@@ -248,7 +248,7 @@ fi
 # fi
 
 ### Dotfiles
-for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc;
+for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc aws_util.sh;
 do
     if [ ! -h "$HOME/$FILE" ];
     then

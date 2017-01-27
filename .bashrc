@@ -57,6 +57,7 @@ alias e='evince'
 alias it='git'
 alias makel='make 2>&1 | less'
 alias mm='$(history -p !!).m'
+alias sbrc='source ~/.bashrc'
 alias tmuxa='tmux attach -t'
 alias tmuxd='tmux detach'
 alias xopen='xdg-open'
@@ -112,6 +113,9 @@ pdftable(){
 
 # System-specific proxies, directories, aliases, etc.
 source ~/.bashrc.local 2>/dev/null
+
+# Utilities for working with AWS CLI
+source ~/aws_util.sh 2>/dev/null
 
 # Password-less ssh
 SSHAGENT=/usr/bin/ssh-agent
