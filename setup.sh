@@ -249,8 +249,17 @@ fi
 #     echo "$SCRIPTNAME: Monaco font already installed"
 # fi
 
+# Install aws4d utils
+if [ ! -d ~/.bash/aws4d ];
+then
+    git clone https://github.com/micahjsmith/aws4d.git \
+        ~/.bash/aws4d
+else
+    echo "$SCRIPTNAME: aws4d already installed"
+fi
+
 ### Dotfiles
-for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc aws_util.sh;
+for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc;
 do
     if [ ! -h "$HOME/$FILE" ];
     then

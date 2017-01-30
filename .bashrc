@@ -115,7 +115,7 @@ pdftable(){
 source ~/.bashrc.local 2>/dev/null
 
 # Utilities for working with AWS CLI
-source ~/aws_util.sh 2>/dev/null
+source ~/.bash/aws4d/aws4d.sh 2>/dev/null
 
 # Password-less ssh
 SSHAGENT=/usr/bin/ssh-agent
