@@ -59,10 +59,13 @@ if version > 704 || version == 704 && has("patch338")
   set breakindent
 endif
 
-" Ignore whitespace with vimdiff
+"Ignore whitespace with vimdiff
 if &diff
     set diffopt +=iwhite
 endif
+
+"Encryption
+set cryptmethod=blowfish2
 
 " Section: Mappings
 " -----------------
