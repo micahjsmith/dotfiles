@@ -157,14 +157,17 @@ autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
 " ---------------------
 
 "Custom language settings - tabs and textwidth
-autocmd FileType python    setlocal tabstop=4 shiftwidth=4
-autocmd FileType python    inoremap # X<C-h>#
-autocmd FileType make      setlocal tabstop=8 shiftwidth=8 noexpandtab
-autocmd FileType matlab    setlocal tabstop=2 shiftwidth=2 | syntax keyword matlabRepeat parfor
-autocmd FileType julia     setlocal tabstop=4 shiftwidth=4 textwidth=92
-autocmd FileType markdown  setlocal tabstop=4 shiftwidth=4 textwidth=92 spell
-autocmd Filetype gitcommit setlocal                        textwidth=72 spell
-autocmd FileType tex       setlocal                        textwidth=92 spell
+autocmd FileType python     setlocal tabstop=4 shiftwidth=4
+autocmd FileType python     inoremap # X<C-h>#
+autocmd FileType make       setlocal tabstop=8 shiftwidth=8 noexpandtab
+autocmd FileType matlab     setlocal tabstop=2 shiftwidth=2 | syntax keyword matlabRepeat parfor
+autocmd FileType julia      setlocal tabstop=4 shiftwidth=4 textwidth=92
+autocmd FileType markdown   setlocal tabstop=4 shiftwidth=4 textwidth=92 spell
+autocmd Filetype gitcommit  setlocal                        textwidth=72 spell
+autocmd FileType tex        setlocal                        textwidth=92 spell
+autocmd FileType html       setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
+autocmd FileType css        setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
+autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 
 " When switching buffers, preserve window view.
 if v:version >= 700
