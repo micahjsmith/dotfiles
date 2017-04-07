@@ -120,6 +120,9 @@ nnoremap <leader>w :%s/[ \t]\+$//g<CR>
 "Execute current selection in bash shell
 vnoremap <leader>b :w !bash<CR>
 
+"Lint current file with pylint
+nnoremap <leader>p :!pylint -E %<CR>
+
 "Toggle spelling
 nnoremap <leader>s :set invspell<CR>
 
@@ -180,6 +183,9 @@ if v:version >= 700
     autocmd BufLeave * call AutoSaveWinView()
     autocmd BufEnter * call AutoRestoreWinView()
 endif
+
+" Fix bug with closing netrw
+autocmd FileType netrw setlocal bufhidden=wipe
 
 " Section: Visual
 " ---------------
