@@ -9,6 +9,7 @@ execute pathogen#infect()
 
 "Basic settings
 syntax enable
+set nocompatible
 set ruler
 set more
 set autoread
@@ -65,7 +66,9 @@ if &diff
 endif
 
 "Encryption
-set cryptmethod=blowfish2
+if version > 704 || version==704 && has("patch399")
+    set cryptmethod=blowfish2
+endif
 
 " Section: Mappings
 " -----------------
@@ -216,6 +219,9 @@ endif
 
 " Section: Plugins
 " ----------------
+
+" netrw
+let g:netrw_liststyle=3
 
 " tabular
 vmap <leader>a= :Tabularize /=<CR>
