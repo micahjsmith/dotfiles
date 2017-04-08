@@ -120,9 +120,6 @@ nnoremap <leader>w :%s/[ \t]\+$//g<CR>
 "Execute current selection in bash shell
 vnoremap <leader>b :w !bash<CR>
 
-"Lint current file with pylint
-nnoremap <leader>p :!pylint -E %<CR>
-
 "Toggle spelling
 nnoremap <leader>s :set invspell<CR>
 
@@ -177,6 +174,10 @@ autocmd FileType tex        setlocal                        textwidth=92 spell
 autocmd FileType html       setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 autocmd FileType css        setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
+
+"Lint current file
+autocmd FileType python     nnoremap <leader>p :!pylint -E %<CR>
+autocmd FileType javascript nnoremap <leader>p :!jshint %<CR>
 
 " When switching buffers, preserve window view.
 if v:version >= 700
