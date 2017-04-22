@@ -231,7 +231,7 @@ then
 fi
 
 ### Dotfiles
-for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc .pylintrc;
+for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc .jshintrc .pylintrc;
 do
     if [ ! -h "$HOME/$FILE" ];
     then

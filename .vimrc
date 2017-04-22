@@ -9,6 +9,7 @@ execute pathogen#infect()
 
 "Basic settings
 syntax enable
+set nocompatible
 set ruler
 set more
 set autoread
@@ -65,7 +66,9 @@ if &diff
 endif
 
 "Encryption
-set cryptmethod=blowfish2
+if version > 704 || version==704 && has("patch399")
+    set cryptmethod=blowfish2
+endif
 
 " Section: Mappings
 " -----------------
@@ -116,9 +119,6 @@ nnoremap <leader>w :%s/[ \t]\+$//g<CR>
 
 "Execute current selection in bash shell
 vnoremap <leader>b :w !bash<CR>
-
-"Lint current file with pylint
-nnoremap <leader>p :!pylint -E %<CR>
 
 "Toggle spelling
 nnoremap <leader>s :set invspell<CR>
@@ -175,6 +175,10 @@ autocmd FileType html       setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 autocmd FileType css        setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 
+"Lint current file
+autocmd FileType python     nnoremap <leader>p :!pylint -E %<CR>
+autocmd FileType javascript nnoremap <leader>p :!jshint %<CR>
+
 " When switching buffers, preserve window view.
 if v:version >= 700
     autocmd BufLeave * call AutoSaveWinView()
@@ -222,6 +226,9 @@ endif
 
 " Section: Plugins
 " ----------------
+
+" netrw
+let g:netrw_liststyle=3
 
 " tabular
 vmap <leader>a= :Tabularize /^[^=]*\zs=/l1c1l0<CR>
