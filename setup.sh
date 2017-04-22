@@ -54,130 +54,117 @@ fi
 ### Vim setup
 
 # Setup vim-pathogen
-if [ ! -f $VIMDIR/autoload/pathogen.vim ];
+if [ ! -f "$VIMDIR/autoload/pathogen.vim" ];
 then
     mkdir -p $VIMDIR/autoload $VIMDIR/bundle
     $download $VIMDIR/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-else
-    echo "$SCRIPTNAME: pathogen.vim already installed"
+    echo "$SCRIPTNAME: installed pathogen.vim"
 fi
 
 # Setup vim-fugitive
-if [ ! -d $VIMDIR/bundle/vim-fugitive ];
+if [ ! -d "$VIMDIR/bundle/vim-fugitive" ];
 then
     git clone https://github.com/tpope/vim-fugitive.git $VIMDIR/bundle/vim-fugitive
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-fugitive/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-fugitive already installed"
+    echo "$SCRIPTNAME: installed vim-fugitive"
 fi
 
 # Setup julia-vim
-if [ ! -d $VIMDIR/bundle/julia-vim ];
+if [ ! -d "$VIMDIR/bundle/julia-vim" ];
 then
     git clone https://github.com/JuliaLang/julia-vim.git $VIMDIR/bundle/julia-vim
     vim -u NONE -c "helptags $VIMDIR/bundle/julia-vim/doc" -c q
-else
-    echo "$SCRIPTNAME: julia-vim already installed"
+    echo "$SCRIPTNAME: installed julia-vim"
 fi
 
 # Setup tabular
-if [ ! -d $VIMDIR/bundle/tabular ];
+if [ ! -d "$VIMDIR/bundle/tabular" ];
 then
     git clone https://github.com/godlygeek/tabular.git $VIMDIR/bundle/tabular
     vim -u NONE -c "helptags $VIMDIR/bundle/tabular/doc" -c q
-else
-    echo "$SCRIPTNAME: tabular already installed"
+    echo "$SCRIPTNAME: installed tabular"
 fi
 
 # Setup vim-airline
-if [ ! -d $VIMDIR/bundle/vim-airline ];
+if [ ! -d "$VIMDIR/bundle/vim-airline" ];
 then
     git clone https://github.com/bling/vim-airline.git $VIMDIR/bundle/vim-airline
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-airline/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-airline already installed"
+    echo "$SCRIPTNAME: installed vim-airline"
 fi
 
 # Setup vim-airline-themes
-if [ ! -d $VIMDIR/bundle/vim-airline-themes ];
+if [ ! -d "$VIMDIR/bundle/vim-airline-themes" ];
 then
     git clone https://github.com/vim-airline/vim-airline-themes $VIMDIR/bundle/vim-airline-themes
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-airline-themes/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-airline-themes already installed"
+    echo "$SCRIPTNAME: installed vim-airline-themes"
 fi
 
 # Setup vim-markdown
-if [ ! -d $VIMDIR/bundle/vim-markdown ];
+if [ ! -d "$VIMDIR/bundle/vim-markdown" ];
 then
     git clone https://github.com/plasticboy/vim-markdown.git $VIMDIR/bundle/vim-markdown
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-markdown/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-markdown already installed"
+    echo "$SCRIPTNAME: installed vim-markdown"
 fi
 
 # Setup increment.vim
-if [ ! -f $VIMDIR/plugins/increment.vim ];
+if [ ! -f "$VIMDIR/plugin/increment.vim" ];
 then
-    mkdir -p $VIMDIR/plugins
-    $download $VIMDIR/plugins/increment.vim http://www.vim.org/scripts/download_script.php?src_id=469
-else
-    echo "$SCRIPTNAME: increment.vim already installed"
+    mkdir -p "$VIMDIR/plugin"
+    $download "$VIMDIR/plugin/increment.vim" http://www.vim.org/scripts/download_script.php?src_id=469
+    vim -u NONE -c 'e ++ff=dos' -c 'w ++ff=unix' -c q "$VIMDIR/plugin/increment.vim"
+    echo "$SCRIPTNAME: installed increment.vim"
 fi
 
 # Setup vim-expand-region
-if [ ! -d $VIMDIR/bundle/vim-expand-region ];
+if [ ! -d "$VIMDIR/bundle/vim-expand-region" ];
 then
     git clone https://github.com/terryma/vim-expand-region.git $VIMDIR/bundle/vim-expand-region
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-expand-region/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-expand-region already installed"
+    echo "$SCRIPTNAME: installed vim-expand-region"
 fi
 
 # Setup indentLine
-if [ ! -d $VIMDIR/bundle/indentLine ];
+if [ ! -d "$VIMDIR/bundle/indentLine" ];
 then
     git clone https://github.com/Yggdroot/indentLine.git $VIMDIR/bundle/indentLine
     vim -u NONE -c "helptags $VIMDIR/bundle/indentLine/doc" -c q
-else
-    echo "$SCRIPTNAME: indentLine already installed"
+    echo "$SCRIPTNAME: installed indentLine"
 fi
 
 # Setup linediff.vim
-if [ ! -d $VIMDIR/bundle/linediff.vim ];
+if [ ! -d "$VIMDIR/bundle/linediff.vim" ];
 then
     git clone https://github.com/AndrewRadev/linediff.vim.git $VIMDIR/bundle/linediff.vim
     vim -u NONE -c "helptags $VIMDIR/bundle/linediff.vim/doc" -c q
-else
-    echo "$SCRIPTNAME: linediff.vim already installed"
+    echo "$SCRIPTNAME: installed linediff.vim"
 fi
 
 # Setup vim-unimpaired
-if [ ! -d $VIMDIR/bundle/vim-unimpaired ];
+if [ ! -d "$VIMDIR/bundle/vim-unimpaired" ];
 then
     git clone https://github.com/tpope/vim-unimpaired.git $VIMDIR/bundle/vim-unimpaired
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-unimpaired/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-unimpaired already installed"
+    echo "$SCRIPTNAME: installed vim-unimpaired"
 fi
 
 # Setup vim-colors-solarized
-if [ ! -d $VIMDIR/bundle/vim-colors-solarized ];
+if [ ! -d "$VIMDIR/bundle/vim-colors-solarized" ];
 then
     git clone https://github.com/altercation/vim-colors-solarized.git \
         $VIMDIR/bundle/vim-colors-solarized
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-colors-solarized/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-colors-solarized already installed"
+    echo "$SCRIPTNAME: installed vim-colors-solarized"
 fi
 
 # Setup vim-surround
-if [ ! -d $VIMDIR/bundle/vim-surround ];
+if [ ! -d "$VIMDIR/bundle/vim-surround" ];
 then
     git clone https://github.com/tpope/vim-surround.git $VIMDIR/bundle/vim-surround
     vim -u NONE -c "helptags $VIMDIR/bundle/vim-surround/doc" -c q
-else
-    echo "$SCRIPTNAME: vim-surround already installed"
+    echo "$SCRIPTNAME: installed vim-surround"
 fi
 
 if $WINDOWS; then
@@ -191,8 +178,7 @@ if [ ! -d ~/.bash/git-aware-prompt ];
 then
     mkdir -p ~/.bash/git-aware-prompt
     git clone https://github.com/jimeh/git-aware-prompt.git ~/.bash/git-aware-prompt
-else
-    echo "$SCRIPTNAME: git-aware-prompt already installed"
+    echo "$SCRIPTNAME: installed git-aware-prompt"
 fi
 
 # Setup solarized
@@ -202,8 +188,7 @@ then
     mkdir -p ~/.bash/gnome-terminal-colors-solarized
     git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git \
         ~/.bash/gnome-terminal-colors-solarized
-else
-    echo "$SCRIPTNAME: gnome-terminal-colors-solarized not applicable or already installed"
+    echo "$SCRIPTNAME: installed gnome-terminal-colors-solarized"
 fi
 
 if echo $TERM_PROGRAM | grep -q Apple_Terminal && \
@@ -214,8 +199,7 @@ then
         ~/.bash/osx-terminal.app-colors-solarized
     open ~/.bash/osx-terminal.app-colors-solarized/Solarized\ Dark.terminal &
     open ~/.bash/osx-terminal.app-colors-solarized/Solarized\ Light.terminal &
-else
-    echo "$SCRIPTNAME: osx-terminal.app-colors-solarized not applicable or already installed"
+    echo "$SCRIPTNAME: installed osx-terminal.app-colors-solarized"
 fi
 
 if [ ! -d ~/.bash/dircolors-solarized ];
@@ -228,43 +212,30 @@ then
         ln -s ~/.bash/dircolors-solarized/dircolors.256dark ~/.dir_colors
         eval `dircolors ~/.dir_colors`
     fi
-else
-    echo "$SCRIPTNAME: dircolors-solarized already installed"
+    echo "$SCRIPTNAME: installed dircolors-solarized"
 fi
-
-# # Download Monaco font
-# if ! fc-list 2>/dev/null | grep -i -q Monaco;
-# then
-#     MONACO_DST="$HOME/.fonts/Monaco.ttf"
-#     MONACO_SRC="http://usystem.googlecode.com/files/MONACO.TTF"
-#     mkdir -p "$(dirname $MONACO_DST)"
-#     if which wget >/dev/null 2>&1;
-#     then
-#         wget -O $MONACO_DST $MONACO_SRC
-#     else
-#         curl $MONACO_SRC > $MONACO_DST
-#     fi
-#     fc-cache -f -v
-# else
-#     echo "$SCRIPTNAME: Monaco font already installed"
-# fi
 
 # Install aws4d utils
 if [ ! -d ~/.bash/aws4d ];
 then
     git clone https://github.com/micahjsmith/aws4d.git \
         ~/.bash/aws4d
-else
-    echo "$SCRIPTNAME: aws4d already installed"
+    echo "$SCRIPTNAME: installed aws4d"
+fi
+
+if [ ! -d ~/.bash/tmux-resurrect ];
+then
+    git clone https://github.com/tmux-plugins/tmux-resurrect \
+        ~/.bash/tmux-resurrect
+    echo "$SCRIPTNAME: installed tmux-resurrect"
 fi
 
 ### Dotfiles
-for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc;
+for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc .pylintrc;
 do
     if [ ! -h "$HOME/$FILE" ];
     then
         ln --symbolic --target-directory $HOME $SCRIPTDIR/$FILE
-    else
-        echo "$SCRIPTNAME: $FILE already linked"
+        echo "$SCRIPTNAME: linked $FILE"
     fi
 done

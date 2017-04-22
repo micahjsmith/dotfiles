@@ -163,7 +163,7 @@ autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
 " ---------------------
 
 "Custom language settings - tabs and textwidth
-autocmd FileType python     setlocal tabstop=4 shiftwidth=4
+autocmd FileType python     setlocal tabstop=4 shiftwidth=4 textwidth=79 foldnestmax=2 foldmethod=indent
 autocmd FileType python     inoremap # X<C-h>#
 autocmd FileType make       setlocal tabstop=8 shiftwidth=8 noexpandtab
 autocmd FileType matlab     setlocal tabstop=2 shiftwidth=2 | syntax keyword matlabRepeat parfor
@@ -224,8 +224,10 @@ endif
 " ----------------
 
 " tabular
-vmap <leader>a= :Tabularize /=<CR>
-nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /^[^=]*\zs=/l1c1l0<CR>
+nmap <leader>a= :Tabularize /^[^=]*\zs=/l1c1l0<CR>
+vmap <leader>a; :Tabularize /:<CR>
+nmap <leader>a; :Tabularize /:<CR>
 
 " vim-airline
 set laststatus=2
