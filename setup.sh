@@ -41,6 +41,7 @@ done
 
 ### Setup
 
+MAC=$(uname | grep -q Darwin && echo "true" || echo "false")
 SCRIPTNAME=$(basename $0)
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -56,7 +57,7 @@ install_vim_bundle_github(){
     bundle_author=$1
     bundle_name=$2
 
-    if [ ! -f "${VIMDIR}/bundle/${bundle_name}" ];
+    if [ ! -d "${VIMDIR}/bundle/${bundle_name}" ];
     then
         git clone \
             "https://github.com/${bundle_author}/${bundle_name}.git" \
@@ -168,3 +169,8 @@ do
         echo "$SCRIPTNAME: linked $FILE"
     fi
 done
+
+### Mac-specific setup
+if $MAC; then
+    ${SCRIPTDIR}/setup_mac.sh
+fi
