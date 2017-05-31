@@ -7,11 +7,14 @@
 set -e
 
 # hack- sha of head commit
-sha=$(git rev-list HEAD^..HEAD | cut -c 1-8)
+sha=$(git rev-list HEAD^..HEAD)
+shashort=$(echo $sha | cut -c 1-8)
 
-reldir=./archive/archive-$sha
+reldir=./archive/archive-$shashort
 mkdir -p $reldir
 absdir=$(realpath $reldir)
+
+echo $sha > $absdir/SHA
 
 pushd $HOME >/dev/null 2>&1
 tar -czf $absdir/.vim.tgz .vim
