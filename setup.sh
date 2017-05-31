@@ -76,7 +76,7 @@ then
 fi
 
 install_vim_bundle_github   altercation   vim-colors-solarized
-install_vim_bundle_github   AndrewRadev   linediff
+install_vim_bundle_github   AndrewRadev   linediff.vim
 install_vim_bundle_github   bling         vim-airline
 install_vim_bundle_github   JuliaLang     julia-vim
 install_vim_bundle_github   plasticboy    vim-markdown
@@ -161,12 +161,15 @@ then
 fi
 
 ### Link dotfiles
-for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc .jshintrc .pylintrc;
+
+# todo make this portable?
+shopt -s dotglob
+for f in config/*;
 do
-    if [ ! -h "$HOME/$FILE" ];
+    if [ ! -h "$HOME/$(basename $f)" ];
     then
-        ln -s $SCRIPTDIR/$FILE $HOME
-        echo "$SCRIPTNAME: linked $FILE"
+        ln -s $SCRIPTDIR/$f $HOME
+        echo "$SCRIPTNAME: linked $f"
     fi
 done
 
