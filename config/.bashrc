@@ -6,10 +6,6 @@
 #Add to path.
 PATH=$HOME/local/bin:$PATH
 
-# Add coreutils to path with normal names.
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
 export EDITOR=vim                                  # Default editor
@@ -114,9 +110,6 @@ pdftable(){
     && evince article.pdf && rm -i 'article.*'
 }
 
-# System-specific proxies, directories, aliases, etc.
-source ~/.bashrc.local 2>/dev/null
-
 # Utilities for working with AWS CLI
 source ~/.bash/aws4d/aws4d.sh 2>/dev/null
 
@@ -127,3 +120,6 @@ if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
     eval `$SSHAGENT $SSHAGENTARGS`
     trap "kill $SSH_AGENT_PID" 0
 fi
+
+# System-specific proxies, directories, aliases, etc.
+source ~/.bashrc.local 2>/dev/null
