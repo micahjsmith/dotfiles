@@ -1,5 +1,8 @@
 # Micah Smith's .bashrc
 
+# If not running interactively, don't do anything.
+[[ $- != *i* ]] && return
+
 #Add to path.
 PATH=$HOME/local/bin:$PATH
 
@@ -10,8 +13,8 @@ MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
 export EDITOR=vim                                  # Default editor
-[[ $- == *i* ]] && mesg n                          # Disallow others to write (interactive term only)
-[[ $- == *i* ]] && stty -ixon                      # Disable <C-s> that hangs terminal (interactive term only)
+mesg n                                             # Disallow others to write (interactive term only)
+stty -ixon                                         # Disable <C-s> that hangs terminal (interactive term only)
 bind '"\e[A": history-search-backward' 2>/dev/null # Arrows search from current cmd
 bind '"\e[B": history-search-forward'  2>/dev/null # Arrows search from current cmd
 umask 0002                                         # Default file creation mode
