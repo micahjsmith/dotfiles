@@ -23,11 +23,14 @@ mv .vim $dest
 
 # todo make this portable?
 shopt -s dotglob
-for f in config/*;
+for f in $SCRIPTDIR/config/*;
 do
     if [ ! -h "$dest/$(basename $f)" ];
     then
-        ln -s $SCRIPTDIR/$f $dest
-        echo "$SCRIPTNAME: linked $f"
+        f1="$(realpath $f)"
+        ln -s "$f1" "$dest" \
+            && echo "$SCRIPTNAME: linked $f"
+            || echo "$SCRIPTNAME: could not link $f (file already exists)\n"\
+                    "             (try echo \'source \"$f1\"\' >> $dest/$f)"
     fi
 done
