@@ -6,6 +6,12 @@
 
 set -e
 
+# don't proceed if we have uncommitted files.
+if [ ! -z "$(git status --short)" ]; then
+    echo "Please reset or commit changes before proceeding."
+    exit 1
+fi
+
 # hack- sha of head commit
 sha=$(git rev-list HEAD^..HEAD)
 shashort=$(echo $sha | cut -c 1-8)
