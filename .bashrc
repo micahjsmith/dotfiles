@@ -111,8 +111,18 @@ pdftable(){
     && evince article.pdf && rm -i 'article.*'
 }
 
-# System-specific proxies, directories, aliases, etc.
-source ~/.bashrc.local 2>/dev/null
+# Mount the current directory in a jupyter/datascience-notebook session.
+jpystart(){
+    docker run -dit --name jpy-$(basename "$(pwd)") \
+        -p 8888:8888 \
+        -v "$(pwd):/home/jovyan/work:rw" \
+        jupyter/datascience-notebook \
+    && sleep 15 \
+    && docker exec -it jpy-$(basename "$(pwd)") jupyter notebook list
+}
+jpystop(){
+    docker rm -f jpy-$(basename "$(pwd)")
+}
 
 # Utilities for working with AWS CLI
 source ~/.bash/aws4d/aws4d.sh 2>/dev/null
@@ -124,3 +134,6 @@ if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
     eval `$SSHAGENT $SSHAGENTARGS`
     trap "kill $SSH_AGENT_PID" 0
 fi
+
+# System-specific proxies, directories, aliases, etc.
+source ~/.bashrc.local 2>/dev/null
