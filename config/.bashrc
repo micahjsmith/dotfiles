@@ -1,17 +1,16 @@
 # Micah Smith's .bashrc
 
+# Exit if not interactive
+[[ $- != *i* ]] && return
+
 #Add to path.
 PATH=$HOME/local/bin:$PATH
-
-# Add coreutils to path with normal names.
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
 export EDITOR=vim                                  # Default editor
-[[ $- == *i* ]] && mesg n                          # Disallow others to write (interactive term only)
-[[ $- == *i* ]] && stty -ixon                      # Disable <C-s> that hangs terminal (interactive term only)
+mesg n                                             # Disallow others to write (interactive term only)
+stty -ixon                                         # Disable <C-s> that hangs terminal (interactive term only)
 bind '"\e[A": history-search-backward' 2>/dev/null # Arrows search from current cmd
 bind '"\e[B": history-search-forward'  2>/dev/null # Arrows search from current cmd
 umask 0002                                         # Default file creation mode
@@ -41,7 +40,10 @@ then
     export GNOME_SOLARIZED_LIGHT=1
 fi
 
-eval `dircolors ~/.dir_colors`                     # Use solarized for `ls --color` output
+# Use solarized for `ls --color` output
+if [ -f ~/.bash/dircolors-solarized/dircolors.256dark ]; then
+    eval `dircolors ~/.bash/dircolors-solarized/dircolors.256dark` 
+fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt

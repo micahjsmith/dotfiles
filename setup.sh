@@ -18,11 +18,8 @@ print_usage_and_exit(){
 };
 
 OPTS=`getopt -o hv:w --long help,vimdir:,windows -n 'parse-options' -- "$@"`
-
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
-
 eval set -- "$OPTS"
-
 # Defaults
 VIMDIR="$HOME/.vim"
 WINDOWS=false
@@ -42,6 +39,9 @@ while true; do
     esac
 done
 
+### Setup
+
+MAC=$(uname | grep -q Darwin && echo "true" || echo "false")
 SCRIPTNAME=$(basename $0)
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -53,6 +53,20 @@ fi
 
 ### Vim setup
 
+install_vim_bundle_github(){
+    bundle_author=$1
+    bundle_name=$2
+
+    if [ ! -d "${VIMDIR}/bundle/${bundle_name}" ];
+    then
+        git clone \
+            "https://github.com/${bundle_author}/${bundle_name}.git" \
+            "${VIMDIR}/bundle/${bundle_name}"
+        vim -u NONE -c "helptags ${VIMDIR}/bundle/${bundle_name}/doc" -c q
+        echo "${SCRIPTNAME}: installed ${bundle_name}"
+    fi
+}
+
 # Setup vim-pathogen
 if [ ! -f "$VIMDIR/autoload/pathogen.vim" ];
 then
@@ -61,53 +75,17 @@ then
     echo "$SCRIPTNAME: installed pathogen.vim"
 fi
 
-# Setup vim-fugitive
-if [ ! -d "$VIMDIR/bundle/vim-fugitive" ];
-then
-    git clone https://github.com/tpope/vim-fugitive.git $VIMDIR/bundle/vim-fugitive
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-fugitive/doc" -c q
-    echo "$SCRIPTNAME: installed vim-fugitive"
-fi
-
-# Setup julia-vim
-if [ ! -d "$VIMDIR/bundle/julia-vim" ];
-then
-    git clone https://github.com/JuliaLang/julia-vim.git $VIMDIR/bundle/julia-vim
-    vim -u NONE -c "helptags $VIMDIR/bundle/julia-vim/doc" -c q
-    echo "$SCRIPTNAME: installed julia-vim"
-fi
-
-# Setup tabular
-if [ ! -d "$VIMDIR/bundle/tabular" ];
-then
-    git clone https://github.com/godlygeek/tabular.git $VIMDIR/bundle/tabular
-    vim -u NONE -c "helptags $VIMDIR/bundle/tabular/doc" -c q
-    echo "$SCRIPTNAME: installed tabular"
-fi
-
-# Setup vim-airline
-if [ ! -d "$VIMDIR/bundle/vim-airline" ];
-then
-    git clone https://github.com/bling/vim-airline.git $VIMDIR/bundle/vim-airline
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-airline/doc" -c q
-    echo "$SCRIPTNAME: installed vim-airline"
-fi
-
-# Setup vim-airline-themes
-if [ ! -d "$VIMDIR/bundle/vim-airline-themes" ];
-then
-    git clone https://github.com/vim-airline/vim-airline-themes $VIMDIR/bundle/vim-airline-themes
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-airline-themes/doc" -c q
-    echo "$SCRIPTNAME: installed vim-airline-themes"
-fi
-
-# Setup vim-markdown
-if [ ! -d "$VIMDIR/bundle/vim-markdown" ];
-then
-    git clone https://github.com/plasticboy/vim-markdown.git $VIMDIR/bundle/vim-markdown
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-markdown/doc" -c q
-    echo "$SCRIPTNAME: installed vim-markdown"
-fi
+install_vim_bundle_github   altercation   vim-colors-solarized
+install_vim_bundle_github   AndrewRadev   linediff.vim
+install_vim_bundle_github   bling         vim-airline
+install_vim_bundle_github   JuliaLang     julia-vim
+install_vim_bundle_github   plasticboy    vim-markdown
+install_vim_bundle_github   terryma       vim-expand-region
+install_vim_bundle_github   tpope         vim-surround
+install_vim_bundle_github   tpope         vim-fugitive
+install_vim_bundle_github   tpope         vim-unimpaired
+install_vim_bundle_github   vim-airline   vim-airline-themes
+install_vim_bundle_github   Yggdroot      indentLine
 
 # Setup increment.vim
 if [ ! -f "$VIMDIR/plugin/increment.vim" ];
@@ -118,55 +96,7 @@ then
     echo "$SCRIPTNAME: installed increment.vim"
 fi
 
-# Setup vim-expand-region
-if [ ! -d "$VIMDIR/bundle/vim-expand-region" ];
-then
-    git clone https://github.com/terryma/vim-expand-region.git $VIMDIR/bundle/vim-expand-region
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-expand-region/doc" -c q
-    echo "$SCRIPTNAME: installed vim-expand-region"
-fi
-
-# Setup indentLine
-if [ ! -d "$VIMDIR/bundle/indentLine" ];
-then
-    git clone https://github.com/Yggdroot/indentLine.git $VIMDIR/bundle/indentLine
-    vim -u NONE -c "helptags $VIMDIR/bundle/indentLine/doc" -c q
-    echo "$SCRIPTNAME: installed indentLine"
-fi
-
-# Setup linediff.vim
-if [ ! -d "$VIMDIR/bundle/linediff.vim" ];
-then
-    git clone https://github.com/AndrewRadev/linediff.vim.git $VIMDIR/bundle/linediff.vim
-    vim -u NONE -c "helptags $VIMDIR/bundle/linediff.vim/doc" -c q
-    echo "$SCRIPTNAME: installed linediff.vim"
-fi
-
-# Setup vim-unimpaired
-if [ ! -d "$VIMDIR/bundle/vim-unimpaired" ];
-then
-    git clone https://github.com/tpope/vim-unimpaired.git $VIMDIR/bundle/vim-unimpaired
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-unimpaired/doc" -c q
-    echo "$SCRIPTNAME: installed vim-unimpaired"
-fi
-
-# Setup vim-colors-solarized
-if [ ! -d "$VIMDIR/bundle/vim-colors-solarized" ];
-then
-    git clone https://github.com/altercation/vim-colors-solarized.git \
-        $VIMDIR/bundle/vim-colors-solarized
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-colors-solarized/doc" -c q
-    echo "$SCRIPTNAME: installed vim-colors-solarized"
-fi
-
-# Setup vim-surround
-if [ ! -d "$VIMDIR/bundle/vim-surround" ];
-then
-    git clone https://github.com/tpope/vim-surround.git $VIMDIR/bundle/vim-surround
-    vim -u NONE -c "helptags $VIMDIR/bundle/vim-surround/doc" -c q
-    echo "$SCRIPTNAME: installed vim-surround"
-fi
-
+### Done with Windows setup.
 if $WINDOWS; then
     exit 0
 fi
@@ -207,17 +137,13 @@ then
     mkdir -p ~/.bash/dircolors-solarized
     git clone https://github.com/seebi/dircolors-solarized.git \
         ~/.bash/dircolors-solarized
-    if [ ! -h "$HOME/.dir_colors" ];
-    then
-        ln -s ~/.bash/dircolors-solarized/dircolors.256dark ~/.dir_colors
-        eval `dircolors ~/.dir_colors`
-    fi
     echo "$SCRIPTNAME: installed dircolors-solarized"
 fi
 
 # Install aws4d utils
 if [ ! -d ~/.bash/aws4d ];
 then
+    mkdir -p ~/.bash/aws4d
     git clone https://github.com/micahjsmith/aws4d.git \
         ~/.bash/aws4d
     echo "$SCRIPTNAME: installed aws4d"
@@ -225,17 +151,29 @@ fi
 
 if [ ! -d ~/.bash/tmux-resurrect ];
 then
+    mkdir -p ~/.bash/tmux-resurrect
     git clone https://github.com/tmux-plugins/tmux-resurrect \
         ~/.bash/tmux-resurrect
     echo "$SCRIPTNAME: installed tmux-resurrect"
 fi
 
-### Dotfiles
-for FILE in .bashrc .vimrc .tmux.conf .gitconfig .vrapperrc .jshintrc .pylintrc;
+### Link dotfiles
+
+# todo make this portable?
+shopt -s dotglob
+for f in $SCRIPTDIR/config/*;
 do
-    if [ ! -h "$HOME/$FILE" ];
+    if [ ! -h "$HOME/$(basename $f)" ];
     then
-        ln --symbolic --target-directory $HOME $SCRIPTDIR/$FILE
-        echo "$SCRIPTNAME: linked $FILE"
+        f1="$(realpath $f)"
+        ln -s "$f1" "$HOME" \
+            && echo "$SCRIPTNAME: linked $f"
+            || echo "$SCRIPTNAME: could not link $f (file already exists)\n"\
+                    "             (try echo \'source \"$f1\"\' >> $HOME/$f)"
     fi
 done
+
+### Mac-specific setup
+if $MAC; then
+    ${SCRIPTDIR}/setup_mac.sh
+fi
