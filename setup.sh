@@ -166,9 +166,10 @@ do
     if [ ! -h "$HOME/$(basename $f)" ];
     then
         f1="$(realpath $f)"
+	echo "$f1"
         ln -s "$f1" "$HOME" \
-            && echo "$SCRIPTNAME: linked $f"
-            || echo "$SCRIPTNAME: could not link $f (file already exists)\n"\
+            && echo "$SCRIPTNAME: linked $f" \
+            || echo "$SCRIPTNAME: could not link $f (file already exists)\n" \
                     "             (try echo \'source \"$f1\"\' >> $HOME/$f)"
     fi
 done
