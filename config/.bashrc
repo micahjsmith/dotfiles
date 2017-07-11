@@ -56,6 +56,7 @@ alias ..='\cd ..'
 alias ...='\cd ../..'
 alias ....='\cd ../../..'
 alias e='evince'
+alias g='git'
 alias it='git'
 alias makel='make 2>&1 | less'
 alias mm='$(history -p !!).m'
@@ -113,6 +114,21 @@ pdftable(){
     && evince article.pdf && rm -i 'article.*'
 }
 
+# Concatenate pdfs
+pdfconcat(){
+    # usage:
+    #     $ pdfconcat file1.pdf file2.pdf
+    # creates output.pdf
+    if ! which gs >/dev/null 2>&1; then
+        echo 'gs not installed'
+        exit 1
+    fi
+
+    gs -dNOPAUSE -dBATCH -q -sDEVICE=pdfwrite \
+        -sOutputFile="output.pdf" \
+        "$@"
+}
+
 # Utilities for working with AWS CLI
 source ~/.bash/aws4d/aws4d.sh 2>/dev/null
 
@@ -123,6 +139,7 @@ if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
     eval `$SSHAGENT $SSHAGENTARGS`
     trap "kill $SSH_AGENT_PID" 0
 fi
+
 
 # System-specific proxies, directories, aliases, etc.
 source ~/.bashrc.local 2>/dev/null
