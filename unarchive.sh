@@ -28,9 +28,9 @@ do
     if [ ! -h "$dest/$(basename $f)" ];
     then
         f1="$(realpath $f)"
-        ln -s "$f1" "$dest" \
-            && echo "$SCRIPTNAME: linked $f"
-            || echo "$SCRIPTNAME: could not link $f (file already exists)\n"\
-                    "             (try echo \'source \"$f1\"\' >> $dest/$f)"
+        ln -s "$f1" "$dest" 2>/dev/null \
+            && echo "$SCRIPTNAME: linked $f" \
+            || { echo "$SCRIPTNAME: could not link $f (file already exists)"; \
+                 echo "             (try echo 'source \"$f1\"' >> $dest/$f)" }
     fi
 done
