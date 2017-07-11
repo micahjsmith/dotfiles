@@ -261,7 +261,9 @@ nnoremap <leader>r :LinediffReset<CR>
 " indentLine
 autocmd FilterWritePre * if &diff | exe "silent! IndentLinesDisable" | endif
 function! ToggleTmuxCopy()
-    silent! IndentLinesToggle
+    if g:indentLine_enabled
+        silent! IndentLinesToggle
+    endif
     set invnumber
 endfunction
 nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
