@@ -28,6 +28,7 @@ tar -czf $absdir/.bash.tgz .bash
 popd >/dev/null 2>&1
 
 cp -r ./config $absdir/
+cp -r ./setup $absdir/
 cp ./unarchive.sh $absdir
 
 echo "Archive created in $absdir"
