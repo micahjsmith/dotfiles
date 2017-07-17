@@ -167,7 +167,7 @@ then
 fi
 
 # *Install* jupyter-vim-binding
-${SCRIPTDIR}/setup_jupyter.sh
+${SCRIPTDIR}/setup/setup_jupyter.sh
 
 ### Link dotfiles
 
@@ -188,5 +188,5 @@ done
 ### Mac-specific setup
 
 if $MAC; then
-    ${SCRIPTDIR}/setup_mac.sh
+    ${SCRIPTDIR}/setup/setup_mac.sh
 fi
