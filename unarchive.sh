@@ -25,7 +25,7 @@ mv .vim $dest
 shopt -s dotglob
 for f in $SCRIPTDIR/config/*;
 do
-    if [ ! -h "$dest/$(basename $f)" ];
+    if [ ! -L "$dest/$(basename $f)" ];
     then
         f1="$(realpath $f)"
         ln -s "$f1" "$dest" 2>/dev/null \

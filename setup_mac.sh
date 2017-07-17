@@ -4,12 +4,11 @@
 # setup_mac.sh
 #   Setup mac-specific config.
 
-echo 
-
 # Config
 if [[ -f ~/.bash_profile && $(grep -q 'source ~/.bashrc' ~/.bash_profile) ]];
 then
     # pass
+    true
 else
     echo 'source ~/.bashrc' >> ~/.bash_profile
 fi

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Micah Smith
 # setup.sh
 #   Setup all my config. Downloads vim plugins, bash git prompt, and creates
 #   symlinks of relevant dotfiles to home directory
@@ -149,6 +148,7 @@ then
     echo "$SCRIPTNAME: installed aws4d"
 fi
 
+# Install tmux-resurrect
 if [ ! -d ~/.bash/tmux-resurrect ];
 then
     mkdir -p ~/.bash/tmux-resurrect
@@ -157,16 +157,27 @@ then
     echo "$SCRIPTNAME: installed tmux-resurrect"
 fi
 
+# *Download* jupyter-vim-binding
+if [ ! -d ~/.bash/jupyter-vim-binding ];
+then
+    mkdir -p ~/.bash/jupyter-vim-binding
+    git clone https://github.com/lambdalisue/jupyter-vim-binding \
+        ~/.bash/jupyter-vim-binding
+    echo "$SCRIPTNAME: installed jupyter-vim-bindings"
+fi
+
+# *Install* jupyter-vim-binding
+${SCRIPTDIR}/setup_jupyter.sh
+
 ### Link dotfiles
 
 # todo make this portable?
 shopt -s dotglob
 for f in $SCRIPTDIR/config/*;
 do
-    if [ ! -h "$HOME/$(basename $f)" ];
+    if [ ! -L "$HOME/$(basename $f)" ];
     then
         f1="$(realpath $f)"
-	echo "$f1"
         ln -s "$f1" "$HOME" \
             && echo "$SCRIPTNAME: linked $f" \
             || echo "$SCRIPTNAME: could not link $f (file already exists)\n" \
@@ -175,6 +186,7 @@ do
 done
 
 ### Mac-specific setup
+
 if $MAC; then
     ${SCRIPTDIR}/setup_mac.sh
 fi
