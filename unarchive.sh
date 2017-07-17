@@ -15,8 +15,8 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 dest=$HOME
 
-tar -xzf bash.tgz && mv bash .bash
-tar -xzf vim.tgz && mv vim .vim
+tar -xzf bash.tgz
+tar -xzf vim.tgz
 
 mv .bash $dest
 mv .vim $dest
@@ -30,14 +30,14 @@ do
         f1="$(realpath $f)"
         ln -s "$f1" "$dest" 2>/dev/null \
             && echo "$SCRIPTNAME: linked $f" \
-            || { echo "$SCRIPTNAME: could not link $f (file already exists)"; \
-                 echo "             (try echo 'source \"$f1\"' >> $dest/$f)" }
+            || echo -e "$SCRIPTNAME: could not link $f (file already exists)\n"\
+                       "             try this:\n"\
+                       "    echo 'source \"$f1\"' >> $dest/$f"
     fi
 done
 
 # is there stuff in setup?
-if [ ( -d "$SCRIPTDIR/config" ) -a ( "$(ls -A "$SCRIPTDIR/setup")" ) ];
-
+if [ -d "$SCRIPTDIR/config" -a "$(ls -A "$SCRIPTDIR/setup")" ];
 then
     echo "$SCRIPTNAME: There are more files in $SCRIPTDIR/setup, "\
                        "in case you are interested."
