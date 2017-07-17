@@ -23,8 +23,8 @@ absdir=$(realpath $reldir)
 echo $sha > $absdir/SHA
 
 pushd $HOME >/dev/null 2>&1
-tar -czf $absdir/.vim.tgz .vim
-tar -czf $absdir/.bash.tgz .bash
+tar -czf $absdir/vim.tgz .vim
+tar -czf $absdir/bash.tgz .bash
 popd >/dev/null 2>&1
 
 cp -r ./config $absdir/

@@ -15,8 +15,8 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 dest=$HOME
 
-tar -xzf .bash.tgz
-tar -xzf .vim.tgz
+tar -xzf bash.tgz && mv bash .bash
+tar -xzf vim.tgz && mv vim .vim
 
 mv .bash $dest
 mv .vim $dest
