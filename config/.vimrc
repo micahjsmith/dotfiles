@@ -80,6 +80,9 @@ noremap ; :
 inoremap jk <Esc>
 inoremap JK <nop>
 
+"Search token under cursor wthout jumping to first match (uses mark `i`)
+nnoremap * :keepjumps normal! mi*`i<CR>
+
 "Move cursor on display physically, preferring the behavior of ^ over 0
 nnoremap j gj
 nnoremap k gk
