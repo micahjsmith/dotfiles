@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+SCRIPTNAME=$(basename "$0")
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # *Install* jupyter-vim-binding
 if which jupyter >/dev/null 2>&1;
 then
@@ -34,7 +37,7 @@ then
     # ~/custom.js below. But what do we care?
     if [ ! -L "$HOME/.jupyter/custom/custom.js" ];
     then
-        src=$(realpath "$SCRIPTDIR/config/custom.js")
+        src=$(realpath "$SCRIPTDIR/../config/custom.js")
         dest=$(realpath -m -s "$HOME/.jupyter/custom/custom.js")
         destdir=$(dirname "$dest")
         if [ ! -d "$destdir" ];

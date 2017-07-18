@@ -12,5 +12,5 @@ require([
     CodeMirror.Vim.map(";", ":", "normal");
 });
 
-// Disable automatic insertion of matching braces, brackets, and paranetheses
+// Disable automatic insertion of matching braces, brackets, and parentheses
 IPython.CodeCell.options_default.cm_config.autoCloseBrackets = false;
