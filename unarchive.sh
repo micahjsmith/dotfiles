@@ -10,24 +10,23 @@
 
 set -e
 
-SCRIPTNAME=$(basename $0)
+SCRIPTNAME=$(basename "$0")
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 dest=$HOME
 
-tar -xzf bash.tgz
-tar -xzf vim.tgz
-
-mv .bash $dest
-mv .vim $dest
+for d in bash vim;
+do
+    mkdir $d && tar -xzf $d.tgz -C $d --strip-components 1 && mv $d "$dest"
+done
 
 # todo make this portable?
 shopt -s dotglob
 for f in $SCRIPTDIR/config/*;
 do
-    if [ ! -L "$dest/$(basename $f)" ];
+    if [ ! -L "$dest/$(basename "$f")" ];
     then
-        f1="$(realpath $f)"
+        f1="$(realpath "$f")"
         ln -s "$f1" "$dest" 2>/dev/null \
             && echo "$SCRIPTNAME: linked $f" \
             || echo -e "$SCRIPTNAME: could not link $f (file already exists)\n"\
@@ -37,7 +36,7 @@ do
 done
 
 # is there stuff in setup?
-if [ -d "$SCRIPTDIR/config" -a "$(ls -A "$SCRIPTDIR/setup")" ];
+if [ -d "$SCRIPTDIR/config" ] && [ "$(ls -A "$SCRIPTDIR/setup")" ];
 then
     echo "$SCRIPTNAME: There are more files in $SCRIPTDIR/setup, "\
                        "in case you are interested."

@@ -5,7 +5,7 @@
 #   Setup mac-specific config.
 
 # Config
-if [[ -f ~/.bash_profile && $(grep -q 'source ~/.bashrc' ~/.bash_profile) ]];
+if [ -f ~/.bash_profile ] && grep -q 'source ~/.bashrc' ~/.bash_profile;
 then
     # pass
     true

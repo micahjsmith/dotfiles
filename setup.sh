@@ -16,9 +16,10 @@ print_usage_and_exit(){
     echo "usage: ./setup.sh [.]"
 };
 
-OPTS=`getopt -o hv:w --long help,vimdir:,windows -n 'parse-options' -- "$@"`
+OPTS=$(getopt -o hv:w --long help,vimdir:,windows -n 'parse-options' -- "$@")
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 eval set -- "$OPTS"
+
 # Defaults
 VIMDIR="$HOME/.vim"
 WINDOWS=false
@@ -41,7 +42,7 @@ done
 ### Setup
 
 MAC=$(uname | grep -q Darwin && echo "true" || echo "false")
-SCRIPTNAME=$(basename $0)
+SCRIPTNAME=$(basename "$0")
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if which wget >/dev/null 2>&1; then
@@ -69,8 +70,8 @@ install_vim_bundle_github(){
 # Setup vim-pathogen
 if [ ! -f "$VIMDIR/autoload/pathogen.vim" ];
 then
-    mkdir -p $VIMDIR/autoload $VIMDIR/bundle
-    $download $VIMDIR/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+    mkdir -p "$VIMDIR/autoload" "$VIMDIR/bundle"
+    $download "$VIMDIR/autoload/pathogen.vim" https://tpo.pe/pathogen.vim
     echo "$SCRIPTNAME: installed pathogen.vim"
 fi
 
@@ -110,8 +111,8 @@ then
     echo "$SCRIPTNAME: installed git-aware-prompt"
 fi
 
-# Setup solarized
-if ps -p$PPID 2>/dev/null | grep -q gnome-terminal &&  \
+# Setup solarized.
+if pgrep gnome-terminal >/dev/null 2>&1 && \
     [ ! -d ~/.bash/gnome-terminal-colors-solarized ];
 then
     mkdir -p ~/.bash/gnome-terminal-colors-solarized
@@ -120,7 +121,7 @@ then
     echo "$SCRIPTNAME: installed gnome-terminal-colors-solarized"
 fi
 
-if echo $TERM_PROGRAM | grep -q Apple_Terminal && \
+if echo "$TERM_PROGRAM" | grep -q Apple_Terminal && \
     [ ! -d ~/.bash/osx-terminal.app-colors-solarized ];
 then
     mkdir -p ~/.bash/osx-terminal.app-colors-solarized
@@ -167,7 +168,7 @@ then
 fi
 
 # *Install* jupyter-vim-binding
-${SCRIPTDIR}/setup/setup_jupyter.sh
+"${SCRIPTDIR}/setup/setup_jupyter.sh"
 
 ### Link dotfiles
 
@@ -175,18 +176,18 @@ ${SCRIPTDIR}/setup/setup_jupyter.sh
 shopt -s dotglob
 for f in $SCRIPTDIR/config/*;
 do
-    if [ ! -L "$HOME/$(basename $f)" ];
+    if [ ! -L "$HOME/$(basename "$f")" ];
     then
-        f1="$(realpath $f)"
+        f1="$(realpath "$f")"
         ln -s "$f1" "$HOME" \
             && echo "$SCRIPTNAME: linked $f" \
-            || echo "$SCRIPTNAME: could not link $f (file already exists)\n" \
-                    "             (try echo \'source \"$f1\"\' >> $HOME/$f)"
+            || echo -e "$SCRIPTNAME: could not link $f (file already exists)\n" \
+                       "\t(try echo \'source \"$f1\"\' >> $HOME/$f)"
     fi
 done
 
 ### Mac-specific setup
 
 if $MAC; then
-    ${SCRIPTDIR}/setup/setup_mac.sh
+    "${SCRIPTDIR}/setup/setup_mac.sh"
 fi
