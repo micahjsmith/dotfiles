@@ -10,6 +10,7 @@ require([
     CodeMirror.Vim.map("JK", "<nop>", "insert");
     // Map ; to :
     CodeMirror.Vim.map(";", ":", "normal");
+    CodeMirror.Vim.map(";", ":", "visual");
 });
 
 // Disable automatic insertion of matching braces, brackets, and parentheses
