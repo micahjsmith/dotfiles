@@ -86,6 +86,7 @@ install_vim_bundle_github   tpope         vim-fugitive
 install_vim_bundle_github   tpope         vim-unimpaired
 install_vim_bundle_github   vim-airline   vim-airline-themes
 install_vim_bundle_github   Yggdroot      indentLine
+install_vim_bundle_github   scrooloose    nerdtree
 
 # Setup increment.vim
 if [ ! -f "$VIMDIR/plugin/increment.vim" ];

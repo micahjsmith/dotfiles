@@ -274,6 +274,14 @@ nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
 " vim-markdown
 let g:vim_markdown_folding_disabled = 1
 
+" nerdtree
+nnoremap <silent> <leader>n :NERDTreeToggle<CR>
+" open nerdtree automatically if vim is opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" close vim if the only window left is nerdtree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 " Section: Local
 " --------------
 
