@@ -66,7 +66,7 @@ alias tmuxd='tmux detach'
 alias xopen='xdg-open'
 
 # Invoking vim
-if which mvim >/dev/null 2>&1; then
+if command -v mvim >/dev/null 2>&1; then
     alias vim='mvim -v'
     alias v='mvim -v'
 else
@@ -119,7 +119,7 @@ pdfconcat(){
     # usage:
     #     $ pdfconcat file1.pdf file2.pdf
     # creates output.pdf
-    if ! which gs >/dev/null 2>&1; then
+    if ! command -v gs >/dev/null 2>&1; then
         echo 'gs not installed'
         exit 1
     fi
@@ -134,7 +134,7 @@ pdfextract(){
     # usage:
     #     $ pdfextract 1,2,4,7- file.pdf
     # creates output.pdf
-    if ! which gs >/dev/null 2>&1; then
+    if ! command -v gs >/dev/null 2>&1; then
         echo 'gs not installed'
         exit 1
     fi

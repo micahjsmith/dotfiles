@@ -45,7 +45,7 @@ MAC=$(uname | grep -q Darwin && echo "true" || echo "false")
 SCRIPTNAME=$(basename "$0")
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-if which wget >/dev/null 2>&1; then
+if command -v wget >/dev/null 2>&1; then
     download="wget -q -O"
 else
     download="curl -LSso"
