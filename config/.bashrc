@@ -66,7 +66,7 @@ alias tmuxd='tmux detach'
 alias xopen='xdg-open'
 
 # Invoking vim
-if which mvim >/dev/null 2>&1; then
+if command -v mvim >/dev/null 2>&1; then
     alias vim='mvim -v'
     alias v='mvim -v'
 else
@@ -119,14 +119,30 @@ pdfconcat(){
     # usage:
     #     $ pdfconcat file1.pdf file2.pdf
     # creates output.pdf
-    if ! which gs >/dev/null 2>&1; then
+    if ! command -v gs >/dev/null 2>&1; then
         echo 'gs not installed'
         exit 1
     fi
 
-    gs -dNOPAUSE -dBATCH -q -sDEVICE=pdfwrite \
+    gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
         -sOutputFile="output.pdf" \
         "$@"
+}
+
+# Extract individual pages from pdf
+pdfextract(){
+    # usage:
+    #     $ pdfextract 1,2,4,7- file.pdf
+    # creates output.pdf
+    if ! command -v gs >/dev/null 2>&1; then
+        echo 'gs not installed'
+        exit 1
+    fi
+
+    gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+        -sOutputFile="output.pdf" \
+        -sPageList="$1" \
+        "$2"
 }
 
 # Mount the current directory in a jupyter/datascience-notebook session.

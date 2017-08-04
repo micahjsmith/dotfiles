@@ -4,8 +4,7 @@ SCRIPTNAME=$(basename "$0")
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # *Install* jupyter-vim-binding
-if which jupyter >/dev/null 2>&1;
-then
+if command -v jupyter >/dev/null 2>&1; then
     nbextensionsdir=$(jupyter --data-dir)/nbextensions
 
     # If not present, create nbextensions dir
