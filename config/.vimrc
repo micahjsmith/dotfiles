@@ -181,6 +181,7 @@ autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 "Lint current file
 autocmd FileType python     nnoremap <leader>p :!pylint -E %<CR>
 autocmd FileType javascript nnoremap <leader>p :!jshint %<CR>
+autocmd FileType sh         nnoremap <leader>p :!shellcheck %<CR>
 
 " When switching buffers, preserve window view.
 if v:version >= 700
