@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Micah Smith
 # setup.sh
 #   Setup all my config. Downloads vim plugins, bash git prompt, and creates
 #   symlinks of relevant dotfiles to home directory
@@ -17,7 +16,7 @@ print_usage_and_exit(){
     echo "usage: ./setup.sh [.]"
 };
 
-OPTS=`getopt -o hv:w --long help,vimdir:,windows -n 'parse-options' -- "$@"`
+OPTS=$(getopt -o hv:w --long help,vimdir:,windows -n 'parse-options' -- "$@")
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 eval set -- "$OPTS"
 # Defaults
@@ -42,10 +41,10 @@ done
 ### Setup
 
 MAC=$(uname | grep -q Darwin && echo "true" || echo "false")
-SCRIPTNAME=$(basename $0)
+SCRIPTNAME=$(basename "$0")
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-if which wget >/dev/null 2>&1; then
+if command -v wget >/dev/null 2>&1; then
     download="wget -q -O"
 else
     download="curl -LSso"
@@ -70,8 +69,8 @@ install_vim_bundle_github(){
 # Setup vim-pathogen
 if [ ! -f "$VIMDIR/autoload/pathogen.vim" ];
 then
-    mkdir -p $VIMDIR/autoload $VIMDIR/bundle
-    $download $VIMDIR/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+    mkdir -p "$VIMDIR/autoload" "$VIMDIR/bundle"
+    $download "$VIMDIR/autoload/pathogen.vim" https://tpo.pe/pathogen.vim
     echo "$SCRIPTNAME: installed pathogen.vim"
 fi
 
@@ -86,6 +85,7 @@ install_vim_bundle_github   tpope         vim-fugitive
 install_vim_bundle_github   tpope         vim-unimpaired
 install_vim_bundle_github   vim-airline   vim-airline-themes
 install_vim_bundle_github   Yggdroot      indentLine
+install_vim_bundle_github   scrooloose    nerdtree
 
 # Setup increment.vim
 if [ ! -f "$VIMDIR/plugin/increment.vim" ];
@@ -111,8 +111,8 @@ then
     echo "$SCRIPTNAME: installed git-aware-prompt"
 fi
 
-# Setup solarized
-if ps -p$PPID 2>/dev/null | grep -q gnome-terminal &&  \
+# Setup solarized.
+if pgrep gnome-terminal >/dev/null 2>&1 && \
     [ ! -d ~/.bash/gnome-terminal-colors-solarized ];
 then
     mkdir -p ~/.bash/gnome-terminal-colors-solarized
@@ -121,7 +121,7 @@ then
     echo "$SCRIPTNAME: installed gnome-terminal-colors-solarized"
 fi
 
-if echo $TERM_PROGRAM | grep -q Apple_Terminal && \
+if echo "$TERM_PROGRAM" | grep -q Apple_Terminal && \
     [ ! -d ~/.bash/osx-terminal.app-colors-solarized ];
 then
     mkdir -p ~/.bash/osx-terminal.app-colors-solarized
@@ -137,43 +137,57 @@ then
     mkdir -p ~/.bash/dircolors-solarized
     git clone https://github.com/seebi/dircolors-solarized.git \
         ~/.bash/dircolors-solarized
-    if [ ! -h "$HOME/.dir_colors" ];
-    then
-        ln -s ~/.bash/dircolors-solarized/dircolors.256dark ~/.dir_colors
-        eval `dircolors ~/.dir_colors`
-    fi
     echo "$SCRIPTNAME: installed dircolors-solarized"
 fi
 
 # Install aws4d utils
 if [ ! -d ~/.bash/aws4d ];
 then
+    mkdir -p ~/.bash/aws4d
     git clone https://github.com/micahjsmith/aws4d.git \
         ~/.bash/aws4d
     echo "$SCRIPTNAME: installed aws4d"
 fi
 
+# Install tmux-resurrect
 if [ ! -d ~/.bash/tmux-resurrect ];
 then
+    mkdir -p ~/.bash/tmux-resurrect
     git clone https://github.com/tmux-plugins/tmux-resurrect \
         ~/.bash/tmux-resurrect
     echo "$SCRIPTNAME: installed tmux-resurrect"
 fi
 
+# *Download* jupyter-vim-binding
+if [ ! -d ~/.bash/jupyter-vim-binding ];
+then
+    mkdir -p ~/.bash/jupyter-vim-binding
+    git clone https://github.com/lambdalisue/jupyter-vim-binding \
+        ~/.bash/jupyter-vim-binding
+    echo "$SCRIPTNAME: installed jupyter-vim-bindings"
+fi
+
+# *Install* jupyter-vim-binding
+"${SCRIPTDIR}/setup/setup_jupyter.sh"
+
 ### Link dotfiles
 
 # todo make this portable?
 shopt -s dotglob
-for f in config/*;
+for f in $SCRIPTDIR/config/*;
 do
-    if [ ! -h "$HOME/$(basename $f)" ];
+    if [ ! -L "$HOME/$(basename "$f")" ];
     then
-        ln -s $SCRIPTDIR/$f $HOME
-        echo "$SCRIPTNAME: linked $f"
+        f1="$(realpath "$f")"
+        ln -s "$f1" "$HOME" \
+            && echo "$SCRIPTNAME: linked $f" \
+            || echo -e "$SCRIPTNAME: could not link $f (file already exists)\n" \
+                       "\t(try echo \'source \"$f1\"\' >> $HOME/$f)"
     fi
 done
 
 ### Mac-specific setup
+
 if $MAC; then
-    ${SCRIPTDIR}/setup_mac.sh
+    "${SCRIPTDIR}/setup/setup_mac.sh"
 fi

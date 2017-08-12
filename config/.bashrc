@@ -1,6 +1,6 @@
 # Micah Smith's .bashrc
 
-# If not running interactively, don't do anything.
+# Exit if not interactive
 [[ $- != *i* ]] && return
 
 #Add to path.
@@ -40,7 +40,10 @@ then
     export GNOME_SOLARIZED_LIGHT=1
 fi
 
-eval `dircolors ~/.dir_colors`                     # Use solarized for `ls --color` output
+# Use solarized for `ls --color` output
+if [ -f ~/.bash/dircolors-solarized/dircolors.256dark ]; then
+    eval `dircolors ~/.bash/dircolors-solarized/dircolors.256dark` 
+fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
@@ -53,6 +56,7 @@ alias ..='\cd ..'
 alias ...='\cd ../..'
 alias ....='\cd ../../..'
 alias e='evince'
+alias g='git'
 alias it='git'
 alias makel='make 2>&1 | less'
 alias mm='$(history -p !!).m'
@@ -62,7 +66,7 @@ alias tmuxd='tmux detach'
 alias xopen='xdg-open'
 
 # Invoking vim
-if which mvim >/dev/null 2>&1; then
+if command -v mvim >/dev/null 2>&1; then
     alias vim='mvim -v'
     alias v='mvim -v'
 else
@@ -108,6 +112,50 @@ pdftable(){
   pdflatex \
     "\\documentclass{article}\\begin{document}\\input{$1}\\end{document}" \
     && evince article.pdf && rm -i 'article.*'
+}
+
+# Concatenate pdfs
+pdfconcat(){
+    # usage:
+    #     $ pdfconcat file1.pdf file2.pdf
+    # creates output.pdf
+    if ! command -v gs >/dev/null 2>&1; then
+        echo 'gs not installed'
+        exit 1
+    fi
+
+    gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+        -sOutputFile="output.pdf" \
+        "$@"
+}
+
+# Extract individual pages from pdf
+pdfextract(){
+    # usage:
+    #     $ pdfextract 1,2,4,7- file.pdf
+    # creates output.pdf
+    if ! command -v gs >/dev/null 2>&1; then
+        echo 'gs not installed'
+        exit 1
+    fi
+
+    gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+        -sOutputFile="output.pdf" \
+        -sPageList="$1" \
+        "$2"
+}
+
+# Mount the current directory in a jupyter/datascience-notebook session.
+jpystart(){
+    docker run -dit --name jpy-$(basename "$(pwd)") \
+        -p 8888:8888 \
+        -v "$(pwd):/home/jovyan/work:rw" \
+        jupyter/datascience-notebook \
+    && sleep 15 \
+    && docker exec -it jpy-$(basename "$(pwd)") jupyter notebook list
+}
+jpystop(){
+    docker rm -f jpy-$(basename "$(pwd)")
 }
 
 # Utilities for working with AWS CLI

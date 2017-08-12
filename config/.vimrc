@@ -80,6 +80,9 @@ noremap ; :
 inoremap jk <Esc>
 inoremap JK <nop>
 
+"Search token under cursor wthout jumping to first match (uses mark `i`)
+nnoremap * :keepjumps normal! mi*`i<CR>
+
 "Move cursor on display physically, preferring the behavior of ^ over 0
 nnoremap j gj
 nnoremap k gk
@@ -178,6 +181,7 @@ autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 textwidth=0 wrap
 "Lint current file
 autocmd FileType python     nnoremap <leader>p :!pylint -E %<CR>
 autocmd FileType javascript nnoremap <leader>p :!jshint %<CR>
+autocmd FileType sh         nnoremap <leader>p :!shellcheck %<CR>
 
 " When switching buffers, preserve window view.
 if v:version >= 700
@@ -217,7 +221,8 @@ highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 "Colorz
-colorscheme solarized
+" colorscheme solarized
+colorscheme default
 if has("gui_running") || $GNOME_SOLARIZED_LIGHT==1
     set background=light
 else
@@ -260,13 +265,23 @@ nnoremap <leader>r :LinediffReset<CR>
 " indentLine
 autocmd FilterWritePre * if &diff | exe "silent! IndentLinesDisable" | endif
 function! ToggleTmuxCopy()
-    silent! IndentLinesToggle
+    if g:indentLine_enabled
+        silent! IndentLinesToggle
+    endif
     set invnumber
 endfunction
 nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
 
 " vim-markdown
 let g:vim_markdown_folding_disabled = 1
+
+" nerdtree
+nnoremap <silent> <leader>n :NERDTreeToggle<CR>
+" open nerdtree automatically if vim is opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" close vim if the only window left is nerdtree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Section: Local
 " --------------
