@@ -1,0 +1,16 @@
+anaconda
+atom
+dropbox
+firefox
+flux
+google-backup-and-sync
+google-chrome
+google-drive
+keybase
+macvim
+quicksilver
+skype
+slack
+spectacle
+spectacles
+thunderbird
