@@ -221,12 +221,13 @@ highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 "Colorz
-" colorscheme solarized
-colorscheme default
 if has("gui_running") || $GNOME_SOLARIZED_LIGHT==1
     set background=light
+    " colorscheme default
+    colorscheme solarized
 else
     set background=dark
+    colorscheme solarized
 endif
 
 " Section: Plugins
