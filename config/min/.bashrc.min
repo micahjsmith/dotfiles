@@ -1,0 +1,20 @@
+export EDITOR=vim                                  # Default editor
+bind '"\e[A": history-search-backward' 2>/dev/null # Arrows search from current cmd
+bind '"\e[B": history-search-forward'  2>/dev/null # Arrows search from current cmd
+alias ..='\cd ..'
+alias g='git'
+alias v='vim'
+alias l='\ls -AF --color'
+alias ll='\ls -AhlF --color'
+
+c(){
+  if [ "$#" = "1" ]; then
+    cd "$1"
+  elif [ "$#" = "2" ]; then
+    cd "${PWD/$1/$2}"
+  else
+    echo "[c] USAGE: c dirname"
+    echo "[c] USAGE: c old new"
+    return 1
+  fi
+}
