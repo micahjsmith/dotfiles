@@ -80,8 +80,9 @@ install_vim_bundle_github   bling         vim-airline
 install_vim_bundle_github   JuliaLang     julia-vim
 install_vim_bundle_github   plasticboy    vim-markdown
 install_vim_bundle_github   terryma       vim-expand-region
-install_vim_bundle_github   tpope         vim-surround
+install_vim_bundle_github   tpope         vim-dispatch
 install_vim_bundle_github   tpope         vim-fugitive
+install_vim_bundle_github   tpope         vim-surround
 install_vim_bundle_github   tpope         vim-unimpaired
 install_vim_bundle_github   vim-airline   vim-airline-themes
 install_vim_bundle_github   Yggdroot      indentLine
@@ -173,8 +174,7 @@ fi
 ### Link dotfiles
 
 # todo make this portable?
-shopt -s dotglob
-for f in $SCRIPTDIR/config/*;
+for f in $(find $SCRIPTDIR/config -maxdepth 1 -type f);
 do
     if [ ! -L "$HOME/$(basename "$f")" ];
     then

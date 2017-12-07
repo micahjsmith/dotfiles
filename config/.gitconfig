@@ -40,7 +40,7 @@
 [apply]
     # fix whitespace issues in patches
     whitespace = fix
-#[url "git@github.com:"]
-#	insteadOf = https://github.com/
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 [include]
     path = ~/.gitconfig.local

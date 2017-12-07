@@ -96,7 +96,7 @@ nnoremap H g^
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 "Format blocks of text
-nnoremap Q gq$
+nnoremap Q gqap
 
 "Manage buffer switching
 nnoremap gn :bn<CR>
@@ -106,10 +106,6 @@ nnoremap gd :bd<CR>
 
 "Open files for editing that don't exist
 map ge :e <cfile><CR>
-
-"Enable C-g in insert mode - displays file name and other info
-inoremap <C-g> <Esc>1<C-g>i
-nnoremap <C-g> 1<C-g>
 
 "Insert lines above and below without entering insert mode. Disable K which I
 "accidentally hit all the time.
@@ -128,6 +124,9 @@ nnoremap <leader>s :set invspell<CR>
 
 "Replace misspelled word with first suggestion
 nnoremap <leader>z 1z=
+
+"Make default goal
+nnoremap <leader>k :Make<CR>
 
 " Section: Commands
 " ----------------

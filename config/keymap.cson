@@ -38,7 +38,6 @@
 'atom-text-editor.vim-mode-plus.normal-mode':
   'ctrl-k': 'vim-mode-plus:add-blank-line-above'
   'ctrl-j': 'vim-mode-plus:add-blank-line-below'
-  'v': 'expand-region:expand'
 
 # keymap for vim-surround, see package vim-mode-plus-keymaps-for-surround
 'atom-text-editor.vim-mode-plus.visual-mode:not(.insert-mode)':
