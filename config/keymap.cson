@@ -38,9 +38,11 @@
 'atom-text-editor.vim-mode-plus.normal-mode':
   'ctrl-k': 'vim-mode-plus:add-blank-line-above'
   'ctrl-j': 'vim-mode-plus:add-blank-line-below'
+  'Q': 'autoflow:reflow-selection'
 
 # keymap for vim-surround, see package vim-mode-plus-keymaps-for-surround
 'atom-text-editor.vim-mode-plus.visual-mode:not(.insert-mode)':
   'S': 'vim-mode-plus:surround'
   'v': 'expand-region:expand'
   'ctrl-v': 'expand-region:shrink'
+  'Q': 'autoflow:reflow-selection'
