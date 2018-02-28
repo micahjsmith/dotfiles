@@ -1,6 +1,13 @@
 # Micah Smith's .bashrc
 
+if [ -f /etc/profile ]; then
+    PATH=""
+    source /etc/profile
+fi
+
 # Exit if not interactive
+echo sourcing bashrc
+echo current path is $PATH
 [[ $- != *i* ]] && return
 
 #Add to path.
