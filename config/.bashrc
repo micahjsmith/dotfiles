@@ -4,7 +4,7 @@
 [[ $- != *i* ]] && return
 
 #Add to path.
-PATH=$HOME/local/bin:$PATH
+[[ ":$PATH:" != *":$HOME/local/bin:"* ]] && PATH="$HOME/local/bin:${PATH}"
 
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
