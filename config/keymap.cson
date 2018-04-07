@@ -36,9 +36,17 @@
   'j k': 'core:cancel'
 
 'atom-text-editor.vim-mode-plus.normal-mode':
+  'j': 'keystroke g j'
+  'k': 'keystroke g k'
+  '$': 'keystroke g $'
+  '^': 'keystroke g 0'
   'ctrl-k': 'vim-mode-plus:add-blank-line-above'
   'ctrl-j': 'vim-mode-plus:add-blank-line-below'
   'Q': 'autoflow:reflow-selection'
+
+'atom-text-editor.vim-mode-plus.normal-mode:not(.with-count)':
+  '0': 'keystroke g ^'
+
 
 # keymap for vim-surround, see package vim-mode-plus-keymaps-for-surround
 'atom-text-editor.vim-mode-plus.visual-mode:not(.insert-mode)':
