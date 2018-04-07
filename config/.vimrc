@@ -87,10 +87,8 @@ nnoremap * :keepjumps normal! mi*`i<CR>
 nnoremap j gj
 nnoremap k gk
 nnoremap $ g$
-nnoremap L g$
 nnoremap ^ g0
 nnoremap 0 g^
-nnoremap H g^
 
 "Redraw the screen and remove any search highlighting
 nnoremap <silent> <C-l> :nohl<CR><C-l>
