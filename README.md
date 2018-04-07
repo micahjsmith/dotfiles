@@ -20,3 +20,7 @@ bash setup.sh
 cd path/to/archive/directory
 ./unarchive.sh
 ```
+
+## Todo
+
+- activate conda env when creating new pane in tmux
