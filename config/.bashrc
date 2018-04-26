@@ -1,3 +1,4 @@
+#!/bin/bash
 # Micah Smith's .bashrc
 
 if [ -f /etc/profile ]; then
@@ -48,7 +49,8 @@ then
     # ~/.bash/gnome-terminal-colors-solarized/set_dark.sh 2>&1 >/dev/null
     # export GNOME_SOLARIZED_DARK=1
 
-    ~/.bash/gnome-terminal-colors-solarized/set_light.sh 2>&1 >/dev/null
+    # shellcheck source=/dev/null
+    source ~/.bash/gnome-terminal-colors-solarized/set_light.sh >/dev/null 2>&1 
     export GNOME_SOLARIZED_LIGHT=1
 fi
 
@@ -61,6 +63,7 @@ LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables a
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
 # TODO preserve CONDA_DEFAULT_ENV if possible and set
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
+# shellcheck source=/dev/null
 source "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
 export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
 
@@ -98,9 +101,9 @@ alias llth='\ls -AhltF --color | head'
 # Imitate zsh-like cd
 c(){
   if [ "$#" = "1" ]; then
-    cd "$1"
+    cd "$1" || return 1
   elif [ "$#" = "2" ]; then
-    cd "${PWD/$1/$2}"
+    cd "${PWD/$1/$2}" || return 1
   else
     echo "[c] USAGE: c dirname"
     echo "[c] USAGE: c old new"
@@ -112,12 +115,12 @@ c(){
 alias latest='\ls -t | head -n 1'
 # nth most recent modified file
 latestn(){
-  \ls -t | head -n $1 | tail -n 1
+  \\ls -t | head -n "$1" | tail -n 1
 }
 # The names of the n most recently modified files in this directory and all
 # subdirectories. See http://stackoverflow.com/a/4561987/2514228
 latestr(){
-  find . -type f -printf '%T@ %p\n' | sort -n | tail -n $1 | cut -f2 -d" "
+  find . -type f -printf '%T@ %p\n' | sort -n | tail -n "$1" | cut -f2 -d" "
 }
 
 # Compile single table and view as pdf
@@ -160,27 +163,31 @@ pdfextract(){
 
 # Mount the current directory in a jupyter/datascience-notebook session.
 jpystart(){
-    docker run -dit --name jpy-$(basename "$(pwd)") \
+    docker run -dit --name jpy-"$(basename "$(pwd)")" \
         -p 8888:8888 \
         -v "$(pwd):/home/jovyan/work:rw" \
         jupyter/datascience-notebook \
     && sleep 15 \
-    && docker exec -it jpy-$(basename "$(pwd)") jupyter notebook list
+    && docker exec -it jpy-"$(basename "$(pwd)")" jupyter notebook list
 }
 jpystop(){
-    docker rm -f jpy-$(basename "$(pwd)")
+    docker rm -f jpy-"$(basename "$(pwd)")"
 }
 
 # Utilities for working with AWS CLI
+# shellcheck source=/dev/null
 source ~/.bash/aws4d/aws4d.sh 2>/dev/null
 
 # Password-less ssh
+# TODO does this work correctly?
+# see http://mah.everybody.org/docs/ssh
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
-if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
-    eval `$SSHAGENT $SSHAGENTARGS`
+if [ -z "$SSH_AUTH_SOCK" ] && [ -x "$SSHAGENT" ]; then
+    eval "$($SSHAGENT $SSHAGENTARGS)"
     trap "kill $SSH_AGENT_PID" 0
 fi
 
 # System-specific proxies, directories, aliases, etc.
+# shellcheck source=/dev/null
 source ~/.bashrc.local 2>/dev/null
