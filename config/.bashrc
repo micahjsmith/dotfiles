@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 # Micah Smith's .bashrc
 
 if [ -f /etc/profile ]; then
     PATH=""
-    source /etc/profile
+    . /etc/profile
 fi
 
 # Exit if not interactive
@@ -23,22 +23,22 @@ umask 0002                                         # Default file creation mode
 set bell-style none                                # Try to avoid bells...
 unset SSH_ASKPASS                                  # So the display doesn't come up for git
 
-# Which which
-# `brew install gnu-which` on OSX
-if gwhich --version 2>/dev/null | grep -q GNU;
-then
-    function which ()
-    {
-        (alias; declare -f) | gwhich  --tty-only --read-alias --read-functions --show-tilde --show-dot $@
-    }
-    export -f which
-fi
+# # Which which
+# # `brew install gnu-which` on OSX
+# if gwhich --version 2>/dev/null | grep -q GNU;
+# then
+#     which ()
+#     {
+#         (alias; declare -f) | gwhich  --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+#     }
+#     export -f which
+# fi
 
 # Conda
 # Note that this activates the base environment, which prepends `(base)` to PS1.
 # Later, we reset PS1. This is okay, because we don't care about displaying base
 # environment anyway.
-source /usr/local/anaconda3/etc/profile.d/conda.sh >/dev/null 2>&1
+. /usr/local/anaconda3/etc/profile.d/conda.sh >/dev/null 2>&1
 conda activate
 
 # Colors
@@ -50,7 +50,7 @@ then
     # export GNOME_SOLARIZED_DARK=1
 
     # shellcheck source=/dev/null
-    source ~/.bash/gnome-terminal-colors-solarized/set_light.sh >/dev/null 2>&1 
+    . ~/.bash/gnome-terminal-colors-solarized/set_light.sh >/dev/null 2>&1 
     export GNOME_SOLARIZED_LIGHT=1
 fi
 
@@ -64,7 +64,7 @@ LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables a
 # TODO preserve CONDA_DEFAULT_ENV if possible and set
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 # shellcheck source=/dev/null
-source "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
+. "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
 export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
 
 # User specific aliases
@@ -76,7 +76,7 @@ alias g='git'
 alias it='git'
 alias makel='make 2>&1 | less'
 alias mm='$(history -p !!).m'
-alias sbrc='source ~/.bashrc'
+alias sbrc='. ~/.bashrc'
 alias tmuxa='tmux attach -t'
 alias tmuxd='tmux detach'
 alias xopen='xdg-open'
@@ -176,7 +176,7 @@ jpystop(){
 
 # Utilities for working with AWS CLI
 # shellcheck source=/dev/null
-source ~/.bash/aws4d/aws4d.sh 2>/dev/null
+. ~/.bash/aws4d/aws4d.sh 2>/dev/null
 
 # Password-less ssh
 # TODO does this work correctly?
@@ -190,4 +190,4 @@ fi
 
 # System-specific proxies, directories, aliases, etc.
 # shellcheck source=/dev/null
-source ~/.bashrc.local 2>/dev/null
+. ~/.bashrc.local 2>/dev/null
