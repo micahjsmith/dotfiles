@@ -29,6 +29,7 @@
 # If you are unfamiliar with CSON, you can read more about it in the
 # Atom Flight Manual:
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+
 'atom-text-editor.vim-mode-plus.insert-mode':
   'j k': 'vim-mode-plus:activate-normal-mode'
 
@@ -54,3 +55,6 @@
   'v': 'expand-region:expand'
   'ctrl-v': 'expand-region:shrink'
   'Q': 'autoflow:reflow-selection'
+
+'.platform-darwin':
+  'cmd-|': 'github:toggle-git-tab'
