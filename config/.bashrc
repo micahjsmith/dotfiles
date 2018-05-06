@@ -38,7 +38,7 @@ fi
 # Later, we reset PS1. This is okay, because we don't care about displaying base
 # environment anyway.
 source /usr/local/anaconda3/etc/profile.d/conda.sh >/dev/null 2>&1
-conda activate
+conda activate >/dev/null 2>&1
 
 # Colors
 
