@@ -58,3 +58,8 @@
 
 '.platform-darwin':
   'cmd-|': 'github:toggle-git-tab'
+
+# scroll in command palette
+'.command-palette':
+  'ctrl-n': 'core:move-down'
+  'ctrl-p': 'core:move-up'
