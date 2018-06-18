@@ -1,0 +1,48 @@
+"*":
+  "autocomplete-plus":
+    confirmCompletion: "enter"
+    fileBlacklist: [
+      "*.md"
+      "*.txt"
+    ]
+  "autocomplete-python":
+    useKite: false
+  "bracket-matcher":
+    autocompleteBrackets: false
+    wrapSelectionsInBrackets: false
+  core:
+    telemetryConsent: "no"
+    themes: [
+      "one-light-ui"
+      "solarized-light-syntax"
+    ]
+  editor:
+    fontSize: 13
+    preferredLineLength: 79
+    scrollPastEnd: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+  "exception-reporting":
+    userId: "26e337ac-f691-46c2-b2b8-9a2d4df2add6"
+  latex:
+    openResultAfterBuild: false
+    openResultInBackground: false
+    opener: "pdf-view"
+  "pdf-view":
+    fitToWidthOnOpen: true
+    paneToUseInSynctex: "left"
+    reverseSyncBehaviour: "Double click"
+  "spell-check":
+    grammars: [
+      "source.asciidoc"
+      "source.gfm"
+      "text.git-commit"
+      "text.plain"
+      "text.plain.null-grammar"
+      "text.tex.latex"
+    ]
+  "tool-bar":
+    position: "Left"
+  "vim-mode-plus": {}
+  welcome:
+    showOnStartup: false
