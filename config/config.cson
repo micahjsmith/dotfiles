@@ -20,6 +20,7 @@
     fontSize: 13
     preferredLineLength: 79
     scrollPastEnd: true
+    showIndentGuide: true
     softWrap: true
     softWrapAtPreferredLineLength: true
   "exception-reporting":
