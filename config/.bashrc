@@ -14,6 +14,7 @@ fi
 
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
+export VISUAL=vim                                  # Default editor
 export EDITOR=vim                                  # Default editor
 mesg n                                             # Disallow others to write (interactive term only)
 stty -ixon                                         # Disable <C-s> that hangs terminal (interactive term only)
@@ -66,6 +67,10 @@ export GITAWAREPROMPT=~/.bash/git-aware-prompt
 # shellcheck source=/dev/null
 . "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
 export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
+
+# git completion
+# See https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+. "$HOME/.bash/git-completion/git-completion.bash" 2>/dev/null
 
 # User specific aliases
 alias ..='\cd ..'

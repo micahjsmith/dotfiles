@@ -160,6 +160,16 @@ then
     echo "$SCRIPTNAME: installed tmux-resurrect"
 fi
 
+# Install git completion
+if [ ! -d "~/.bash/git-completion" ];
+then
+    mkdir -p ~/.bash/git-completion
+    $download \
+        "$HOME/.bash/git-completion/git-completion.bash" \
+        https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    echo "SCRIPTNAME: installed git-completion"
+fi
+
 # *Download* jupyter-vim-binding
 if [ ! -d ~/.bash/jupyter-vim-binding ];
 then
