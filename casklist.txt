@@ -8,9 +8,10 @@ google-chrome
 google-drive
 keybase
 macvim
+meld
+miniconda
 quicksilver
 skype
 slack
 spectacle
-spectacles
 thunderbird

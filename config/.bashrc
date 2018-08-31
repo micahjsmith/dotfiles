@@ -66,7 +66,7 @@ LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables a
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 # shellcheck source=/dev/null
 . "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
-export PS1="\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\\$ \[$(tput sgr0)\]"
+export PS1="\n\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\n\\$ \[$(tput sgr0)\]"
 
 # git completion
 # See https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
