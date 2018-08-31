@@ -4,7 +4,7 @@
 [github]
 	user = micahjsmith
 [alias]
-    a    = add
+    a     = add
     au    = add -u
     amend = "!git add -u && git commit --amend --no-edit"
     br   = branch
@@ -34,11 +34,14 @@
     conflictstyle = diff3
 [mergetool]
     prompt = false
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output="$MERGED"
 [push]
     default = tracking
 [core]
     # warn on whitespace issues
     whitespace = trailing-space,space-before-tab
+    filemode = false
 [apply]
     # fix whitespace issues in patches
     whitespace = fix
