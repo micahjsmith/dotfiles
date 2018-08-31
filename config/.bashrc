@@ -196,3 +196,5 @@ fi
 # System-specific proxies, directories, aliases, etc.
 # shellcheck source=/dev/null
 . ~/.bashrc.local 2>/dev/null
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

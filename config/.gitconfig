@@ -5,6 +5,8 @@
 	user = micahjsmith
 [alias]
     a    = add
+    au    = add -u
+    amend = "!git add -u && git commit --amend --no-edit"
     br   = branch
     ch   = checkout
     co   = commit
