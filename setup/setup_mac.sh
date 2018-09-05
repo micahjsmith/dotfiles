@@ -34,3 +34,9 @@ do
         brew install $pkg
     fi
 done
+
+# install key bindings for fzf
+if [ ! -f "$HOME/.bash/installed-fzf-key-bindings" ]; then
+    "$(brew --prefix)/opt/fzf/install" --key-bindings --no-completion --no-update-rc
+    touch "$HOME/.bash/installed-fzf-key-bindings"
+fi
