@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
+import argparse
 import logging
 import os
 import platform
 import subprocess
 import sys
+
+from contextlib import contextmanager
 
 try:
     from urllib.request import urlretrieve
@@ -14,6 +19,18 @@ except ImportError:
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 VIM_DIR = os.path.join(os.path.expanduser('~'), '.vim')
+
+
+@contextmanager
+def stacklog(method, message, *args, **kwargs):
+    method(str(message) + '...', *args, **kwargs)
+    try:
+        yield
+    except Exception as e:
+        method(str(message) + '...FAILURE', *args, **kwargs)
+        raise e
+    else:
+        method(str(message) + '...DONE', *args, **kwargs)
 
 
 def home():
@@ -65,12 +82,12 @@ def install_vim_bundle_github(author, name):
 
         
 def main():
-    # setup vim-pathogen
-    path = os.path.join(VIM_DIR, 'autoload', 'pathogen.vim')
-    if not os.path.isfile(path):
-        for d in ['autoload', 'bundle']:
-            os.makedirs(os.path.join(VIM_DIR, d), exist_ok=True)
-        download('https://tpo.pe/pathogen.vim', path)
+    with stacklog(logging.info, 'Setting up vim-pathogen'):
+        path = os.path.join(VIM_DIR, 'autoload', 'pathogen.vim')
+        if not os.path.isfile(path):
+            for d in ['autoload', 'bundle']:
+                os.makedirs(os.path.join(VIM_DIR, d), exist_ok=True)
+            download('https://tpo.pe/pathogen.vim', path)
 
     # install vim bundles
     vim_bundle_configs = [
@@ -89,97 +106,100 @@ def main():
         {'author': 'editorconfig', 'name': 'editorconfig-vim'},
     ]
     for c in vim_bundle_configs:
-        install_vim_bundle_github(c['author'], c['name'])
+        with stacklog(logging.info, 'Installing vim bundle {author}/{name}'.format(**c)):
+            install_vim_bundle_github(c['author'], c['name'])
 
-    # setup increment.vim
-    if not os.path.isfile(os.path.join(VIM_DIR, 'plugin', 'increment.vim')):
-        os.makedirs(os.path.join(VIM_DIR, 'plugin'), exist_ok=True)
-        download(
-            'http://www.vim.org/scripts/download_script.php?src_id=469',
-            os.path.join(VIM_DIR, 'plugin', 'increment.vim')
-        )
-        subprocess.check_call([
-            'vim', '-u', 'NONE', '-c', 'e ++ff=dos', '-c', 'w ++ff=unix', '-c', 'q',
-            os.path.join(VIM_DIR, 'plugin', 'increment.vim'),
-        ])
+    with stacklog(logging.info, 'Installing vim script increment.vim'):
+        if not os.path.isfile(os.path.join(VIM_DIR, 'plugin', 'increment.vim')):
+            os.makedirs(os.path.join(VIM_DIR, 'plugin'), exist_ok=True)
+            download(
+                'http://www.vim.org/scripts/download_script.php?src_id=469',
+                os.path.join(VIM_DIR, 'plugin', 'increment.vim')
+            )
+            subprocess.check_call([
+                'vim', '-u', 'NONE', '-c', 'e ++ff=dos', '-c', 'w ++ff=unix', '-c', 'q',
+                os.path.join(VIM_DIR, 'plugin', 'increment.vim'),
+            ])
 
     # done with WSL setup
     if is_wsl():
         return
 
-    # setup git-aware-prompt
-    path = os.path.join(home(), '.bash', 'git-aware-prompt')
-    if not os.path.isdir(path):
-        os.makedirs(path, exist_ok=True)
-        clone('https://github.com/jimeh/git-aware-prompt.git', path)
+    with stacklog(logging.info, 'Setting up git-aware-prompt'):
+        path = os.path.join(home(), '.bash', 'git-aware-prompt')
+        if not os.path.isdir(path):
+            os.makedirs(path, exist_ok=True)
+            clone('https://github.com/jimeh/git-aware-prompt.git', path)
 
-    # setup solarized
-    path = os.path.join(home(), '.bash', 'osx-terminal.app-colors-solarized')
-    if is_apple_terminal() and not os.path.isdir(path):
-        os.makedirs(path, exist_ok=True)
-        clone('https://github.com/tomislav/osx-terminal.app-colors-solarized.git', path)
-        for theme in ['Dark', 'Light']:
-            subprocess.Popen(
-                ['open', os.path.join(path, 'Solarized {theme}.terminal'.format(theme=theme))],
-                close_fds=True
+    with stacklog(logging.info, 'Setting up solarized'):
+        path = os.path.join(home(), '.bash', 'osx-terminal.app-colors-solarized')
+        if is_apple_terminal() and not os.path.isdir(path):
+            os.makedirs(path, exist_ok=True)
+            clone('https://github.com/tomislav/osx-terminal.app-colors-solarized.git', path)
+            for theme in ['Dark', 'Light']:
+                subprocess.Popen(
+                    ['open', os.path.join(path, 'Solarized {theme}.terminal'.format(theme=theme))],
+                    close_fds=True
+                )
+
+        path = os.path.join(home(), '.bash', 'dircolors-solarized')
+        if not os.path.isdir(path):
+            os.makedirs(path, exist_ok=True)
+            clone('https://github.com/seebi/dircolors-solarized.git', path)
+
+    with stacklog(logging.info, 'Installing tmux-resurrect'):
+        path = os.path.join(home(), '.bash', 'tmux-resurrect')
+        if not os.path.isdir(path):
+            os.makedirs(path, exist_ok=True)
+            download(
+                'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash',
+                os.path.join(path, 'git-completion.bash')
             )
 
-    path = os.path.join(home(), '.bash', 'dircolors-solarized')
-    if not os.path.isdir(path):
-        os.makedirs(path, exist_ok=True)
-        clone('https://github.com/seebi/dircolors-solarized.git', path)
+    with stacklog(logging.info, 'Installing jupyter-vim-binding'):
+        with stacklog(logging.debug, 'Downloading jupyter-vim-binding'):
+            path = os.path.join(home(), '.bash', 'jupyter-vim-binding')
+            if not os.path.isdir(path):
+                os.makedirs(path, exist_ok=True)
+                clone('https://github.com/lambdalisue/jupyter-vim-binding', path)
 
-    # install tmux-resurrect
-    path = os.path.join(home(), '.bash', 'tmux-resurrect')
-    if not os.path.isdir(path):
-        os.makedirs(path, exist_ok=True)
-        download(
-            'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash',
-            os.path.join(path, 'git-completion.bash')
-        )
+        with stacklog(logging.debug, 'Running setup_jupyter.sh'):
+            path = os.path.join(SCRIPT_DIR, 'setup', 'setup_jupyter.sh')
+            subprocess.check_call(path)
 
-    # download jupyter-vim-binding
-    path = os.path.join(home(), '.bash', 'jupyter-vim-binding')
-    if not os.path.isdir(path):
-        os.makedirs(path, exist_ok=True)
-        clone('https://github.com/lambdalisue/jupyter-vim-binding', path)
+    with stacklog(logging.info, 'Linking dotfiles'):
+        path = os.path.join(SCRIPT_DIR, 'config')
+        exclude = ['.DS_Store']
+        for f in os.listdir(path):
+            if f in exclude:
+                continue
+            fa = os.path.join(path, f)
+            if os.path.isfile(fa):
+                dst = os.path.join(home(), f)
+                if not os.path.isfile(dst):
+                    os.symlink(fa, )
+                else:
+                    logging.warning(
+                        'Could not link {src} to {dst} (already exists)'
+                        .format(src=fa, dst=dst))
 
-    # install jupyter-vim-binding
-    path = os.path.join(SCRIPT_DIR, 'setup', 'setup_jupyter.sh')
-    subprocess.check_call(path)
-
-    # link dotfiles
-    path = os.path.join(SCRIPT_DIR, 'config')
-    exclude = ['.DS_Store']
-    for f in os.listdir(path):
-        if f in exclude:
-            continue
-        fa = os.path.join(path, f)
-        if os.path.isfile(fa):
-            dst = os.path.join(home(), f)
-            if not os.path.isfile(dst):
-                os.symlink(fa, )
-            else:
-                logging.warning(
-                    'Could not link {src} to {dst} (already exists)'
-                    .format(src=fa, dst=dst))
-
-    # mac setup
     if is_mac():
-        path = os.path.join(SCRIPT_DIR, 'setup', 'setup_mac.sh')
-        subprocess.check_call(path)
-
-    # done!
-    print('Done.')
+        with stacklog(logging.info, 'Running setup_mac.sh'):
+            path = os.path.join(SCRIPT_DIR, 'setup', 'setup_mac.sh')
+            subprocess.check_call(path)
 
 
 if __name__ == '__main__':
-    import argparse
     parser = argparse.ArgumentParser(description='Setup all my config')
     parser.add_argument('--vimdir', help='Path to .vim directory')
+    parser.add_argument('--verbose', '-v', action='count', default=0)
     args = parser.parse_args()
 
     if args.vimdir is not None:
         VIM_DIR = args.vimdir
 
-    main()
+    level = logging.WARNING - min(10 * args.verbose, logging.WARNING)
+    logging.basicConfig(level=level)
+
+    with stacklog(print, 'Setting up'):
+        main()
