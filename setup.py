@@ -23,14 +23,15 @@ VIM_DIR = os.path.join(os.path.expanduser('~'), '.vim')
 
 @contextmanager
 def stacklog(method, message, *args, **kwargs):
-    method(str(message) + '...', *args, **kwargs)
+    message = str(message)
+    method(message + '...', *args, **kwargs)
     try:
         yield
     except Exception as e:
-        method(str(message) + '...FAILURE', *args, **kwargs)
-        raise e
+        method(message + '...FAILURE', *args, **kwargs)
+        raise
     else:
-        method(str(message) + '...DONE', *args, **kwargs)
+        method(message + '...DONE', *args, **kwargs)
 
 
 def home():
