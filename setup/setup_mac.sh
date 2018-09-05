@@ -28,7 +28,7 @@ then
 fi
 
 # Other brew
-for pkg in tmux wget gnu-which shellcheck;
+for pkg in tmux wget gnu-which shellcheck fzf;
 do
     if ! brew list | grep -q $pkg; then
         brew install $pkg
