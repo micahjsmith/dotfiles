@@ -61,12 +61,23 @@ if [ -f ~/.bash/dircolors-solarized/dircolors.256dark ]; then
 fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
+# PS1
+_set_conda_env(){
+    if [ "$CONDA_DEFAULT_ENV" != "" ];
+    then
+        conda_env=" <$CONDA_DEFAULT_ENV>"
+    else
+        conda_env=""
+    fi
+}
+
+
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
-# TODO preserve CONDA_DEFAULT_ENV if possible and set
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
+PROMPT_COMMAND="_set_conda_env; $PROMPT_COMMAND"
 # shellcheck source=/dev/null
 . "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
-export PS1="\n\[$(tput setaf 4)\][\[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 4)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\]]\n\\$ \[$(tput sgr0)\]"
+export PS1="\n\[$(tput setaf 4)\][ \[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 1)\]\${conda_env}\[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\] ]\n\\$ \[$(tput sgr0)\]"
 
 # git completion
 # See https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
