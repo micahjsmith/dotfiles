@@ -1,10 +1,10 @@
 #!/bin/sh
 # Micah Smith's .bashrc
 
-if [ -f /etc/profile ]; then
-    PATH=""
-    . /etc/profile
-fi
+# if [ -f /etc/profile ]; then
+#     PATH=""
+#     . /etc/profile
+# fi
 
 # Exit if not interactive
 [[ $- != *i* ]] && return
