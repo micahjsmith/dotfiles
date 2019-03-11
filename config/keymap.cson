@@ -55,6 +55,8 @@
   'v': 'expand-region:expand'
   'ctrl-v': 'expand-region:shrink'
   'Q': 'autoflow:reflow-selection'
+  'j': 'keystroke g j'
+  'k': 'keystroke g k'
 
 '.platform-darwin':
   'cmd-|': 'github:toggle-git-tab'
@@ -63,3 +65,7 @@
 '.command-palette':
   'ctrl-n': 'core:move-down'
   'ctrl-p': 'core:move-up'
+
+# latex compile
+'atom-text-editor[data-grammar~="latex"]':
+  'cmd-enter': 'latex:build'

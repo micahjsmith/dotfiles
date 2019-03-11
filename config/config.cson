@@ -11,13 +11,14 @@
     autocompleteBrackets: false
     wrapSelectionsInBrackets: false
   core:
+    projectHome: "/Users/micahsmith/workspace"
     telemetryConsent: "no"
     themes: [
-      "one-light-ui"
-      "solarized-light-syntax"
+      "one-dark-ui"
+      "solarized-dark-syntax"
     ]
   editor:
-    fontSize: 13
+    fontSize: 16
     preferredLineLength: 79
     scrollPastEnd: true
     showIndentGuide: true
@@ -26,9 +27,11 @@
   "exception-reporting":
     userId: "26e337ac-f691-46c2-b2b8-9a2d4df2add6"
   latex:
+    moveResultToSourceDirectory: false
     openResultAfterBuild: false
     openResultInBackground: false
     opener: "pdf-view"
+    outputDirectory: "_build"
   "pdf-view":
     fitToWidthOnOpen: true
     paneToUseInSynctex: "left"
