@@ -53,6 +53,14 @@ def is_wsl():
     return False
 
 
+def makedirs(d, exist_ok=False):
+    try:
+        os.makedirs(d)
+    except OSError as e:
+        if 'File exists' in e and not exist_ok:
+            raise
+
+
 def is_apple_terminal():
     try:
         return os.environ['TERM_PROGRAM'] == 'Apple_Terminal'
@@ -87,7 +95,7 @@ def main():
         path = os.path.join(VIM_DIR, 'autoload', 'pathogen.vim')
         if not os.path.isfile(path):
             for d in ['autoload', 'bundle']:
-                os.makedirs(os.path.join(VIM_DIR, d), exist_ok=True)
+		makedirs(os.path.join(VIM_DIR), exist_ok=True)
             download('https://tpo.pe/pathogen.vim', path)
 
     # install vim bundles
@@ -112,7 +120,7 @@ def main():
 
     with stacklog(logging.info, 'Installing vim script increment.vim'):
         if not os.path.isfile(os.path.join(VIM_DIR, 'plugin', 'increment.vim')):
-            os.makedirs(os.path.join(VIM_DIR, 'plugin'), exist_ok=True)
+            makedirs(os.path.join(VIM_DIR, 'plugin'), exist_ok=True)
             download(
                 'http://www.vim.org/scripts/download_script.php?src_id=469',
                 os.path.join(VIM_DIR, 'plugin', 'increment.vim')
@@ -129,13 +137,13 @@ def main():
     with stacklog(logging.info, 'Setting up git-aware-prompt'):
         path = os.path.join(home(), '.bash', 'git-aware-prompt')
         if not os.path.isdir(path):
-            os.makedirs(path, exist_ok=True)
+            makedirs(path, exist_ok=True)
             clone('https://github.com/jimeh/git-aware-prompt.git', path)
 
     with stacklog(logging.info, 'Setting up solarized'):
         path = os.path.join(home(), '.bash', 'osx-terminal.app-colors-solarized')
         if is_apple_terminal() and not os.path.isdir(path):
-            os.makedirs(path, exist_ok=True)
+            makedirs(path, exist_ok=True)
             clone('https://github.com/tomislav/osx-terminal.app-colors-solarized.git', path)
             for theme in ['Dark', 'Light']:
                 subprocess.Popen(
@@ -145,13 +153,13 @@ def main():
 
         path = os.path.join(home(), '.bash', 'dircolors-solarized')
         if not os.path.isdir(path):
-            os.makedirs(path, exist_ok=True)
+            makedirs(path, exist_ok=True)
             clone('https://github.com/seebi/dircolors-solarized.git', path)
 
     with stacklog(logging.info, 'Installing tmux-resurrect'):
         path = os.path.join(home(), '.bash', 'tmux-resurrect')
         if not os.path.isdir(path):
-            os.makedirs(path, exist_ok=True)
+            makedirs(path, exist_ok=True)
             download(
                 'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash',
                 os.path.join(path, 'git-completion.bash')
@@ -161,7 +169,7 @@ def main():
         with stacklog(logging.debug, 'Downloading jupyter-vim-binding'):
             path = os.path.join(home(), '.bash', 'jupyter-vim-binding')
             if not os.path.isdir(path):
-                os.makedirs(path, exist_ok=True)
+                makedirs(path, exist_ok=True)
                 clone('https://github.com/lambdalisue/jupyter-vim-binding', path)
 
         with stacklog(logging.debug, 'Running setup_jupyter.sh'):
@@ -178,7 +186,7 @@ def main():
             if os.path.isfile(fa):
                 dst = os.path.join(home(), f)
                 if not os.path.isfile(dst):
-                    os.symlink(fa, )
+                    os.symlink(fa, dst)
                 else:
                     logging.warning(
                         'Could not link {src} to {dst} (already exists)'
