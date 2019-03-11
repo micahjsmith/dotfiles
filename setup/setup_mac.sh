@@ -13,13 +13,13 @@ else
     echo 'source ~/.bashrc' >> ~/.bash_profile
 fi
 
-# Brew
+# Install brew
 if ! command -v brew >/dev/null 2>&1;
 then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-# GNU coreutils
+# Install GNU coreutils
 if ! brew list | grep -q coreutils;
 then
     brew install coreutils
@@ -28,7 +28,7 @@ then
 fi
 
 # Other brew
-for pkg in tmux wget gnu-which shellcheck fzf;
+for pkg in tmux wget gnu-which shellcheck fzf reattach-to-user-namespace;
 do
     if ! brew list | grep -q $pkg; then
         brew install $pkg
