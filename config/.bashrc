@@ -106,13 +106,14 @@ else
 fi
 
 #Change what ls displays
-alias ls='\ls --color'
-alias l='\ls -AF --color'
-alias l1='\ls -AF1 --color'
-alias ll='\ls -AhlF --color'
-alias lsd='\ls -d1 --color */'
-alias lld='\ls -dhl --color */'
-alias llth='\ls -AhltF --color | head'
+export CLICOLOR=true
+alias ls='\ls'
+alias l='\ls -AF'
+alias l1='\ls -AF1'
+alias ll='\ls -AhlF'
+alias lsd='\ls -d1 */'
+alias lld='\ls -dhl */'
+alias llth='\ls -AhltF | head'
 
 # Imitate zsh-like cd
 c(){
