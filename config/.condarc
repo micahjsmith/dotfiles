@@ -3,4 +3,3 @@
 create_default_packages:
   - pip
   - ipython
-  - funcy
