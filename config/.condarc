@@ -1,0 +1,6 @@
+# See also: https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/use-condarc.html
+
+create_default_packages:
+  - pip
+  - ipython
+  - funcy
