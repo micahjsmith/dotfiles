@@ -3,3 +3,6 @@
 create_default_packages:
   - pip
   - ipython
+
+auto_activate_base: true
+changeps1: false

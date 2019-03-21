@@ -40,7 +40,6 @@ unset SSH_ASKPASS                                  # So the display doesn't come
 # Later, we reset PS1. This is okay, because we don't care about displaying base
 # environment anyway.
 . /usr/local/miniconda3/etc/profile.d/conda.sh >/dev/null 2>&1
-conda activate >/dev/null 2>&1
 
 # Colors
 
