@@ -1,4 +1,9 @@
 "*":
+  "atom-ide-ui":
+    "atom-ide-outline-view": {}
+  "atom-typescript":
+    allowJS: true
+    showSemanticView: true
   "autocomplete-plus":
     confirmCompletion: "enter"
     fileBlacklist: [
@@ -10,15 +15,24 @@
   "bracket-matcher":
     autocompleteBrackets: false
     wrapSelectionsInBrackets: false
+  build:
+    panelVisibility: "Show on Error"
+  "build-make":
+    jobs: 1
   core:
+    packagesWithKeymapsDisabled: [
+      "external-open"
+      "ex-mode"
+      "latex"
+    ]
     projectHome: "/Users/micahsmith/workspace"
     telemetryConsent: "no"
     themes: [
-      "one-dark-ui"
-      "solarized-dark-syntax"
+      "one-light-ui"
+      "solarized-light-syntax"
     ]
   editor:
-    fontSize: 16
+    fontSize: 13
     preferredLineLength: 79
     scrollPastEnd: true
     showIndentGuide: true
@@ -26,12 +40,22 @@
     softWrapAtPreferredLineLength: true
   "exception-reporting":
     userId: "26e337ac-f691-46c2-b2b8-9a2d4df2add6"
+  "ide-python":
+    python: "/usr/local/miniconda3/bin/python"
+  "julia-client":
+    firstBoot: false
+    uiOptions:
+      enableMenu: true
+      enableToolBar: true
+      layouts:
+        openDefaultPanesOnStartUp: false
   latex:
+    enableShellEscape: true
     moveResultToSourceDirectory: false
     openResultAfterBuild: false
     openResultInBackground: false
     opener: "pdf-view"
-    outputDirectory: "_build"
+    outputDirectory: "build"
   "pdf-view":
     fitToWidthOnOpen: true
     paneToUseInSynctex: "left"
@@ -47,6 +71,21 @@
     ]
   "tool-bar":
     position: "Left"
+    visible: false
+  "uber-juno":
+    disable: true
   "vim-mode-plus": {}
   welcome:
     showOnStartup: false
+  wordcount:
+    extensions: [
+      "md"
+      "markdown"
+      "readme"
+      "txt"
+      "rst"
+      "adoc"
+      "log"
+      "msg"
+      "tex"
+    ]

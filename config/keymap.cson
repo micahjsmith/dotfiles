@@ -44,6 +44,7 @@
   'ctrl-k': 'vim-mode-plus:add-blank-line-above'
   'ctrl-j': 'vim-mode-plus:add-blank-line-below'
   'Q': 'autoflow:reflow-selection'
+  'g f': 'open-this:here'
 
 'atom-text-editor.vim-mode-plus.normal-mode:not(.with-count)':
   '0': 'keystroke g ^'
@@ -68,4 +69,17 @@
 
 # latex compile
 'atom-text-editor[data-grammar~="latex"]':
-  'cmd-enter': 'latex:build'
+  'cmd-enter': 'build:trigger'
+
+# ex-mode
+'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+  ';': 'ex-mode:open'
+'atom-text-editor.vim-mode:not(.insert-mode)':
+  ';': 'ex-mode:open'
+'atom-text-editor.ex-mode-editor':
+  'ctrl-c': 'ex-mode:close'
+
+# warn before quitting (https://github.com/atom/atom/issues/6082)
+'body':
+  'cmd-q': 'core-save'
+  'cmd-q cmd-q': 'application:quit'

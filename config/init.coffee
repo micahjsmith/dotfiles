@@ -9,3 +9,14 @@
 # atom.workspace.observeTextEditors (editor) ->
 #   editor.onDidSave ->
 #     console.log "Saved! #{editor.getPath()}"
+
+# From https://github.com/TypeStrong/atom-typescript/blob/master/docs/faq.md#i-want-to-use-atom-typescript-with-javascript-too
+do (grammarPackageImUsing = "language-javascript") ->
+  atom.packages.onDidTriggerActivationHook "#{grammarPackageImUsing}:grammar-used", ->
+    atom.packages.triggerActivationHook 'language-typescript:grammar-used'
+
+# ex-mode
+atom.packages.onDidActivatePackage (pack) ->
+  if pack.name == 'ex-mode'
+    Ex = pack.mainModule.provideEx()
+    #Ex.registerCommand 's', -> console.log("Zzzzzz...")
