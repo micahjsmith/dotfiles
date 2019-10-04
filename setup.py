@@ -104,6 +104,7 @@ def main():
         {'author': 'AndrewRadev', 'name': 'linediff.vim'},
         {'author': 'bling', 'name': 'vim-airline'},
         {'author': 'plasticboy', 'name': 'vim-markdown'},
+        {'author': 'godlygeek', 'name': 'tabular'},
         {'author': 'terryma', 'name': 'vim-expand-region'},
         {'author': 'tpope', 'name': 'vim-dispatch'},
         {'author': 'tpope', 'name': 'vim-fugitive'},
