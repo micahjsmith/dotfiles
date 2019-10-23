@@ -2,6 +2,8 @@
 
 Micah's dotfiles: bashrc, vimrc, etc.
 
+- License: MIT License
+
 ## Setup a new box
 
 ```
