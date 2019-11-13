@@ -28,14 +28,17 @@
     prompt = false
 [difftool "vimdiff"]
     # vim will otherwise fail on filenames starting with a '+'
-    cmd = vimdiff -- $LOCAL $REMOTE
+    cmd = vim -d -- "$LOCAL" "$REMOTE"
 [branch]
     autosetuprebase = always
 [merge]
     tool = vimdiff
+    guitool = meld
     conflictstyle = diff3
 [mergetool]
     prompt = false
+[mergetool "vimdiff"]
+    cmd = vim -d -- "$LOCAL" "$MERGED" "$REMOTE"
 [mergetool "meld"]
     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output="$MERGED"
 [push]
@@ -44,6 +47,7 @@
     # warn on whitespace issues
     whitespace = trailing-space,space-before-tab
     filemode = false
+	excludesfile = ~/.gitignore
 [apply]
     # fix whitespace issues in patches
     whitespace = fix

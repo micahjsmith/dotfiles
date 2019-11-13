@@ -9,7 +9,7 @@
 # Exit if not interactive
 [[ $- != *i* ]] && return
 
-#Add to path.
+# Add homebrew dirs to path
 [[ ":$PATH:" != *":$HOME/local/bin:"* ]] && PATH="$HOME/local/bin:${PATH}"
 
 # Random settings
@@ -41,7 +41,7 @@ unset SSH_ASKPASS                                  # So the display doesn't come
 # environment anyway.
 . /usr/local/miniconda3/etc/profile.d/conda.sh >/dev/null 2>&1
 PATH="/usr/local/miniconda3/bin:$PATH"
-conda activate
+# conda activate
 
 # Colors
 
@@ -88,23 +88,13 @@ export PS1="\n\[$(tput setaf 4)\][ \[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(
 alias ..='\cd ..'
 alias ...='\cd ../..'
 alias ....='\cd ../../..'
-alias e='evince'
 alias g='git'
 alias it='git'
 alias makel='make 2>&1 | less'
-alias mm='$(history -p !!).m'
 alias sbrc='. ~/.bashrc'
 alias tmuxa='tmux attach -t'
 alias tmuxd='tmux detach'
-alias xopen='xdg-open'
-
-# Invoking vim
-if command -v mvim >/dev/null 2>&1; then
-    alias vim='mvim -v'
-    alias v='mvim -v'
-else
-    alias v='vim'
-fi
+alias v=vim
 
 #Change what ls displays
 export CLICOLOR=true
@@ -206,8 +196,12 @@ if [ -z "$SSH_AUTH_SOCK" ] && [ -x "$SSHAGENT" ]; then
     trap "kill $SSH_AGENT_PID" 0
 fi
 
+# From fzf installation
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# See https://support.apple.com/en-us/HT208050
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 # System-specific proxies, directories, aliases, etc.
 # shellcheck source=/dev/null
 . ~/.bashrc.local 2>/dev/null
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
