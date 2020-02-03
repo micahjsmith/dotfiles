@@ -20,6 +20,10 @@
   "build-make":
     jobs: 1
   core:
+    disabledPackages: [
+      "language-julia"
+      "pdf-view"
+    ]
     packagesWithKeymapsDisabled: [
       "external-open"
       "ex-mode"
@@ -32,7 +36,7 @@
       "solarized-light-syntax"
     ]
   editor:
-    fontSize: 13
+    fontSize: 12
     preferredLineLength: 79
     scrollPastEnd: true
     showIndentGuide: true
@@ -54,7 +58,6 @@
     moveResultToSourceDirectory: false
     openResultAfterBuild: false
     openResultInBackground: false
-    opener: "pdf-view"
     outputDirectory: "build"
   "pdf-view":
     fitToWidthOnOpen: true

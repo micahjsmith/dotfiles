@@ -23,6 +23,7 @@ VIM_DIR = os.path.join(os.path.expanduser('~'), '.vim')
 
 @contextmanager
 def stacklog(method, message, *args, **kwargs):
+    """Bootstrapped version of https://github.com/micahjsmith/stacklog"""
     message = str(message)
     method(message + '...', *args, **kwargs)
     try:
