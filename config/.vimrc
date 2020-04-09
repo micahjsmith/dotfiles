@@ -71,6 +71,11 @@ if version > 704 || version==704 && has("patch399")
     set cryptmethod=blowfish2
 endif
 
+"Mouse
+if has('mouse')
+  set mouse=a
+endif
+
 " Section: Mappings
 " -----------------
 
