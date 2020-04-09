@@ -7,7 +7,7 @@ Micah's dotfiles: bashrc, vimrc, etc.
 ## Setup a new box
 
 ```
-bash setup.sh
+./setup.py
 ```
 
 ## Archive dotfiles
