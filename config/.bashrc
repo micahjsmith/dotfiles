@@ -96,6 +96,7 @@ alias sbrc='. ~/.bashrc'
 alias tmuxa='tmux attach -t'
 alias tmuxd='tmux detach'
 alias v=vim
+alias j=jupyter
 
 #Change what ls displays
 export CLICOLOR=true
@@ -182,10 +183,6 @@ jpystart(){
 jpystop(){
     docker rm -f jpy-"$(basename "$(pwd)")"
 }
-
-# Utilities for working with AWS CLI
-# shellcheck source=/dev/null
-. ~/.bash/aws4d/aws4d.sh 2>/dev/null
 
 # Password-less ssh
 # TODO does this work correctly?
