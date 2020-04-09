@@ -16,13 +16,15 @@
     dcc  = difftool --cached
     gr   = grep
     lg   = log --graph --all --full-history --color --abbrev-commit --decorate
-    lgp  = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %s <%an>'
+    lgp  = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %<(72,trunc) %s <%an> %x09 %C(cyan dim)%ar%Creset'
+    lgpd = log --graph --all --full-history --color --date=short --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %<(72,trunc) %s <%an> %x09 %C(cyan dim)%ad%Creset'
     mtc  = mergetool
     mt   = mergetool --tool=meld
     pr   = "!hub pr checkout $1"
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
     reco = commit --amend --no-edit
     st   = status
+    wip  = "!git add -u && git commit -m 'WIP'"  
 [diff]
     tool = vimdiff
     guitool = meld
