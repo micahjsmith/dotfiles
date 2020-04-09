@@ -15,6 +15,7 @@ set more
 set autoread
 set hidden
 set number
+set relativenumber
 set noautowrite
 set scrolloff=2
 set sidescrolloff=5

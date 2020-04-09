@@ -115,6 +115,7 @@ def main():
         {'author': 'Yggdroot', 'name': 'indentLine'},
         {'author': 'scrooloose', 'name': 'nerdtree'},
         {'author': 'editorconfig', 'name': 'editorconfig-vim'},
+        {'author': 'jeffkreeftmeijer', 'name': 'vim-numbertoggle'},
     ]
     for c in vim_bundle_configs:
         with stacklog(logging.info, 'Installing vim bundle {author}/{name}'.format(**c)):
