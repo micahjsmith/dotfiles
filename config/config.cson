@@ -20,10 +20,6 @@
   "build-make":
     jobs: 1
   core:
-    disabledPackages: [
-      "language-julia"
-      "pdf-view"
-    ]
     packagesWithKeymapsDisabled: [
       "external-open"
       "ex-mode"
