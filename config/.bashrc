@@ -103,6 +103,20 @@ c(){
   fi
 }
 
+# python environments
+
+## pyenv setup
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+if which pyenv-virtualenv-init >/dev/null; then
+    eval "$(pyenv virtualenv-init -)";
+fi
+
+## pipenv setup
+export PIPENV_VENV_IN_PROJECT=1
+export PIPENV_IGNORE_VIRTUALENVS=0  # for running pipenv with pyenv-virtualenv
+
 # Most recent modified file
 alias latest='\ls -t | head -n 1'
 # nth most recent modified file
