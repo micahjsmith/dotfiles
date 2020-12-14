@@ -35,14 +35,6 @@ unset SSH_ASKPASS                                  # So the display doesn't come
 #     export -f which
 # fi
 
-# Conda
-# Note that this activates the base environment, which prepends `(base)` to PS1.
-# Later, we reset PS1. This is okay, because we don't care about displaying base
-# environment anyway.
-. /usr/local/miniconda3/etc/profile.d/conda.sh >/dev/null 2>&1
-PATH="/usr/local/miniconda3/bin:$PATH"
-# conda activate
-
 # Colors
 
 # Set solarized palette on gnome-terminal
@@ -63,22 +55,12 @@ fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
 # PS1
-_set_conda_env(){
-    if [ "$CONDA_DEFAULT_ENV" != "" ];
-    then
-        conda_env=" <$CONDA_DEFAULT_ENV>"
-    else
-        conda_env=""
-    fi
-}
-
 
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
-PROMPT_COMMAND="_set_conda_env; $PROMPT_COMMAND"
 # shellcheck source=/dev/null
 . "$HOME/.bash/git-aware-prompt/main.sh" 2>/dev/null
-export PS1="\n\[$(tput setaf 4)\][ \[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 1)\]\${conda_env}\[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\] ]\n\\$ \[$(tput sgr0)\]"
+export PS1="\n\[$(tput setaf 4)\][ \[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 1)\]\[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\] ]\[$(tput sgr0)\]\n\\$ "
 
 # git completion
 # See https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
@@ -131,13 +113,6 @@ latestn(){
 # subdirectories. See http://stackoverflow.com/a/4561987/2514228
 latestr(){
   find . -type f -printf '%T@ %p\n' | sort -n | tail -n "$1" | cut -f2 -d" "
-}
-
-# Compile single table and view as pdf
-pdftable(){
-  pdflatex \
-    "\\documentclass{article}\\begin{document}\\input{$1}\\end{document}" \
-    && evince article.pdf && rm -i 'article.*'
 }
 
 # Concatenate pdfs
