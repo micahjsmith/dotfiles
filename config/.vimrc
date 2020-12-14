@@ -272,7 +272,7 @@ function! ToggleTmuxCopy()
     if g:indentLine_enabled
         silent! IndentLinesToggle
     endif
-    set invnumber
+    set number! relativenumber!
 endfunction
 nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
 
