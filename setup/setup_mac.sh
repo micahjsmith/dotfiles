@@ -19,10 +19,10 @@ then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-# Install GNU coreutils
+# Install GNU coreutils and findutils and place them ahead on the path
 if ! brew list | grep -q coreutils;
 then
-    brew install coreutils
+    brew install coreutils findutils
     echo 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"' >> ~/.bashrc.local
     echo 'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"' >> ~/.bashrc.local
 fi
