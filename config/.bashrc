@@ -79,6 +79,7 @@ alias tmuxa='tmux attach -t'
 alias tmuxd='tmux detach'
 alias v=vim
 alias j=jupyter
+alias i=invoke
 
 #Change what ls displays
 export CLICOLOR=true
@@ -188,6 +189,9 @@ fi
 
 # See https://support.apple.com/en-us/HT208050
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# See https://discourse.jupyter.org/t/jupyter-paths-priority-order/7771
+export JUPYTER_PREFER_ENV_PATH=1
 
 # System-specific proxies, directories, aliases, etc.
 # shellcheck source=/dev/null
