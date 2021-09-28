@@ -224,13 +224,13 @@ highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 "Colorz
+colorscheme solarized
 if has("gui_running") || $GNOME_SOLARIZED_LIGHT==1
     set background=light
-    " colorscheme default
-    colorscheme solarized
+elseif getenv("TERM_PROGRAM") == "vscode"
+    set background=light
 else
     set background=dark
-    colorscheme solarized
 endif
 
 " Section: Plugins
