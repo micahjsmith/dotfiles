@@ -32,11 +32,10 @@ if command -v jupyter >/dev/null 2>&1; then
         echo "$SCRIPTNAME: enabled vim_binding/vim_binding"
     fi
 
-    # If not linked, link custom.js. Yes, custom.js will also be linked to
-    # ~/custom.js below. But what do we care?
+    # If not linked, link custom.js.
     if [ ! -L "$HOME/.jupyter/custom/custom.js" ];
     then
-        src=$(realpath "$SCRIPTDIR/../config/custom.js")
+        src=$(realpath "$SCRIPTDIR/../config/jupyter/custom.js")
         dest=$(realpath -m -s "$HOME/.jupyter/custom/custom.js")
         destdir=$(dirname "$dest")
         if [ ! -d "$destdir" ];
