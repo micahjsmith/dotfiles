@@ -91,7 +91,7 @@ def install_vim_bundle_github(author, name):
         ])
 
         
-def main():
+def main(minimal):
     with stacklog(logging.info, 'Setting up vim-pathogen'):
         path = os.path.join(VIM_DIR, 'autoload', 'pathogen.vim')
         if not os.path.isfile(path):
@@ -180,7 +180,10 @@ def main():
             subprocess.check_call(path)
 
     with stacklog(logging.info, 'Linking dotfiles'):
-        path = os.path.join(SCRIPT_DIR, 'config')
+        if minimal:
+            path = os.path.join(SCRIPT_DIR, 'config', 'min')
+        else:
+            path = os.path.join(SCRIPT_DIR, 'config')
         exclude = ['.DS_Store']
         for f in os.listdir(path):
             if f in exclude:
@@ -188,6 +191,9 @@ def main():
             fa = os.path.join(path, f)
             if os.path.isfile(fa):
                 dst = os.path.join(home(), f)
+                if minimal:
+                    dst, ext = os.path.splitext(dst)
+                    assert ext == '.min'
                 if not os.path.isfile(dst):
                     os.symlink(fa, dst)
                 else:
@@ -205,6 +211,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Setup all my config')
     parser.add_argument('--vimdir', help='Path to .vim directory')
     parser.add_argument('--verbose', '-v', action='count', default=0)
+    parser.add_argument('--min', dest='minimal', action='store_true')
     args = parser.parse_args()
 
     if args.vimdir is not None:
@@ -214,4 +221,4 @@ if __name__ == '__main__':
     logging.basicConfig(level=level)
 
     with stacklog(print, 'Setting up'):
-        main()
+        main(args.minimal)
