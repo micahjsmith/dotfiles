@@ -96,7 +96,7 @@ def main():
         path = os.path.join(VIM_DIR, 'autoload', 'pathogen.vim')
         if not os.path.isfile(path):
             for d in ['autoload', 'bundle']:
-                makedirs(os.path.join(VIM_DIR), exist_ok=True)
+                makedirs(os.path.join(VIM_DIR, d), exist_ok=True)
         download('https://tpo.pe/pathogen.vim', path)
 
     # install vim bundles
