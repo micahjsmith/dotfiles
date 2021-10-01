@@ -1,0 +1,45 @@
+# Reset command key and set <C-o> as prefix
+unbind C-b
+set -g prefix C-o
+bind C-o send-prefix
+ 
+# Rebind split window commands, work with versions 1.8+. Use <prefix + _> to split
+# horizontally, and use <prefix + |> to split vertically
+bind | split-window -h
+bind _ split-window -v
+
+# Rebind new window command, work with versions 1.9+. Use prefix + c to open new
+# window, and new windows open in current path.
+unbind c
+bind c new-window -c "#{pane_current_path}"
+ 
+# act like vim
+bind h select-pane -L                     # prefix + h to select pane on left
+bind j select-pane -D                     # prefix + j to select pane below
+bind k select-pane -U                     # prefix + k to select pane above
+bind l select-pane -R                     # prefix + l to seleft pane on right
+ 
+# Settings for copy-mode and navigation
+set-window-option -g mode-keys vi         # use vim-style navigation in buffers
+set-option -g history-limit 10000         # increase scrollback buffer size
+
+# begin copy with `v` (`<Space>` also works)
+if-shell '[ $(echo "$(tmux -V | cut -d" " -f2) < 2.4" | bc) -eq 1 ]' \
+    'bind -t vi-copy v begin-selection' \
+    'bind -Tcopy-mode-vi v send-keys -X begin-selection'
+ 
+# switch : and ; keys
+unbind :
+unbind \;
+bind : last-pane
+bind \; command-prompt
+
+# Bottom bar, from http://www.drbunsen.org/the-text-triumvirate/
+set -g status-left-length 52
+set -g status-right-length 451
+set -g status-fg white
+set -g status-bg colour234
+set -g window-status-activity-style bold
+set -g pane-border-style fg=colour245
+set -g pane-active-border-style fg=colour39
+set -g message-style fg=colour16,bg=colour221,bold

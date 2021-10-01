@@ -1,0 +1,36 @@
+[user]
+	name = Micah Smith
+	email = micahjsmith@gmail.com
+    useConfigOnly = true
+[github]
+	user = micahjsmith
+[alias]
+    a     = add
+    amend = "!git add -u && git commit --amend --no-edit"
+    br   = branch
+    ch   = checkout
+    co   = commit
+    gr   = grep
+    lg   = log --graph --all --full-history --color --abbrev-commit --decorate
+    lgp  = log --graph --all --full-history --color --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %<(72,trunc) %s <%an> %x09 %C(cyan dim)%ar%Creset'
+    lgpd = log --graph --all --full-history --color --date=short --pretty=format:'%C(yellow)%h%Creset%x09%Cblue%d%Creset %<(72,trunc) %s <%an> %x09 %C(cyan dim)%ad%Creset'
+    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+    reco = commit --amend --no-edit
+    st   = status
+    wip  = "!git add -u && git commit -m 'WIP'"  
+[pull]
+    ff = only
+[push]
+    default = tracking
+[core]
+    # warn on whitespace issues
+    whitespace = trailing-space,space-before-tab
+    filemode = false
+	excludesfile = ~/.gitignore
+[apply]
+    # fix whitespace issues in patches
+    whitespace = fix
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[include]
+    path = ~/.gitconfig.local

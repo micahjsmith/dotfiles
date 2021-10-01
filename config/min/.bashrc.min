@@ -7,5 +7,7 @@ alias ...='\cd ../..'
 alias c='\cd'
 alias g='git'
 alias v='vim'
-alias l='\ls -AF --color'
-alias ll='\ls -AhlF --color'
+alias l='\ls -AFG'
+alias ll='\ls -AhlFG'
+
+. ~/.bashrc.local 2>/dev/null
