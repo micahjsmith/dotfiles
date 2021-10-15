@@ -3,6 +3,7 @@
 from __future__ import print_function
 
 import argparse
+import json
 import logging
 import os
 import platform
@@ -39,6 +40,11 @@ SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 VIM_DIR = os.path.join(home(), '.vim')
 
 
+def load_setup_data():
+    with open(os.path.join(SCRIPT_DIR, 'data.json'), 'r') as f:
+        return json.load(f)
+
+
 def is_mac():
     return platform.system() == 'Darwin'
 
@@ -71,7 +77,7 @@ def is_apple_terminal():
 
 def is_descendent(child, parent):
     """Whether child is recursively contained within parent or its children"""
-    # note: os.path.commonpath new in py35
+    # note: os.path.commonpath not available until py35
     return not os.path.relpath(child, start=parent).startswith('..')
 
 
@@ -97,7 +103,7 @@ def install_vim_bundle_github(author, name):
         ])
 
 
-def main(minimal=False, extra=False):
+def main(data, minimal=False, extra=False):
     with stacklog(logging.info, 'Setting up vim-pathogen'):
         path = os.path.join(VIM_DIR, 'autoload', 'pathogen.vim')
         if not os.path.isfile(path):
@@ -106,24 +112,7 @@ def main(minimal=False, extra=False):
         download('https://tpo.pe/pathogen.vim', path)
 
     # install vim bundles
-    vim_bundle_configs = [
-        {'author': 'altercation', 'name': 'vim-colors-solarized'},
-        {'author': 'AndrewRadev', 'name': 'linediff.vim'},
-        {'author': 'bling', 'name': 'vim-airline'},
-        {'author': 'plasticboy', 'name': 'vim-markdown'},
-        {'author': 'godlygeek', 'name': 'tabular'},
-        {'author': 'terryma', 'name': 'vim-expand-region'},
-        {'author': 'tpope', 'name': 'vim-dispatch'},
-        {'author': 'tpope', 'name': 'vim-fugitive'},
-        {'author': 'tpope', 'name': 'vim-surround'},
-        {'author': 'tpope', 'name': 'vim-unimpaired'},
-        {'author': 'vim-airline', 'name': 'vim-airline-themes'},
-        {'author': 'Yggdroot', 'name': 'indentLine'},
-        {'author': 'scrooloose', 'name': 'nerdtree'},
-        {'author': 'editorconfig', 'name': 'editorconfig-vim'},
-        {'author': 'jeffkreeftmeijer', 'name': 'vim-numbertoggle'},
-    ]
-    for c in vim_bundle_configs:
+    for c in data['vim']['bundles']:
         with stacklog(logging.info, 'Installing vim bundle {author}/{name}'.format(**c)):
             install_vim_bundle_github(c['author'], c['name'])
 
@@ -216,7 +205,7 @@ def main(minimal=False, extra=False):
             subprocess.check_call(path)
 
 
-def cleanup():
+def cleanup(data):
     dir = home()
     for f in os.listdir(dir):
         f = os.path.join(dir, f)
@@ -230,6 +219,8 @@ def cleanup():
 
 
 if __name__ == '__main__':
+    data = load_setup_data()
+
     parser = argparse.ArgumentParser(description='Setup all my config')
     parser.add_argument(
         '--vimdir',
@@ -262,9 +253,9 @@ if __name__ == '__main__':
 
     if args.cleanup:
         with stacklog(print, 'Cleaning up'):
-            retcode  = cleanup()
+            retcode  = cleanup(data)
         sys.exit(retcode)
 
     with stacklog(print, 'Setting up'):
-        retcode = main(minimal=args.minimal, extra=args.extra)
+        retcode = main(data, minimal=args.minimal, extra=args.extra)
     sys.exit(retcode)

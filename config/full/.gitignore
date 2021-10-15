@@ -1,6 +1,7 @@
 .idea/
 **/.ipynb_checkpoints/
-Icon[]
+Icon[
+]
 .DS_Store
 .vscode/
 .python-version

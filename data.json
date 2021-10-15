@@ -1,0 +1,101 @@
+{
+    "brew": {
+        "casks": [
+            "1password",
+            "homebrew/cask/docker",
+            "dropbox",
+            "firefox",
+            "google-drive",
+            "google-chrome",
+            "mactex",
+            "miniconda",
+            "notion",
+            "quicksilver",
+            "rectangle",
+            "signal",
+            "slack",
+            "visual-studio-code"
+        ],
+        "formulas": [
+            "coreutils",
+            "findutils",
+            "flux",
+            "fzf",
+            "jq",
+            "macvim",
+            "reattach-to-user-namespace",
+            "shellcheck",
+            "sqlite",
+            "tldr",
+            "tmux",
+            "wget",
+            "yq"
+        ]
+    },
+    "vim": {
+        "bundles": [
+            {
+                "author": "altercation",
+                "name": "vim-colors-solarized"
+            },
+            {
+                "author": "AndrewRadev",
+                "name": "linediff.vim"
+            },
+            {
+                "author": "bling",
+                "name": "vim-airline"
+            },
+            {
+                "author": "plasticboy",
+                "name": "vim-markdown"
+            },
+            {
+                "author": "godlygeek",
+                "name": "tabular"
+            },
+            {
+                "author": "terryma",
+                "name": "vim-expand-region"
+            },
+            {
+                "author": "tpope",
+                "name": "vim-dispatch"
+            },
+            {
+                "author": "tpope",
+                "name": "vim-surround"
+            },
+            {
+                "author": "tpope",
+                "name": "vim-unimpaired"
+            },
+            {
+                "author": "vim-airline",
+                "name": "vim-airline-themes"
+            },
+            {
+                "author": "Yggdroot",
+                "name": "indentLine"
+            },
+            {
+                "author": "scrooloose",
+                "name": "nerdtree"
+            },
+            {
+                "author": "editorconfig",
+                "name": "editorconfig-vim"
+            },
+            {
+                "author": "jeffkreeftmeijer",
+                "name": "vim-numbertoggle"
+            }
+        ],
+        "scripts": [
+            {
+                "name": "increment.vim",
+                "url": "http://www.vim.org/scripts/download_script.php?src_id=469"
+            }
+        ]
+    }
+}
