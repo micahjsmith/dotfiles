@@ -251,9 +251,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme = 'solarized'
 
-" pydiction
-let g:pydiction_location = "~/.vim/bundle/pydiction/complete-dict"
-
 " Increment.vim (Script #156)
 vnoremap <C-a> :Inc<CR>
 

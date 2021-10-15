@@ -17,10 +17,6 @@ except ImportError:
     from urllib import urlretrieve
 
 
-SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
-VIM_DIR = os.path.join(os.path.expanduser('~'), '.vim')
-
-
 @contextmanager
 def stacklog(method, message, *args, **kwargs):
     """Bootstrapped version of https://github.com/micahjsmith/stacklog"""
@@ -37,6 +33,10 @@ def stacklog(method, message, *args, **kwargs):
 
 def home():
     return os.path.expanduser('~')
+
+
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+VIM_DIR = os.path.join(home(), '.vim')
 
 
 def is_mac():
@@ -69,6 +69,12 @@ def is_apple_terminal():
         return False
 
 
+def is_descendent(child, parent):
+    """Whether child is recursively contained within parent or its children"""
+    # note: os.path.commonpath new in py35
+    return not os.path.relpath(child, start=parent).startswith('..')
+
+
 def download(url, destination):
     urlretrieve(url, destination)
 
@@ -90,8 +96,8 @@ def install_vim_bundle_github(author, name):
             '-c', 'q'
         ])
 
-        
-def main(minimal):
+
+def main(minimal=False, extra=False):
     with stacklog(logging.info, 'Setting up vim-pathogen'):
         path = os.path.join(VIM_DIR, 'autoload', 'pathogen.vim')
         if not os.path.isfile(path):
@@ -128,6 +134,8 @@ def main(minimal):
                 'http://www.vim.org/scripts/download_script.php?src_id=469',
                 os.path.join(VIM_DIR, 'plugin', 'increment.vim')
             )
+            # use vim to force converting the increment.vim script to unix
+            # line endings
             subprocess.check_call([
                 'vim', '-u', 'NONE', '-c', 'e ++ff=dos', '-c', 'w ++ff=unix', '-c', 'q',
                 os.path.join(VIM_DIR, 'plugin', 'increment.vim'),
@@ -143,7 +151,7 @@ def main(minimal):
             makedirs(path, exist_ok=True)
             clone('https://github.com/jimeh/git-aware-prompt.git', path)
 
-    with stacklog(logging.info, 'Setting up solarized'):
+    with stacklog(logging.info, 'Setting up solarized colorscheme'):
         path = os.path.join(home(), '.bash', 'osx-terminal.app-colors-solarized')
         if is_apple_terminal() and not os.path.isdir(path):
             makedirs(path, exist_ok=True)
@@ -180,26 +188,27 @@ def main(minimal):
             subprocess.check_call(path)
 
     with stacklog(logging.info, 'Linking dotfiles'):
+        dirs = []
         if minimal:
-            path = os.path.join(SCRIPT_DIR, 'config', 'min')
+            dirs.append(os.path.join(SCRIPT_DIR, 'config', 'min'))
         else:
-            path = os.path.join(SCRIPT_DIR, 'config')
+            dirs.append(os.path.join(SCRIPT_DIR, 'config', 'full'))
+        if extra:
+            dirs.append(os.path.join(SCRIPT_DIR, 'config', 'extra'))
         exclude = ['.DS_Store']
-        for f in os.listdir(path):
-            if f in exclude:
-                continue
-            fa = os.path.join(path, f)
-            if os.path.isfile(fa):
-                dst = os.path.join(home(), f)
-                if minimal:
-                    dst, ext = os.path.splitext(dst)
-                    assert ext == '.min'
-                if not os.path.isfile(dst):
-                    os.symlink(fa, dst)
-                else:
-                    logging.warning(
-                        'Could not link {src} to {dst} (already exists)'
-                        .format(src=fa, dst=dst))
+        for dir in dirs:
+            for f in os.listdir(dir):
+                if f in exclude:
+                    continue
+                src = os.path.join(dir, f)
+                if os.path.isfile(src):
+                    dst = os.path.join(home(), f)
+                    if not os.path.isfile(dst):
+                        os.symlink(src, dst)
+                    else:
+                        logging.warning(
+                            'Could not link {src} to {dst} (already exists)'
+                            .format(src=src, dst=dst))
 
     if is_mac():
         with stacklog(logging.info, 'Running setup_mac.sh'):
@@ -207,11 +216,42 @@ def main(minimal):
             subprocess.check_call(path)
 
 
+def cleanup():
+    dir = home()
+    for f in os.listdir(dir):
+        f = os.path.join(dir, f)
+        if os.path.islink(f):
+            src = os.readlink(f)
+            if not os.path.isabs(src):
+                src = os.path.join(dir, src)
+            if is_descendent(src, SCRIPT_DIR):
+                with stacklog(logging.info, 'Unlinking {f}'.format(f=f)):
+                    os.remove(f)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Setup all my config')
-    parser.add_argument('--vimdir', help='Path to .vim directory')
-    parser.add_argument('--verbose', '-v', action='count', default=0)
-    parser.add_argument('--min', dest='minimal', action='store_true')
+    parser.add_argument(
+        '--vimdir',
+        help='Path to .vim directory')
+    parser.add_argument(
+        '--verbose', '-v',
+        action='count',
+        default=0)
+    parser.add_argument(
+        '--min',
+        dest='minimal',
+        action='store_true',
+        help='Use minimal versions of core dotfiles')
+    parser.add_argument(
+        '--extra',
+        action='store_true',
+        help='Link extra, less-frequently used dotfiles')
+    parser.add_argument(
+        '--cleanup', '-C',
+        action='store_true',
+        help='Cleanup links to real dotfiles and exit')
+
     args = parser.parse_args()
 
     if args.vimdir is not None:
@@ -220,5 +260,11 @@ if __name__ == '__main__':
     level = logging.WARNING - min(10 * args.verbose, logging.WARNING)
     logging.basicConfig(level=level)
 
+    if args.cleanup:
+        with stacklog(print, 'Cleaning up'):
+            retcode  = cleanup()
+        sys.exit(retcode)
+
     with stacklog(print, 'Setting up'):
-        main(args.minimal)
+        retcode = main(minimal=args.minimal, extra=args.extra)
+    sys.exit(retcode)

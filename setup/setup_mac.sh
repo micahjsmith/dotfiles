@@ -5,12 +5,12 @@
 #   Setup mac-specific config.
 
 # Config
-if [ -f ~/.bash_profile ] && grep -q 'source ~/.bashrc' ~/.bash_profile;
+if [ -f ~/.bash_profile ] && grep -q '. ~/.bashrc' ~/.bash_profile;
 then
     # pass
     true
 else
-    echo 'source ~/.bashrc' >> ~/.bash_profile
+    echo '. ~/.bashrc' >> ~/.bash_profile
 fi
 
 # Install brew

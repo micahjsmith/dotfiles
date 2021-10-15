@@ -1,0 +1,8 @@
+.idea/
+**/.ipynb_checkpoints/
+Icon[]
+.DS_Store
+.vscode/
+.python-version
+**/*.pyc
+.cruft.json

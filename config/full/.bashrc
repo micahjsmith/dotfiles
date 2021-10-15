@@ -44,13 +44,13 @@ then
     # export GNOME_SOLARIZED_DARK=1
 
     # shellcheck source=/dev/null
-    . ~/.bash/gnome-terminal-colors-solarized/set_light.sh >/dev/null 2>&1 
+    . ~/.bash/gnome-terminal-colors-solarized/set_light.sh >/dev/null 2>&1
     export GNOME_SOLARIZED_LIGHT=1
 fi
 
 # Use solarized for `ls --color` output
 if [ -f ~/.bash/dircolors-solarized/dircolors.256dark ]; then
-    eval `dircolors ~/.bash/dircolors-solarized/dircolors.256dark` 
+    eval $(dircolors ~/.bash/dircolors-solarized/dircolors.256dark)
 fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
