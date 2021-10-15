@@ -4,6 +4,9 @@
 # setup_mac.sh
 #   Setup mac-specific config. No need to re-write this in Python.
 
+SCRIPTNAME=$(basename "$0")
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Config
 if [ -f ~/.bash_profile ] && grep -q '. ~/.bashrc' ~/.bash_profile;
 then
@@ -27,14 +30,15 @@ fi
 
 # Other brew
 # TODO path to data.json!
-for pkg in $(jq -r '.brew.formulas | join(" ")' data.json);
+for pkg in $(jq -r '.brew.formulas | join(" ")' "$SCRIPTDIR/../data.json");
 do
-    if ! brew list | grep -q $pkg; then
-        brew install $pkg
+    if ! brew list | grep -q "$pkg"; then
+        brew install "$pkg"
     fi
 done
 
 # Place GNU coreutils and findutils ahead on the path
+# shellcheck disable=2016
 if ! grep -q coreutils ~/.bashrc.local;
 then
     echo 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"' >> ~/.bashrc.local
