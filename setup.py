@@ -160,6 +160,13 @@ def main(data, minimal=False, extra=False):
         path = os.path.join(home(), '.bash', 'tmux-resurrect')
         if not os.path.isdir(path):
             makedirs(path, exist_ok=True)
+            clone('https://github.com/tmux-plugins/tmux-resurrect', path)
+
+
+    with stacklog(logging.info, 'Installing git autocomplete'):
+        path = os.path.join(home(), '.bash', 'git-completion')
+        if not os.path.isdir(path):
+            makedirs(path, exist_ok=True)
             download(
                 'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash',
                 os.path.join(path, 'git-completion.bash')

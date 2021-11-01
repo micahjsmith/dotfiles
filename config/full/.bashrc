@@ -70,7 +70,7 @@ alias ..='\cd ..'
 alias ...='\cd ../..'
 alias ....='\cd ../../..'
 alias g='git'
-__git_complete g _git  # See https://stackoverflow.com/a/24665529/
+__git_complete g __git_main  # See https://stackoverflow.com/a/24665529/
 alias it='git'
 alias makel='make 2>&1 | less'
 alias sbrc='. ~/.bashrc'
