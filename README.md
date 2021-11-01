@@ -25,4 +25,6 @@ cd path/to/archive/directory
 
 ## Todo
 
-- activate conda env when creating new pane in tmux
+[ ] use [git contrib's git
+prompt](https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh) rather than third party (jimeh)
+[ ] activate python/conda env when creating new pane in tmux
