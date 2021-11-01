@@ -50,6 +50,7 @@ fi
 
 # Use solarized for `ls --color` output
 if [ -f ~/.bash/dircolors-solarized/dircolors.256dark ]; then
+    # FIXME: dircolors binary is part of coreutils which may not be on PATH yet
     eval $(dircolors ~/.bash/dircolors-solarized/dircolors.256dark)
 fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
