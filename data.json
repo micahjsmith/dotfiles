@@ -3,7 +3,6 @@
         "casks": [
             "1password",
             "homebrew/cask/docker",
-            "dropbox",
             "firefox",
             "google-drive",
             "google-chrome",
@@ -21,13 +20,17 @@
             "findutils",
             "flux",
             "fzf",
+            "gh",
+            "gnu-which",
             "jq",
             "macvim",
+            "pipx",
             "reattach-to-user-namespace",
             "shellcheck",
             "sqlite",
             "tldr",
             "tmux",
+            "tree",
             "wget",
             "yq"
         ]
@@ -45,10 +48,6 @@
             {
                 "author": "bling",
                 "name": "vim-airline"
-            },
-            {
-                "author": "plasticboy",
-                "name": "vim-markdown"
             },
             {
                 "author": "godlygeek",

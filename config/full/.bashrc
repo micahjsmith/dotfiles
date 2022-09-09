@@ -11,6 +11,7 @@
 
 # Add homebrew dirs to path
 [[ ":$PATH:" != *":$HOME/local/bin:"* ]] && PATH="$HOME/local/bin:${PATH}"
+[[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && PATH="$HOME/.local/bin:${PATH}"
 
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
@@ -121,7 +122,7 @@ export PIPENV_IGNORE_VIRTUALENVS=0  # for running pipenv with pyenv-virtualenv
 alias latest='\ls -t | head -n 1'
 # nth most recent modified file
 latestn(){
-  \\ls -t | head -n "$1" | tail -n 1
+  \ls -t | head -n "$1" | tail -n 1
 }
 # The names of the n most recently modified files in this directory and all
 # subdirectories. See http://stackoverflow.com/a/4561987/2514228

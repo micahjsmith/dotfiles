@@ -273,9 +273,6 @@ function! ToggleTmuxCopy()
 endfunction
 nnoremap <silent> <leader>t :call ToggleTmuxCopy()<CR>
 
-" vim-markdown
-let g:vim_markdown_folding_disabled = 1
-
 " nerdtree
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 " open nerdtree automatically if vim is opening a directory
