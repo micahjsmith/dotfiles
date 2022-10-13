@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Micah Smith's .bashrc
 
 # if [ -f /etc/profile ]; then
@@ -39,7 +39,7 @@ unset SSH_ASKPASS                                  # So the display doesn't come
 # Colors
 
 # Set solarized palette on gnome-terminal
-if ps -p$PPID 2>/dev/null | grep -q gnome-terminal;
+if pgrep -q -P $PPID gnome-terminal 2>/dev/null;
 then
     # ~/.bash/gnome-terminal-colors-solarized/set_dark.sh 2>&1 >/dev/null
     # export GNOME_SOLARIZED_DARK=1
@@ -52,14 +52,14 @@ fi
 # Use solarized for `ls --color` output
 if [ -f ~/.bash/dircolors-solarized/dircolors.256dark ]; then
     # FIXME: dircolors binary is part of coreutils which may not be on PATH yet
-    eval $(dircolors ~/.bash/dircolors-solarized/dircolors.256dark)
+    eval "$(dircolors ~/.bash/dircolors-solarized/dircolors.256dark)"
 fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
 # PS1
 
 # Colorized PS1 that shows git branch. See https://github.com/jimeh/git-aware-prompt
-. "$HOME/.bash/git-aware-prompt/prompt.sh" 2>/dev/null
+. ~/.bash/git-aware-prompt/prompt.sh 2>/dev/null
 export PS1="\n\[$(tput setaf 4)\][ \[$(tput setaf 4)\]\u\[$(tput setaf 4)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 2)\]\W\[$(tput setaf 1)\] \[$(tput setaf 5)\]\${git_branch}\[$(tput setaf 4)\] ]\[$(tput sgr0)\]\n\\$ "
 
 # git completion
@@ -115,51 +115,12 @@ if which pyenv-virtualenv-init >/dev/null; then
 fi
 
 ## pipenv setup
+
 export PIPENV_VENV_IN_PROJECT=1
-export PIPENV_IGNORE_VIRTUALENVS=0  # for running pipenv with pyenv-virtualenv
 
-# Most recent modified file
-alias latest='\ls -t | head -n 1'
-# nth most recent modified file
-latestn(){
-  \ls -t | head -n "$1" | tail -n 1
-}
-# The names of the n most recently modified files in this directory and all
-# subdirectories. See http://stackoverflow.com/a/4561987/2514228
-latestr(){
-  find . -type f -printf '%T@ %p\n' | sort -n | tail -n "$1" | cut -f2 -d" "
-}
 
-# Concatenate pdfs
-pdfconcat(){
-    # usage:
-    #     $ pdfconcat file1.pdf file2.pdf
-    # creates output.pdf
-    if ! command -v gs >/dev/null 2>&1; then
-        echo 'gs not installed'
-        exit 1
-    fi
-
-    gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
-        -sOutputFile="output.pdf" \
-        "$@"
-}
-
-# Extract individual pages from pdf
-pdfextract(){
-    # usage:
-    #     $ pdfextract 1,2,4,7- file.pdf
-    # creates output.pdf
-    if ! command -v gs >/dev/null 2>&1; then
-        echo 'gs not installed'
-        exit 1
-    fi
-
-    gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
-        -sOutputFile="output.pdf" \
-        -sPageList="$1" \
-        "$2"
-}
+# to run pipenv inside a virtualenv created by pyenv-virtualenv, require:
+export PIPENV_IGNORE_VIRTUALENVS=
 
 # Mount the current directory in a jupyter/datascience-notebook session.
 jpystart(){
@@ -185,7 +146,7 @@ if [ -z "$SSH_AUTH_SOCK" ] && [ -x "$SSHAGENT" ]; then
 fi
 
 # From fzf installation
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf.bash ] && . ~/.fzf.bash
 
 # See https://support.apple.com/en-us/HT208050
 export BASH_SILENCE_DEPRECATION_WARNING=1

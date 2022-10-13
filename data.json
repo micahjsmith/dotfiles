@@ -2,10 +2,12 @@
     "brew": {
         "casks": [
             "1password",
-            "homebrew/cask/docker",
+            "docker",
             "firefox",
-            "google-drive",
+            "google-backup-and-sync",
             "google-chrome",
+            "homebrew/cask/flux",
+            "macvim",
             "mactex",
             "miniconda",
             "notion",
@@ -18,12 +20,10 @@
         "formulas": [
             "coreutils",
             "findutils",
-            "flux",
             "fzf",
             "gh",
             "gnu-which",
             "jq",
-            "macvim",
             "pipx",
             "reattach-to-user-namespace",
             "shellcheck",

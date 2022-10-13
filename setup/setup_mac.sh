@@ -6,6 +6,7 @@
 
 SCRIPTNAME=$(basename "$0")
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DATAJSONPATH=$(realpath "${SCRIPTDIR}/../data.json")
 
 # Config
 if [ -f ~/.bash_profile ] && grep -q '. ~/.bashrc' ~/.bash_profile;
@@ -30,10 +31,19 @@ fi
 
 # Other brew
 # TODO path to data.json!
-for pkg in $(jq -r '.brew.formulas | join(" ")' "$SCRIPTDIR/../data.json");
+for pkg in $(jq -r '.brew.formulas | join(" ")' "${DATAJSONPATH}");
 do
-    if ! brew list | grep -q "$pkg"; then
+    if ! brew list -1 --formula | grep -q "$pkg"; then
         brew install "$pkg"
+    fi
+done
+
+# Brew casks
+# TODO path to data.json
+for pkg in $(jq -r '.brew.casks | join(" ")' "${DATAJSONPATH}");
+do
+    if ! brew list -1 --cask | grep -q "$pkg"; then
+        brew install --cask "$pkg"
     fi
 done
 
