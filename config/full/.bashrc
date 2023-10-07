@@ -80,6 +80,9 @@ alias tmuxd='tmux detach'
 alias v=vim
 alias j=jupyter
 alias i=invoke
+alias ag='ag -p ~/.ignore'
+alias rr='cd $(git rev-parse --show-toplevel)'
+alias k=kubectl
 
 #Change what ls displays
 export CLICOLOR=true
@@ -122,6 +125,9 @@ export PIPENV_VENV_IN_PROJECT=1
 # to run pipenv inside a virtualenv created by pyenv-virtualenv, require:
 export PIPENV_IGNORE_VIRTUALENVS=
 
+## poetry setup
+export POETRY_VIRTUALENVS_IN_PROJECT=1
+
 # Mount the current directory in a jupyter/datascience-notebook session.
 jpystart(){
     docker run -dit --name jpy-"$(basename "$(pwd)")" \
@@ -157,3 +163,7 @@ export JUPYTER_PREFER_ENV_PATH=1
 # System-specific proxies, directories, aliases, etc.
 # shellcheck source=/dev/null
 . ~/.bashrc.local 2>/dev/null
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

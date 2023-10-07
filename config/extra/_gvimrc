@@ -1,6 +1,0 @@
-"Windows config
-set guioptions-=T
-set guifont=Consolas:h16
-
-set encoding=utf-8
-set fileencoding=utf-8

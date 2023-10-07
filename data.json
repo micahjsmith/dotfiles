@@ -15,6 +15,7 @@
             "rectangle",
             "signal",
             "slack",
+            "teamookla/speedtest/speedtest",
             "visual-studio-code"
         ],
         "formulas": [
