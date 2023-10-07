@@ -2,33 +2,59 @@
     "brew": {
         "casks": [
             "1password",
-            "docker",
+            "dbeaver-community",
+            "discord",
+            "filezilla",
             "firefox",
+            "flux",
             "google-backup-and-sync",
             "google-chrome",
-            "homebrew/cask/flux",
+            "google-cloud-sdk",
             "macvim",
             "mactex",
             "miniconda",
             "notion",
+            "obs",
             "quicksilver",
             "rectangle",
             "signal",
             "slack",
             "teamookla/speedtest/speedtest",
-            "visual-studio-code"
+            "visual-studio-code",
+            "vlc"
         ],
         "formulas": [
+            "asciinema",
+            "awscli@2",
             "coreutils",
+            "ffmpeg",
             "findutils",
             "fzf",
             "gh",
+            "ghostscript",
+            "git",
+            "git-filter-repo",
             "gnu-which",
+            "helm",
+            "htop",
+            "imagemagick",
             "jq",
+            "kubernetes-cli",
+            "markdownlint-cli2",
+            "moreutils",
+            "openssl@3",
+            "no-more-secrets",
+            "pandoc",
             "pipx",
+            "postgresql@14",
+            "psutils",
+            "pyenv",
             "reattach-to-user-namespace",
             "shellcheck",
             "sqlite",
+            "the_silver_searcher",
+            "telnet",
+            "terminal-notifier",
             "tldr",
             "tmux",
             "tree",
@@ -90,12 +116,47 @@
                 "author": "jeffkreeftmeijer",
                 "name": "vim-numbertoggle"
             }
-        ],
-        "scripts": [
-            {
-                "name": "increment.vim",
-                "url": "http://www.vim.org/scripts/download_script.php?src_id=469"
-            }
         ]
-    }
+    },
+    "scripts": [
+        {
+            "name": "nvm",
+            "homepage": "https://github.com/nvm-sh/nvm",
+            "command": "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash"
+        },
+        {
+            "name": "poetry",
+            "homepage": "https://python-poetry.org/docs",
+            "command": "curl -sSL https://install.python-poetry.org | python3 -"
+        }
+    ],
+    "others": [
+        {
+            "name": "container-diff"
+        },
+        {
+            "name": "cloud_sql_proxy"
+        },
+        {
+            "name": "docker"
+        },
+        {
+            "name": "docker-compose"
+        },
+        {
+            "name": "docker-credential-desktop"
+        },
+        {
+            "name": "docker-credential-osxkeychain"
+        },
+        {
+            "name": "docker-credential-ecr-login"
+        },
+        {
+            "name": "docker-credential-gcloud"
+        },
+        {
+            "name": "dot"
+        }
+    ]
 }

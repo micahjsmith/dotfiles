@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import platform
+import shutil
 import subprocess
 import sys
 
@@ -60,11 +61,15 @@ def is_wsl():
     return False
 
 
+def is_command(c):
+    return bool(shutil.which(c))
+
+
 def makedirs(d, exist_ok=False):
     try:
         os.makedirs(d)
     except OSError as e:
-        if 'File exists' in e and not exist_ok:
+        if 'File exists' in str(e) and not exist_ok:
             raise
 
 
@@ -95,12 +100,17 @@ def install_vim_bundle_github(author, name):
         url = 'https://github.com/{author}/{name}.git'.format(author=author, name=name)
         clone(url, bundle_dir)
 
-        subprocess.check_call([
-            'vim',
-            '-u', 'NONE',
-            '-c', 'helptags ' + os.path.join(bundle_dir, 'doc'),
-            '-c', 'q'
-        ])
+        subprocess.check_call(
+            [
+                'vim',
+                '-u',
+                'NONE',
+                '-c',
+                'helptags ' + os.path.join(bundle_dir, 'doc'),
+                '-c',
+                'q',
+            ]
+        )
 
 
 def main(data, minimal=False, extra=False):
@@ -113,7 +123,9 @@ def main(data, minimal=False, extra=False):
 
     # install vim bundles
     for c in data['vim']['bundles']:
-        with stacklog(logging.info, 'Installing vim bundle {author}/{name}'.format(**c)):
+        with stacklog(
+            logging.info, 'Installing vim bundle {author}/{name}'.format(**c)
+        ):
             install_vim_bundle_github(c['author'], c['name'])
 
     with stacklog(logging.info, 'Installing vim script increment.vim'):
@@ -121,14 +133,24 @@ def main(data, minimal=False, extra=False):
             makedirs(os.path.join(VIM_DIR, 'plugin'), exist_ok=True)
             download(
                 'http://www.vim.org/scripts/download_script.php?src_id=469',
-                os.path.join(VIM_DIR, 'plugin', 'increment.vim')
+                os.path.join(VIM_DIR, 'plugin', 'increment.vim'),
             )
             # use vim to force converting the increment.vim script to unix
             # line endings
-            subprocess.check_call([
-                'vim', '-u', 'NONE', '-c', 'e ++ff=dos', '-c', 'w ++ff=unix', '-c', 'q',
-                os.path.join(VIM_DIR, 'plugin', 'increment.vim'),
-            ])
+            subprocess.check_call(
+                [
+                    'vim',
+                    '-u',
+                    'NONE',
+                    '-c',
+                    'e ++ff=dos',
+                    '-c',
+                    'w ++ff=unix',
+                    '-c',
+                    'q',
+                    os.path.join(VIM_DIR, 'plugin', 'increment.vim'),
+                ]
+            )
 
     # done with WSL setup
     if is_wsl():
@@ -144,11 +166,19 @@ def main(data, minimal=False, extra=False):
         path = os.path.join(home(), '.bash', 'osx-terminal.app-colors-solarized')
         if is_apple_terminal() and not os.path.isdir(path):
             makedirs(path, exist_ok=True)
-            clone('https://github.com/tomislav/osx-terminal.app-colors-solarized.git', path)
+            clone(
+                'https://github.com/tomislav/osx-terminal.app-colors-solarized.git',
+                path,
+            )
             for theme in ['Dark', 'Light']:
                 subprocess.Popen(
-                    ['open', os.path.join(path, 'Solarized {theme}.terminal'.format(theme=theme))],
-                    close_fds=True
+                    [
+                        'open',
+                        os.path.join(
+                            path, 'Solarized {theme}.terminal'.format(theme=theme)
+                        ),
+                    ],
+                    close_fds=True,
                 )
 
         path = os.path.join(home(), '.bash', 'dircolors-solarized')
@@ -162,14 +192,13 @@ def main(data, minimal=False, extra=False):
             makedirs(path, exist_ok=True)
             clone('https://github.com/tmux-plugins/tmux-resurrect', path)
 
-
     with stacklog(logging.info, 'Installing git autocomplete'):
         path = os.path.join(home(), '.bash', 'git-completion')
         if not os.path.isdir(path):
             makedirs(path, exist_ok=True)
             download(
                 'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash',
-                os.path.join(path, 'git-completion.bash')
+                os.path.join(path, 'git-completion.bash'),
             )
 
     with stacklog(logging.info, 'Installing jupyter-vim-binding'):
@@ -182,6 +211,14 @@ def main(data, minimal=False, extra=False):
         with stacklog(logging.debug, 'Running setup_jupyter.sh'):
             path = os.path.join(SCRIPT_DIR, 'setup', 'setup_jupyter.sh')
             subprocess.check_call(path)
+
+    with stacklog(logging.info, 'Installing custom scripts'):
+        for entry in data['scripts']:
+            name = entry['name']
+            if not is_command(name):
+                with stacklog(logging.info, 'Installing {name}'.format(name=name)):
+                    command = entry['command']
+                    subprocess.check_call(command, shell=True)
 
     with stacklog(logging.info, 'Linking dotfiles'):
         dirs = []
@@ -203,13 +240,22 @@ def main(data, minimal=False, extra=False):
                         os.symlink(src, dst)
                     else:
                         logging.warning(
-                            'Could not link {src} to {dst} (already exists)'
-                            .format(src=src, dst=dst))
+                            'Could not link {src} to {dst} (already exists)'.format(
+                                src=src, dst=dst
+                            )
+                        )
 
     if is_mac():
         with stacklog(logging.info, 'Running setup_mac.sh'):
             path = os.path.join(SCRIPT_DIR, 'setup', 'setup_mac.sh')
             subprocess.check_call(path)
+
+    logging.info('done!')
+
+    for entry in data['others']:
+        logging.info(
+            'Another thing you might want to install: {name}'.format(name=entry['name'])
+        )
 
 
 def cleanup(data):
@@ -229,26 +275,23 @@ if __name__ == '__main__':
     data = load_setup_data()
 
     parser = argparse.ArgumentParser(description='Setup all my config')
-    parser.add_argument(
-        '--vimdir',
-        help='Path to .vim directory')
-    parser.add_argument(
-        '--verbose', '-v',
-        action='count',
-        default=0)
+    parser.add_argument('--vimdir', help='Path to .vim directory')
+    parser.add_argument('--verbose', '-v', action='count', default=0)
     parser.add_argument(
         '--min',
         dest='minimal',
         action='store_true',
-        help='Use minimal versions of core dotfiles')
+        help='Use minimal versions of core dotfiles',
+    )
     parser.add_argument(
-        '--extra',
-        action='store_true',
-        help='Link extra, less-frequently used dotfiles')
+        '--extra', action='store_true', help='Link extra, less-frequently used dotfiles'
+    )
     parser.add_argument(
-        '--cleanup', '-C',
+        '--cleanup',
+        '-C',
         action='store_true',
-        help='Cleanup links to real dotfiles and exit')
+        help='Cleanup links to real dotfiles and exit',
+    )
 
     args = parser.parse_args()
 
@@ -260,7 +303,7 @@ if __name__ == '__main__':
 
     if args.cleanup:
         with stacklog(print, 'Cleaning up'):
-            retcode  = cleanup(data)
+            retcode = cleanup(data)
         sys.exit(retcode)
 
     with stacklog(print, 'Setting up'):

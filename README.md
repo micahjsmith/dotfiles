@@ -6,9 +6,13 @@ Micah's dotfiles: bashrc, vimrc, etc.
 
 ## Setup a new box
 
-```
-./setup.py
-```
+1. Go to System Settings > Privacy & Security > App Management and add or enable your terminal.
+
+2. Run
+
+    ```
+    ./setup.py
+    ```
 
 ## Archive dotfiles
 
