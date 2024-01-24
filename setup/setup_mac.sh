@@ -4,6 +4,8 @@
 # setup_mac.sh
 #   Setup mac-specific config. No need to re-write this in Python.
 
+set -e -o pipefail
+
 SCRIPTNAME=$(basename "$0")
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DATAJSONPATH=$(realpath "${SCRIPTDIR}/../data.json")
@@ -18,7 +20,7 @@ fi
 
 # Install brew
 if ! command -v brew >/dev/null 2>&1; then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 # Install jq to bootstrap other installs :(

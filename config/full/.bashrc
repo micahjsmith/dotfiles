@@ -12,6 +12,7 @@
 # Add homebrew dirs to path
 [[ ":$PATH:" != *":$HOME/local/bin:"* ]] && PATH="$HOME/local/bin:${PATH}"
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && PATH="$HOME/.local/bin:${PATH}"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
@@ -52,7 +53,7 @@ fi
 # Use solarized for `ls --color` output
 if [ -f ~/.bash/dircolors-solarized/dircolors.256dark ]; then
     # FIXME: dircolors binary is part of coreutils which may not be on PATH yet
-    eval "$(dircolors ~/.bash/dircolors-solarized/dircolors.256dark)"
+    eval "$(/opt/homebrew/bin/gdircolors ~/.bash/dircolors-solarized/dircolors.256dark)"
 fi
 LS_COLORS=${LS_COLORS/ex=01;32:/ex=00;32:}         # Don't display executables as bold
 
@@ -83,6 +84,7 @@ alias i=invoke
 alias ag='ag -p ~/.ignore'
 alias rr='cd $(git rev-parse --show-toplevel)'
 alias k=kubectl
+alias tf=terraform
 
 #Change what ls displays
 export CLICOLOR=true
@@ -113,14 +115,10 @@ c(){
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
-if which pyenv-virtualenv-init >/dev/null; then
-    eval "$(pyenv virtualenv-init -)";
-fi
 
 ## pipenv setup
 
 export PIPENV_VENV_IN_PROJECT=1
-
 
 # to run pipenv inside a virtualenv created by pyenv-virtualenv, require:
 export PIPENV_IGNORE_VIRTUALENVS=
@@ -163,7 +161,3 @@ export JUPYTER_PREFER_ENV_PATH=1
 # System-specific proxies, directories, aliases, etc.
 # shellcheck source=/dev/null
 . ~/.bashrc.local 2>/dev/null
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -212,13 +212,14 @@ def main(data, minimal=False, extra=False):
             path = os.path.join(SCRIPT_DIR, 'setup', 'setup_jupyter.sh')
             subprocess.check_call(path)
 
-    with stacklog(logging.info, 'Installing custom scripts'):
-        for entry in data['scripts']:
-            name = entry['name']
-            if not is_command(name):
-                with stacklog(logging.info, 'Installing {name}'.format(name=name)):
-                    command = entry['command']
-                    subprocess.check_call(command, shell=True)
+    #with stacklog(logging.info, 'Installing custom scripts'):
+    #    for entry in data['scripts']:
+    #        name = entry['name']
+    #        if not is_command(name):
+    #            with stacklog(logging.info, 'Installing {name}'.format(name=name)):
+    #                command = entry['command']
+    #                if command == 'poetry': continue
+    #                subprocess.check_call(command, shell=True)
 
     with stacklog(logging.info, 'Linking dotfiles'):
         dirs = []

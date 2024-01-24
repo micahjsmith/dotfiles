@@ -23,7 +23,7 @@
     mtc      = mergetool
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
     st       = status --untracked-files=no
-    wip      = "!git add -u && git commit -m 'WIP'"
+    wip      = "!git add -u && git commit -m 'update'"
 [apply]
     whitespace = fix
 [branch]
@@ -32,12 +32,6 @@
     whitespace = trailing-space,space-before-tab
     filemode = false
 	excludesfile = ~/.gitignore
-[credential "https://github.com"]
-	helper =
-	helper = !/usr/local/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper =
-	helper = !/usr/local/bin/gh auth git-credential
 [diff]
     tool = vimdiff
     guitool = vscode
