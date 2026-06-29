@@ -10,9 +10,13 @@
 [[ $- != *i* ]] && return
 
 # Add homebrew dirs to path
+[[ ":$PATH:" != *":/usr/local/bin:"* ]] && PATH="/usr/local/bin:${PATH}"
 [[ ":$PATH:" != *":$HOME/local/bin:"* ]] && PATH="$HOME/local/bin:${PATH}"
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && PATH="$HOME/.local/bin:${PATH}"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Add cargo dir to path
+[[ ":$PATH:" != *":$HOME/.cargo/bin:"* ]] && PATH="$HOME/.cargo/bin:${PATH}"
 
 # Random settings
 export TERM='xterm-256color'                       # Color terminal... see blog.sanctum.geek.nz/term-strings
@@ -25,17 +29,7 @@ bind '"\e[B": history-search-forward'  2>/dev/null # Arrows search from current 
 umask 0002                                         # Default file creation mode
 set bell-style none                                # Try to avoid bells...
 unset SSH_ASKPASS                                  # So the display doesn't come up for git
-
-# # Which which
-# # `brew install gnu-which` on OSX
-# if gwhich --version 2>/dev/null | grep -q GNU;
-# then
-#     which ()
-#     {
-#         (alias; declare -f) | gwhich  --tty-only --read-alias --read-functions --show-tilde --show-dot $@
-#     }
-#     export -f which
-# fi
+shopt -s globstar || true                          # Enable globstar option (bash 4+)
 
 # Colors
 
@@ -112,35 +106,15 @@ c(){
 # python environments
 
 ## pyenv setup
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
-## pipenv setup
-
-export PIPENV_VENV_IN_PROJECT=1
-
-# to run pipenv inside a virtualenv created by pyenv-virtualenv, require:
-export PIPENV_IGNORE_VIRTUALENVS=
+# if command -v pyenv 1>/dev/null 2>&1; then
+#   eval "$(pyenv init -)"
+# fi
 
 ## poetry setup
-export POETRY_VIRTUALENVS_IN_PROJECT=1
-
-# Mount the current directory in a jupyter/datascience-notebook session.
-jpystart(){
-    docker run -dit --name jpy-"$(basename "$(pwd)")" \
-        -p 8888:8888 \
-        -v "$(pwd):/home/jovyan/work:rw" \
-        jupyter/datascience-notebook \
-    && sleep 15 \
-    && docker exec -it jpy-"$(basename "$(pwd)")" jupyter notebook list
-}
-jpystop(){
-    docker rm -f jpy-"$(basename "$(pwd)")"
-}
+export POETRY_VIRTUALENVS_IN_PROJECT=true
 
 # Password-less ssh
-# TODO does this work correctly?
+# not sure that this works correctly
 # see http://mah.everybody.org/docs/ssh
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
@@ -158,6 +132,21 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # See https://discourse.jupyter.org/t/jupyter-paths-priority-order/7771
 export JUPYTER_PREFER_ENV_PATH=1
 
+# See https://github.com/pypa/pipx/issues/1288#issuecomment-1991265545
+export PIPX_HOME=$HOME/.local/pipx
+
+
 # System-specific proxies, directories, aliases, etc.
 # shellcheck source=/dev/null
 . ~/.bashrc.local 2>/dev/null
+. "$HOME/.cargo/env"
+
+# pnpm
+export PNPM_HOME="/Users/micahsmith/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+export STACKPR_CONFIG="$HOME/.stack-pr.cfg"

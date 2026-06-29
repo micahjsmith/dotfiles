@@ -51,6 +51,9 @@ for pkg in $(jq -r '.brew.casks | join(" ")' "${DATAJSONPATH}"); do
     fi
 done
 
+# pipx utils
+
+
 # Place GNU coreutils and findutils ahead on the path
 # shellcheck disable=2016
 if ! grep -q coreutils ~/.bashrc.local; then

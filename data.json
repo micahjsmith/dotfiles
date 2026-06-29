@@ -126,7 +126,10 @@
             "name": "poetry",
             "homepage": "https://python-poetry.org/docs",
             "command": "curl -sSL https://install.python-poetry.org | python3 -"
-        }
+        },
+        {
+            "name": "tldr",
+            "command": "pipx install tldr"
     ],
     "others": [
         {

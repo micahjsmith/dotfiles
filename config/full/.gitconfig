@@ -23,6 +23,7 @@
     mtc      = mergetool
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
     st       = status --untracked-files=no
+	stack    = !stack-pr
     wip      = "!git add -u && git commit -m 'update'"
 [apply]
     whitespace = fix
@@ -61,7 +62,18 @@
 [push]
     default = tracking
     autoSetupRemote = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+
+# To use git-based auth with ssh key
+# [url "git@github.com:"]
+# 	insteadOf = https://github.com/
+
+# To use `gh`-cli auth (see `gh auth setup-git`)
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
 [include]
     path = ~/.gitconfig.local
