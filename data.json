@@ -9,6 +9,7 @@
             "google-chrome",
             "google-cloud-sdk",
             "google-drive",
+            "karabiner-elements",
             "macvim",
             "mactex",
             "miniconda",
@@ -44,16 +45,15 @@
             "no-more-secrets",
             "pandoc",
             "pipx",
-            "postgresql@14",
+            "postgresql@15",
             "psutils",
-            "pyenv",
             "reattach-to-user-namespace",
             "shellcheck",
             "sqlite",
             "the_silver_searcher",
             "telnet",
             "terminal-notifier",
-            "tldr",
+            "tlrc",
             "tmux",
             "tree",
             "wget",
@@ -118,6 +118,11 @@
     },
     "scripts": [
         {
+            "name": "kitty",
+            "homepage": "https://sw.kovidgoyal.net/kitty/",
+            "command": "curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin"
+        },
+        {
             "name": "nvm",
             "homepage": "https://github.com/nvm-sh/nvm",
             "command": "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash"
@@ -128,8 +133,11 @@
             "command": "curl -sSL https://install.python-poetry.org | python3 -"
         },
         {
-            "name": "tldr",
-            "command": "pipx install tldr"
+            "name": "uv",
+            "homepage": "https://docs.astral.sh/uv/",
+            "command": "curl -LsSf https://astral.sh/uv/install.sh | sh"
+        }
+
     ],
     "others": [
         {

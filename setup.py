@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from __future__ import print_function
 
@@ -222,7 +222,7 @@ def main(data, minimal=False, extra=False):
     #                subprocess.check_call(command, shell=True)
 
     with stacklog(logging.info, 'Linking dotfiles'):
-        dirs = []
+        dirs = []  # type: list[str]
         if minimal:
             dirs.append(os.path.join(SCRIPT_DIR, 'config', 'min'))
         else:
@@ -231,20 +231,28 @@ def main(data, minimal=False, extra=False):
             dirs.append(os.path.join(SCRIPT_DIR, 'config', 'extra'))
         exclude = ['.DS_Store']
         for dir in dirs:
-            for f in os.listdir(dir):
-                if f in exclude:
-                    continue
-                src = os.path.join(dir, f)
-                if os.path.isfile(src):
-                    dst = os.path.join(home(), f)
-                    if not os.path.isfile(dst):
-                        os.symlink(src, dst)
-                    else:
-                        logging.warning(
-                            'Could not link {src} to {dst} (already exists)'.format(
-                                src=src, dst=dst
+            for root, _, files in os.walk(dir):
+                for file in files:
+                    # construct the relative path of the file to the config directory
+                    f = os.path.relpath(os.path.join(root, file), start=dir)
+
+                    # check if it is excluded (relative to the config directory)
+                    if f in exclude:
+                        continue
+
+                    # create the symlink in the home directory, preserving the relative path
+                    src = os.path.join(dir, f)
+                    if os.path.isfile(src):
+                        dst = os.path.join(home(), f)
+                        os.makedirs(os.path.dirname(dst), exist_ok=True)
+                        if not os.path.isfile(dst):
+                            os.symlink(src, dst)
+                        else:
+                            logging.warning(
+                                'Could not link {src} to {dst} (already exists)'.format(
+                                    src=src, dst=dst
+                                )
                             )
-                        )
 
     if is_mac():
         with stacklog(logging.info, 'Running setup_mac.sh'):
