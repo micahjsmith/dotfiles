@@ -22,8 +22,10 @@
     mt       = mergetool -g
     mtc      = mergetool
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+    rc       = rebase --continue
+    ri       = "!git rebase -i $(git symbolic-ref refs/remotes/origin/HEAD --short)"
     st       = status --untracked-files=no
-	stack    = !stack-pr
+	stack = !stack-pr
     wip      = "!git add -u && git commit -m 'update'"
 [apply]
     whitespace = fix
